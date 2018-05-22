@@ -234,7 +234,7 @@
     
 }
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction {
     
     NSArray *urlComp = [URL.absoluteString componentsSeparatedByString:@"://"];
     NSArray *keys;
