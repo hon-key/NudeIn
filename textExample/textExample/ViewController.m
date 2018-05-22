@@ -43,9 +43,9 @@
     if (!_textView) {
         _textView = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
             
-            make.text(@"this is ").font(14).color([UIColor blackColor]).attach();
+            make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
             make.text(@"BlueLink").font(17).color([UIColor blueColor]).link(self,@selector(linkHandler:index:)).attach();
-            make.text(@", and this is ").font(14).color([UIColor blackColor]).attach();
+            make.text(@", and this is a ").font(14).color([UIColor blackColor]).attach();
             make.text(@"RedLink").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:index:)).attach();
             
         }];
