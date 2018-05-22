@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HKAttributedTextView"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "A attributed text component like masonry."
 
   # This description is used to generate tags and improve search results.
