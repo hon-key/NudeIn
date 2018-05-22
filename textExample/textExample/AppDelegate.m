@@ -17,6 +17,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSArray *familyNames = [UIFont familyNames];
+    
+    for (NSString *familyName in familyNames) {
+        printf("familyNames = %s\n",[familyName UTF8String]);
+        
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        
+        for (NSString *fontName in fontNames) {
+            printf("\tfontName = %s\n",[fontName UTF8String]);
+        }
+    }
+
     return YES;
 }
 

@@ -59,18 +59,6 @@
     return self;
 }
 
-- (HKAttributeText *(^)(NSString *))text {
-    
-    HKAttributeText *(^block)(NSString *) = ^HKAttributeText *(NSString *string) {
-        
-        self.string = string;
-        return self;
-        
-    };
-    
-    return block;
-}
-
 - (HKAttributeText *(^)(NSUInteger))font {
     
     HKAttributeText *(^block)(NSUInteger) = ^HKAttributeText *(NSUInteger size) {
@@ -83,6 +71,52 @@
     return block;
 }
 
+- (HKAttributeText *(^)(HKAttributeFontStyle))fontStyle {
+    
+    HKAttributeText *(^block)(HKAttributeFontStyle) = ^HKAttributeText *(HKAttributeFontStyle style) {
+        
+        UIFont *font = [self.attributes objectForKey:NSFontAttributeName];
+        if (!font) {
+            font = [UIFont systemFontOfSize:17];
+        }
+        
+        NSString *fontName = [font.fontName componentsSeparatedByString:@"-"][0];
+        
+        NSString *styleStr;
+        if ([self fontStyleArray].count > style) {
+            styleStr = [self fontStyleArray][style];
+        }
+        if (styleStr) {
+            
+            fontName = [fontName stringByAppendingString:[NSString stringWithFormat:@"-%@",styleStr]];
+            
+            UIFont *newFont = [UIFont fontWithName:fontName size:font.pointSize];
+            if (newFont) {
+                [self.attributes setObject:newFont forKey:NSFontAttributeName];
+            }
+            
+        }
+        
+        return self;
+    };
+    
+    return block;
+    
+}
+
+- (HKAttributeText *(^)(NSString *, NSUInteger))fontName {
+    
+    HKAttributeText *(^block)(NSString *,NSUInteger) = ^HKAttributeText *(NSString *name,NSUInteger size) {
+        
+        [self.attributes setObject:[UIFont fontWithName:name size:size] forKey:NSFontAttributeName];
+        return self;
+        
+    };
+    
+    return block;
+    
+}
+
 - (HKAttributeText *(^)(UIColor *))color {
     
     HKAttributeText *(^block)(UIColor *) = ^HKAttributeText *(UIColor *color) {
@@ -93,6 +127,90 @@
     };
     
     return block;
+}
+
+- (HKAttributeText *(^)(UIColor *))mark {
+    
+    HKAttributeText *(^block)(UIColor *) = ^HKAttributeText *(UIColor *color) {
+        
+        [self.attributes setObject:color forKey:NSBackgroundColorAttributeName];
+        return self;
+        
+    };
+    
+    return block;
+    
+}
+
+- (HKAttributeText *(^)(UIColor *))_ {
+    
+    HKAttributeText *(^block)(UIColor *) = ^HKAttributeText *(UIColor *color) {
+        
+        [self.attributes setObject:@1 forKey:NSUnderlineStyleAttributeName];
+        if (color) {
+            [self.attributes setObject:color forKey:NSUnderlineColorAttributeName];
+        }
+        return self;
+        
+    };
+    
+    return block;
+}
+
+- (HKAttributeText *(^)(UIColor *))deprecated {
+    
+    HKAttributeText *(^block)(UIColor *) = ^HKAttributeText *(UIColor *color) {
+        
+        [self.attributes setObject:@1 forKey:NSStrikethroughStyleAttributeName];
+        if (color) {
+            [self.attributes setObject:color forKey:NSStrikethroughColorAttributeName];
+        }
+        return self;
+        
+    };
+    
+    return block;
+    
+}
+
+- (HKAttributeText *(^)(CGFloat))skew {
+    
+    HKAttributeText *(^block)(CGFloat) = ^HKAttributeText *(CGFloat value) {
+        
+        [self.attributes setObject:@(value) forKey:NSObliquenessAttributeName];
+        return self;
+        
+    };
+    
+    return block;
+    
+}
+
+- (HKAttributeText *(^)(CGFloat))kern {
+    
+    HKAttributeText *(^block)(CGFloat) = ^HKAttributeText *(CGFloat value) {
+        
+        [self.attributes setObject:@(value) forKey:NSKernAttributeName];
+        return self;
+        
+    };
+    
+    return block;
+    
+}
+
+- (HKAttributeText *(^)(NSUInteger, UIColor *))hollow {
+    
+    HKAttributeText *(^block)(NSUInteger, UIColor *) = ^HKAttributeText *(NSUInteger width, UIColor *color) {
+        
+        [self.attributes setObject:@(width) forKey:NSStrokeWidthAttributeName];
+        [self.attributes setObject:color forKey:NSStrokeColorAttributeName];
+        return self;
+        
+    };
+    
+    return block;
+    
 }
 
 - (HKAttributeText *(^)(id, SEL))link {
@@ -126,6 +244,14 @@
     return block;
 }
 
+- (NSArray *)fontStyleArray {
+    static NSArray *fontStyle;
+    if (!fontStyle) {
+        fontStyle = @[@"Bold",@"Regular",@"Medium",@"Light",@"Thin",@"SemiBold",@"UltraLight",@"Italic"];
+    }
+    return fontStyle;
+}
+
 @end
 
 @implementation HKAttributeTextMaker
@@ -151,53 +277,6 @@
     return block;
 }
 
-- (HKAttributeText *(^)(NSUInteger))font {
-    
-    HKAttributeText *(^block)(NSUInteger) = ^HKAttributeText *(NSUInteger size) {
-        
-        HKAttributeText *text = [[HKAttributeText alloc] initWithFather:self];
-        [text.attributes setObject:[UIFont systemFontOfSize:size] forKey:NSFontAttributeName];
-        return text;
-        
-    };
-    
-    return block;
-    
-}
-
-- (HKAttributeText *(^)(UIColor *))color {
-    
-    
-    HKAttributeText *(^block)(UIColor *) = ^HKAttributeText *(UIColor *color) {
-        
-        HKAttributeText *text = [[HKAttributeText alloc] initWithFather:self];
-        [text.attributes setObject:color forKey:NSForegroundColorAttributeName];
-        return text;
-        
-    };
-    
-    return block;
-    
-}
-
-- (HKAttributeText *(^)(id, SEL))link {
-    
-    HKAttributeText *(^block)(id,SEL) = ^HKAttributeText *(id target,SEL selector) {
-        
-        HKAttributeText *text = [[HKAttributeText alloc] initWithFather:self];
-        HKSelector *s = [HKSelector new];
-        s.target = target;
-        s.action = selector;
-        [self.selectors addObject:s];
-        NSString *urlString = [NSString stringWithFormat:@"selector://%@&%@&%lu",text.string,[s name],(unsigned long)[text.father.selectors indexOfObject:s]];
-        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        [text.attributes setObject:url forKey:NSLinkAttributeName];
-        
-        return text;
-    };
-    
-    return block;
-}
 
 - (void)appendString:(NSAttributedString *)string {
     [self.string appendAttributedString:string];

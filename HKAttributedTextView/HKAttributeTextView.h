@@ -8,22 +8,39 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
+    HKBold, HKRegular, HKMedium, HKLight, HKThin, HKSemiBold, HKUltraLight, HKItalic, 
+};
+
 @interface HKAttributeText : NSObject
 
-- (HKAttributeText * (^)(NSString *))text;
-- (HKAttributeText * (^)(UIColor *))color;
-- (HKAttributeText * (^)(id target,SEL action))link;
+// font
 - (HKAttributeText * (^)(NSUInteger))font;
-- (HKAttributeText *(^)(void))attach;
+- (HKAttributeText * (^)(NSString *,NSUInteger))fontName;
+- (HKAttributeText * (^)(UIFont *))fontRes;
+- (HKAttributeText * (^)(HKAttributeFontStyle))fontStyle;
+
+- (HKAttributeText * (^)(UIColor *))color;
+- (HKAttributeText * (^)(UIColor *))mark;
+- (HKAttributeText * (^)(NSUInteger,UIColor *))hollow;
+- (HKAttributeText * (^)(id target,SEL action))link;
+- (HKAttributeText * (^)(UIColor *))_;
+- (HKAttributeText * (^)(UIColor *))deprecated;
+- (HKAttributeText * (^)(CGFloat))skew;
+- (HKAttributeText * (^)(CGFloat))kern;
+- (HKAttributeText * (^)(void))attach;
+
+@end
+
+@interface HKAttributeAttachment : NSObject
 
 @end
 
 @interface HKAttributeTextMaker : NSObject
 
 - (HKAttributeText * (^)(NSString *))text;
-- (HKAttributeText * (^)(UIColor *))color;
-- (HKAttributeText * (^)(id target,SEL action))link;
-- (HKAttributeText * (^)(NSUInteger))font;
+- (HKAttributeAttachment * (^)(NSString *))image;
+- (HKAttributeAttachment * (^)(UIImage *))imageRes;
 
 @end
 
