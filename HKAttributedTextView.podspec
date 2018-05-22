@@ -24,9 +24,9 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = <<-DESC
-                      A attributed text component like masonry..
-                   DESC
+  # s.description  = <<-DESC
+  #                     A attributed text component like masonry..
+  #                  DESC
 
   s.homepage     = "https://github.com/hon-key/HKAttributedTextView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/hon-key/HKAttributedTextView.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/hon-key/HKAttributedTextView.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
