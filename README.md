@@ -12,10 +12,13 @@ HKAttributedTextView 的用法非常简单明了:
 ```
 
 2、声明控件为你的成员变量
+
 ```Objective-C
 @property (nonatomic,strong) HKAttributeTextView *attrLabel;
+```
 
-// 初始化
+3、初始化
+```Objective-C
 _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
     make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
     make.text(@"BlueLink").font(17).color([UIColor blueColor]).link(self,@selector(linkHandler:index:)).attach();
