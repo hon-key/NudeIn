@@ -47,6 +47,7 @@
     }
     
     label.attributedText = label.maker.string;
+    label.linkTextAttributes = @{};
     
     return label;
     
