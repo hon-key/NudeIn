@@ -2,7 +2,7 @@
 
 HKAttributedTextView 是一个书写风格类似于 masonry 的富文本控件，它采用优雅的声明式方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
 
-# Usage
+## Usage
 
 HKAttributedTextView 的用法非常简单明了:
 
@@ -48,9 +48,15 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/2.png" width = "50%" />
 
-# Installation
+## Installation
 
 ```
 pod 'HKAttributedTextView'
 ```
-最新 pod 版本：1.1
+最新 pod 版本：`1.1`
+
+最低 iOS 版本： `8.0`
+
+## License
+
+HKAttributedTextView is released under the MIT license. See [LICENSE](https://github.com/hon-key/HKAttributedTextView/raw/master/LICENSE) for details.
