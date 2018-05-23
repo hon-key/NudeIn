@@ -41,7 +41,10 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 - (HKAttributeText * (^)(UIColor *))deprecated;
 - (HKAttributeText * (^)(CGFloat))skew;
 - (HKAttributeText * (^)(CGFloat))kern;
+
 - (HKAttributeText * (^)(void))attach;
+// TODO: 模板功能，指定特定模板字符串，可以应用相应的模板
+- (HKAttributeText * (^)(NSString *))attachWith;
 
 @end
 
@@ -49,16 +52,40 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 
 @end
 
+@interface HKAttributeTextTemplate : NSObject
+
+@end
+
+@interface HKAttributeAttachmentTemplate : NSObject
+
+@end
+
 @interface HKAttributeTextMaker : NSObject
 
 - (HKAttributeText * (^)(NSString *))text;
+
+// TODO: 富文本可添加自定义图片
 - (HKAttributeAttachment * (^)(NSString *))image;
 - (HKAttributeAttachment * (^)(UIImage *))imageRes;
+
+// TODO: 做一个全局设定功能，设定一次，接下来的make操作都会应用这些操作
+- (HKAttributeTextTemplate * (^)(void))allText;
+- (HKAttributeAttachmentTemplate * (^)(void))allImage;
+
+// TODO: 做一个模板功能，可以在attach的时候指定相应模板，自动应用其模板
+- (HKAttributeTextTemplate * (^)(NSString *))textTemplate;
+- (HKAttributeAttachmentTemplate * (^)(NSString *))imageTemplate;
+
+
 
 @end
 
 @interface HKAttributeTextView : UITextView
 
 + (HKAttributeTextView *)make:(void (^)(HKAttributeTextMaker *make))make;
+
+// TODO: 提供一个可以给现有实例继续添加组件的功能
+- (HKAttributeTextView *)append:(void (^)(HKAttributeTextMaker *make))make;
+
 
 @end
