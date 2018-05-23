@@ -53,3 +53,4 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 ```
 pod 'HKAttributedTextView'
 ```
+最新 pod 版本：1.1
