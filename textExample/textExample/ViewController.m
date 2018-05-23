@@ -32,6 +32,7 @@
         make.top.equalTo(self.textView.mas_bottom);
         make.centerX.equalTo(self.view);
     }];
+
 }
 
 - (void)linkHandler:(NSString *)text index:(NSUInteger)index {
@@ -58,7 +59,6 @@
             make.text(@"RedLink").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:index:))._([UIColor redColor]).deprecated([UIColor purpleColor]).attach();
             
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
-            
         }];
     }
     return _textView;
@@ -70,7 +70,7 @@
             
             make.text(@"RNG").font(30).hollow(1,[UIColor redColor]).attach();
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
-            make.text(@"KZ").font(14).color([UIColor blueColor]).attach();
+            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).attach();
         }];
     }
     return _textView2;

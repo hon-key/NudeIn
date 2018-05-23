@@ -20,65 +20,10 @@
 //  SOFTWARE.
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
-    HKBold, HKRegular, HKMedium, HKLight, HKThin, HKSemiBold, HKUltraLight, HKItalic, 
-};
-
-@interface HKAttributeText : NSObject
-
-// font
-- (HKAttributeText * (^)(NSUInteger))font;
-- (HKAttributeText * (^)(NSString *,NSUInteger))fontName;
-- (HKAttributeText * (^)(UIFont *))fontRes;
-- (HKAttributeText * (^)(HKAttributeFontStyle))fontStyle;
-
-- (HKAttributeText * (^)(UIColor *))color;
-- (HKAttributeText * (^)(UIColor *))mark;
-- (HKAttributeText * (^)(NSUInteger,UIColor *))hollow;
-- (HKAttributeText * (^)(id target,SEL action))link;
-- (HKAttributeText * (^)(UIColor *))_;
-- (HKAttributeText * (^)(UIColor *))deprecated;
-- (HKAttributeText * (^)(CGFloat))skew;
-- (HKAttributeText * (^)(CGFloat))kern;
-
-- (HKAttributeText * (^)(void))attach;
-// TODO: 模板功能，指定特定模板字符串，可以应用相应的模板
-- (HKAttributeText * (^)(NSString *))attachWith;
-
-@end
-
-@interface HKAttributeAttachment : NSObject
-
-@end
-
-@interface HKAttributeTextTemplate : NSObject
-
-@end
-
-@interface HKAttributeAttachmentTemplate : NSObject
-
-@end
-
-@interface HKAttributeTextMaker : NSObject
-
-- (HKAttributeText * (^)(NSString *))text;
-
-// TODO: 富文本可添加自定义图片
-- (HKAttributeAttachment * (^)(NSString *))image;
-- (HKAttributeAttachment * (^)(UIImage *))imageRes;
-
-// TODO: 做一个全局设定功能，设定一次，接下来的make操作都会应用这些操作
-- (HKAttributeTextTemplate * (^)(void))allText;
-- (HKAttributeAttachmentTemplate * (^)(void))allImage;
-
-// TODO: 做一个模板功能，可以在attach的时候指定相应模板，自动应用其模板
-- (HKAttributeTextTemplate * (^)(NSString *))textTemplate;
-- (HKAttributeAttachmentTemplate * (^)(NSString *))imageTemplate;
+#import "HKAttributeText.h"
+#import "HKAttributeTextMaker.h"
 
 
-
-@end
 
 @interface HKAttributeTextView : UITextView
 
