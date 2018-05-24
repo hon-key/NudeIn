@@ -15,6 +15,7 @@
 
 @property (nonatomic,strong) HKAttributeTextView *textView;
 @property (nonatomic,strong) HKAttributeTextView *textView2;
+@property (nonatomic,strong) HKAttributeTextView *textView3;
 
 @end
 
@@ -30,6 +31,11 @@
     [self.view addSubview:self.textView2];
     [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.textView.mas_bottom);
+        make.centerX.equalTo(self.view);
+    }];
+    [self.view addSubview:self.textView3];
+    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.textView2.mas_bottom);
         make.centerX.equalTo(self.view);
     }];
 
@@ -68,12 +74,26 @@
     if (!_textView2) {
         _textView2 = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
             
-            make.text(@"RNG").font(30).hollow(1,[UIColor redColor]).attach();
+            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1");
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
             make.text(@"KZ").font(14).bold().color([UIColor blueColor]).attach();
         }];
     }
     return _textView2;
+}
+
+- (HKAttributeTextView *)textView3 {
+    if (!_textView3) {
+        _textView3 = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
+            
+            make.allText().font(20).color([UIColor redColor]).link(self,@selector(linkHandler:index:)).skew(0.3).kern(6).attach();
+            
+            make.text(@"RNG").color([UIColor blueColor]).attach();
+            make.text(@"大战").attach();
+            make.text(@"KZ").attach();
+        }];
+    }
+    return _textView3;
 }
 
 
