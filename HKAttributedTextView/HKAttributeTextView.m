@@ -72,6 +72,12 @@
     
 }
 
+- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange {
+    NSLog(@"%@,%d,%d",textAttachment,characterRange.location,characterRange.length);
+    return NO;
+}
+
+
 @end
 
 @implementation UITextView (DisableCopy)

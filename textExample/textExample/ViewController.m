@@ -35,8 +35,9 @@
     }];
     [self.view addSubview:self.textView3];
     [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView2.mas_bottom);
         make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view);
+        make.width.height.mas_equalTo(300);
     }];
 
 }
@@ -86,12 +87,16 @@
     if (!_textView3) {
         _textView3 = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
             
-            make.allText().font(20).color([UIColor redColor]).link(self,@selector(linkHandler:index:)).skew(0.3).kern(6).attach();
-            
+            make.allImage().size(120,120).linefeed(3).attach();
+            make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();
             make.text(@"RNG").color([UIColor blueColor]).attach();
-            make.text(@"大战").attach();
+            make.text(@"\ue056大战").attach();
+            make.image(@"replayIcon").linefeed(1).attach();
             make.text(@"KZ").attach();
+            make.image(@"replayIcon").attach();
         }];
+        _textView3.backgroundColor = [UIColor greenColor];
+        _textView3.scrollEnabled = YES;
     }
     return _textView3;
 }

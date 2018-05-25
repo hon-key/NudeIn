@@ -22,24 +22,23 @@
 
 #import "HKAttributeText.h"
 #import "HKAttributeTextView.h"
-
-#define HKAT(method,...) \
-            self.parasitismObj.method(__VA_ARGS__); \
-            return self; \
+#import <objc/runtime.h>
 
 @interface HKAttributeText ()
 
 @property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
 @property (nonatomic,weak) HKAttributeTextMaker *father;
 
+@property (nonatomic,assign) BOOL shouldDisableLinefeed;
+
 @end
 
 @interface HKAttributeTextTemplate ()
 
-@property (nonatomic,copy,readwrite) NSString *identifier;
-@property (nonatomic,strong) HKAttributeText *parasitismObj;
+@property (nonatomic,strong) HKAttributeText *parasiticalObj;
 
 @property (nonatomic,strong) HKSelector *tplLinkSelector;
+@property (nonatomic,assign) NSUInteger numOfLinefeed;
 
 @end
 
@@ -51,6 +50,7 @@
     if (self = [super init]) {
         _attributes = [NSMutableDictionary new];
         _father = maker;
+        _shouldDisableLinefeed = NO;
 
     }
     return self;
@@ -207,6 +207,18 @@
     };
 }
 
+- (id (^)(NSUInteger))linefeed {
+    return HKABI(NSUInteger num) {
+        
+        self.shouldDisableLinefeed = num == 0 ? YES : NO;
+        
+        for (int i = 0; i < num; i++) {
+            self.string = [self.string stringByAppendingString:@"\n"];
+        }
+        return self;
+    };
+}
+
 - (void (^)(void))attach {
     return ^void (void) {
         self.attachWith(kHKAttributeTextAllTextKey);
@@ -225,6 +237,9 @@
                 self.link(tpl.tplLinkSelector.target,tpl.tplLinkSelector.action);
                 [tplAttrs removeObjectForKey:NSLinkAttributeName];
             }
+            if (tpl.numOfLinefeed > 0 && self.shouldDisableLinefeed == NO) {
+                self.linefeed(tpl.numOfLinefeed);
+            }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
         }
@@ -240,10 +255,13 @@
 
 @implementation HKAttributeTextTemplate
 
+HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
+
 - (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasitismObj = [[HKAttributeText alloc] initWithFather:maker];
-        _identifier = identifier;
+        _parasiticalObj = [[HKAttributeText alloc] initWithFather:maker];
+        self.identifier = identifier;
+        _numOfLinefeed = 0;
     }
     return self;
 }
@@ -264,27 +282,34 @@
 - (id (^)(id, SEL))link {
     return HKABI(id target,SEL action) {
         
-        self.parasitismObj.string = kHKAttributeTextAllTextKey;
-        self.parasitismObj.link(target,action);
-        self.tplLinkSelector = [[self.parasitismObj.father linkSelectors] lastObject];
-        [self.parasitismObj.father removeLinkSelector:self.tplLinkSelector];
+        self.parasiticalObj.string = kHKAttributeTextAllTextKey;
+        self.parasiticalObj.link(target,action);
+        self.tplLinkSelector = [[self.parasiticalObj.father linkSelectors] lastObject];
+        [self.parasiticalObj.father removeLinkSelector:self.tplLinkSelector];
         
-        NSString *url = [[self.parasitismObj.attributes objectForKey:NSLinkAttributeName] absoluteString];
+        NSString *url = [[self.parasiticalObj.attributes objectForKey:NSLinkAttributeName] absoluteString];
         url = [[url substringToIndex:url.length-1] stringByAppendingString:@"-1"];
-        [self.parasitismObj.attributes setObject:[NSURL URLWithString:url] forKey:NSLinkAttributeName];
+        [self.parasiticalObj.attributes setObject:[NSURL URLWithString:url] forKey:NSLinkAttributeName];
         
+        return self;
+    };
+}
+
+- (id (^)(NSUInteger))linefeed {
+    return HKABI(NSUInteger num) {
+        self.numOfLinefeed += num;
         return self;
     };
 }
 
 - (void (^)(void))attach {
     return ^void (void) {
-        [self.parasitismObj.father addTemplate:self];
+        [self.parasiticalObj.father addTemplate:self];
     };
 }
 
 - (NSDictionary *)tplAttributes {
-    return self.parasitismObj.attributes;
+    return self.parasiticalObj.attributes;
 }
 
 @end

@@ -33,11 +33,7 @@
 @end
 
 @class HKAttributeTextTemplate;
-@interface HKAttributeTextTemplate : HKAttribute<HKAttributeTextTemplate *>
-
-@property (nonatomic,copy,readonly) NSString *identifier;
-
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier;
+@interface HKAttributeTextTemplate : HKAttribute<HKAttributeTextTemplate *> <HKTemplate>
 
 - (NSDictionary *)tplAttributes;
 

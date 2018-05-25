@@ -10,7 +10,23 @@
 #import <UIKit/UIKit.h>
 
 #define HKAB(...) className (^)(__VA_ARGS__)
+
 #define HKABI(...) ^id (__VA_ARGS__)
+
+#define HKAT(method,...) \
+self.parasiticalObj.method(__VA_ARGS__); \
+return self; \
+
+#define HKAT_ASSIGN OBJC_ASSOCIATION_ASSIGN
+#define HKAT_RETAIN OBJC_ASSOCIATION_RETAIN
+#define HKAT_RETAIN_NONATOMIC OBJC_ASSOCIATION_RETAIN_NONATOMIC
+#define HKAT_COPY OBJC_ASSOCIATION_COPY
+#define HKAT_COPY_NONATOMIC OBJC_ASSOCIATION_COPY_NONATOMIC
+
+#define HKAT_SYNTHESIZE(tag,type,prop) \
+- (type)prop {return objc_getAssociatedObject(self, _cmd);} \
+- (void)setIdentifier:(type)_prop \
+{ objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
 
 typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
     HKBold, HKRegular, HKMedium, HKLight,
@@ -36,10 +52,30 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 - (HKAB(UIColor *))deprecated;
 - (HKAB(CGFloat))skew;
 - (HKAB(CGFloat))kern;
+- (HKAB(NSUInteger))linefeed;
 
 - (void (^)(void))attach;
-// TODO: 模板功能，指定特定模板字符串，可以应用相应的模板
 - (void (^)(NSString *))attachWith;
 
+
+@end
+
+@interface HKAttachment <className> : NSObject
+
+- (HKAB(CGFloat,CGFloat))origin;
+- (HKAB(CGFloat))vertical;
+- (HKAB(CGFloat,CGFloat))size;
+- (HKAB(NSUInteger))linefeed;
+
+- (void (^)(void))attach;
+- (void (^)(NSString *))attachWith;
+
+@end
+
+@class HKAttributeTextMaker;
+@protocol HKTemplate <NSObject>
+
+@property (nonatomic,copy) NSString *identifier;
+- (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier;
 
 @end

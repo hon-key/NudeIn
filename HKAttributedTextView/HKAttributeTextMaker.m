@@ -24,6 +24,7 @@
 #import "HKAttributeText.h"
 
 NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
+NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allImage";
 
 @implementation HKSelector
 - (NSString *)name {
@@ -43,6 +44,7 @@ NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
 @property (nonatomic,strong,readwrite) NSMutableAttributedString *string;
 @property (nonatomic,strong) NSMutableArray<HKSelector *> *selectors;
 @property (nonatomic,strong) NSMutableArray<HKAttributeTextTemplate *> *templates;
+@property (nonatomic,strong) NSMutableArray<HKAttributeAttachmentTemplate *> *attachmentTemplates;
 
 @end
 
@@ -81,6 +83,28 @@ NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
     };
 }
 
+- (HKAttributeAttachment *(^)(NSString *))image {
+    return ^HKAttributeAttachment *(NSString *imageName) {
+        HKAttributeAttachment *attachment = [[HKAttributeAttachment alloc] initWithFather:self];
+        attachment.image = [UIImage imageNamed:imageName];
+        return attachment;
+    };
+}
+
+- (HKAttributeAttachmentTemplate *(^)(NSString *))imageTemplate {
+    return ^HKAttributeAttachmentTemplate *(NSString *string) {
+        HKAttributeAttachmentTemplate *template = [[HKAttributeAttachmentTemplate alloc] initWithFather:self identifier:string];
+        return template;
+    };
+}
+
+- (HKAttributeAttachmentTemplate *(^)(void))allImage {
+    return ^HKAttributeAttachmentTemplate *(void) {
+        HKAttributeAttachmentTemplate *template = [[HKAttributeAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributeAttachmentAllImageKey];
+        return template;
+    };
+}
+
 @end
 
 @implementation HKAttributeTextMaker (ToolsExtension)
@@ -110,19 +134,19 @@ NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
     }
 }
 
-- (void)addTemplate:(HKAttributeTextTemplate *)tpl {
+- (void)addTemplate:(id<HKTemplate>)tpl {
     if ([tpl.identifier isEqualToString:@""] && tpl.identifier != nil) {
         return;
     }
-    HKAttributeTextTemplate *existTpl = [self templateWithId:tpl.identifier];
+    id<HKTemplate> existTpl = [self templateWithId:tpl.identifier];
     if (existTpl) {
         [self.templates removeObject:existTpl];
     }
     [self.templates addObject:tpl];
 }
 
-- (HKAttributeTextTemplate *)templateWithId:(NSString *)identifier {
-    for (HKAttributeTextTemplate *tpl in self.templates) {
+- (id<HKTemplate>)templateWithId:(NSString *)identifier {
+    for (id<HKTemplate> tpl in self.templates) {
         if ([tpl.identifier isEqualToString:identifier]) {
             return tpl;
         }

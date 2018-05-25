@@ -20,19 +20,12 @@
 //  SOFTWARE.
 
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "HKAttribute.h"
 #import "HKAttributeText.h"
+#import "HKAttributeAttachment.h"
 
 extern NSString * const kHKAttributeTextAllTextKey;
-
-@interface HKAttributeAttachment : NSObject
-@end
-
-
-@interface HKAttributeAttachmentTemplate : NSObject
-
-@end
+extern NSString * const kHKAttributeAttachmentAllImageKey;
 
 @interface HKSelector : NSObject
 
@@ -56,11 +49,9 @@ extern NSString * const kHKAttributeTextAllTextKey;
 - (HKAttributeAttachment * (^)(UIImage *))imageRes;
 
 - (HKAttributeTextTemplate * (^)(void))allText;
-- (HKAttributeTextTemplate * (^)(NSString *))textTemplate;
-
-// TODO: 做一个全局设定功能，设定一次，接下来的make操作都会应用这些操作
-// TODO: 做一个模板功能，可以在attach的时候指定相应模板，自动应用其模板
 - (HKAttributeAttachmentTemplate * (^)(void))allImage;
+
+- (HKAttributeTextTemplate * (^)(NSString *))textTemplate;
 - (HKAttributeAttachmentTemplate * (^)(NSString *))imageTemplate;
 
 
@@ -72,8 +63,8 @@ extern NSString * const kHKAttributeTextAllTextKey;
 - (void)addSelector:(HKSelector *)selector;
 - (NSUInteger)indexOfSelector:(HKSelector *)selector;
 - (void)emurateSelector:(void(^)(HKSelector *selector,BOOL *stop))handler;
-- (void)addTemplate:(HKAttributeTextTemplate *)tpl;
-- (HKAttributeTextTemplate *)templateWithId:(NSString *)identifier;
+- (void)addTemplate:(id<HKTemplate>)tpl;
+- (id<HKTemplate>)templateWithId:(NSString *)identifier;
 - (NSArray *)linkSelectors;
 - (void)removeLinkSelector:(HKSelector *)sel;
 

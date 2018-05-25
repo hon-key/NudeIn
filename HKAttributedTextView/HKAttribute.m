@@ -44,6 +44,7 @@
 - (id (^)(id, SEL))link {HKMethodNotImplemented();}
 - (id (^)(UIColor *))deprecated {HKMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {HKMethodNotImplemented();}
+- (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
 
 
 @synthesize fontStyles = _fontStyles;
@@ -56,3 +57,15 @@
 }
 
 @end
+
+@implementation HKAttachment
+
+- (id (^)(CGFloat, CGFloat))origin {HKMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))size {HKMethodNotImplemented();}
+- (void (^)(void))attach {HKMethodNotImplemented();}
+- (void (^)(NSString *))attachWith {HKMethodNotImplemented();}
+- (id (^)(CGFloat))vertical {HKMethodNotImplemented();}
+- (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
+
+@end
+
