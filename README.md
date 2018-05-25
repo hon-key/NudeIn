@@ -66,9 +66,9 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 
     - [**bold**](#usage) **`声明字体为 Bold 风格，如果有的话`**
 
-    - [**color**](#usage) **`声明文字的颜色`**
+    - [**color**](#usage) **`声明文字的前景色`**
 
-    - [**mark**](#usage) **`声明文字的底色，`**
+    - [**mark**](#usage) **`声明文字的底色`**
 
     - [**hollow**](#usage) **`声明文字为镂空`**
 
