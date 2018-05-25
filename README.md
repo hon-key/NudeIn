@@ -51,6 +51,9 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/2.png" width = "50%" />
 
+
+[li](#usage)
+
 ## Installation
 
 ```
