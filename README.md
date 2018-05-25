@@ -52,7 +52,37 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/2.png" width = "50%" />
 
 
-[li](#usage)
+## Documents
+
+* ### [Text](#usage)
+
+    - [**font**](#usage) **`通过大小声明字体，统一使用系统字体`**
+
+    - [**fontName**](#usage) **`通过字体名以及大小声明字体`**
+
+    - [**fontRes**](#usage) **`通过 UIFont 声明字体`**
+
+    - [**fontStyle**](#usage) **`声明字体的风格，如 Bold、Light 等`**
+
+    - [**bold**](#usage) **`声明字体为 Bold 风格，如果有的话`**
+
+    - [**color**](#usage) **`声明文字的颜色`**
+
+    - [**mark**](#usage) **`声明文字的底色，`**
+
+    - [**hollow**](#usage) **`声明文字为镂空`**
+
+    - [**link**](#usage) **`声明文字为链接文字`**
+
+    - [**_**](#usage) **`声明文字带下划线`**
+
+    - [**deprecated**](#usage) **`声明文字带删除线`**
+
+    - [**skew**](#usage) **`声明文字为斜体`**
+
+    - [**kern**](#usage) **`声明文字的紧凑程度`**
+
+    - [**linefeed**](#usage) **`声明文字换行`**
 
 ## Installation
 
