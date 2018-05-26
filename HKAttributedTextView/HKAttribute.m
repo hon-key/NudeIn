@@ -27,6 +27,19 @@
                                                reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
                                              userInfo:nil]
 
+@implementation HKBase
+- (id<HKTemplate>)mergeTemplates:(NSArray<id<HKTemplate>> *)templates {
+    id<HKTemplate> result = nil;
+    if (templates.count > 0) {
+        result = [[templates firstObject] copyWithZone:nil];
+        for (int i = 1; i <templates.count; i++) {
+            [result mergeTemplate:templates[i]];
+        }
+    }
+    return result;
+}
+@end
+
 @implementation HKAttribute
 
 - (id (^)(UIColor *))color {HKMethodNotImplemented();}
@@ -39,12 +52,13 @@
 - (id (^)(void))bold {HKMethodNotImplemented();}
 - (id (^)(CGFloat))skew {HKMethodNotImplemented();}
 - (id (^)(HKAttributeFontStyle))fontStyle {HKMethodNotImplemented();}
-- (void (^)(NSString *))attachWith {HKMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
 - (void (^)(void))attach {HKMethodNotImplemented();}
 - (id (^)(id, SEL))link {HKMethodNotImplemented();}
 - (id (^)(UIColor *))deprecated {HKMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
+- (void (^)(NSString *, ...))hk_attachWith{return nil;}
 
 
 @synthesize fontStyles = _fontStyles;
@@ -63,7 +77,7 @@
 - (id (^)(CGFloat, CGFloat))origin {HKMethodNotImplemented();}
 - (id (^)(CGFloat, CGFloat))size {HKMethodNotImplemented();}
 - (void (^)(void))attach {HKMethodNotImplemented();}
-- (void (^)(NSString *))attachWith {HKMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
 

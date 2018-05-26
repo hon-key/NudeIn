@@ -76,7 +76,7 @@
     if (!_textView2) {
         _textView2 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
             
-            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1");
+            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
             make.text(@"KZ").font(14).bold().color([UIColor blueColor]).attach();
         }];
@@ -89,12 +89,17 @@
         _textView3 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
             
             make.allImage().size(120,120).linefeed(3).attach();
+            make.imageTemplate(@"im1").size(100,100).attach();
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();
             make.text(@"RNG").color([UIColor blueColor]).attach();
             make.text(@"\ue056大战").attach();
-            make.image(@"replayIcon").linefeed(1).attach();
-            make.text(@"KZ").attach();
-            make.image(@"replayIcon").attach();
+            make.image(@"replayIcon").linefeed(1).attachWith(@"im1",@"im2",nil);
+            
+            make.textTemplate(@"tp1").color([UIColor purpleColor]).linefeed(1).attach();
+            make.textTemplate(@"tp2").font(40).color([UIColor redColor]).linefeed(1).attach();
+            
+            make.text(@"KZ").hk_attachWith(@"tp1",@"tp2");
+            make.image(@"replayIcon").attachWith(@"im1",@"im2",nil);
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;

@@ -86,19 +86,20 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributedAttachmentAllImageKey);
+        self.attachWith(kHKAttributedAttachmentAllImageKey,nil);
     };
 }
 
-- (void (^)(NSString *))attachWith {
-    return ^void (NSString *identifier) {
-        
-        HKAttributedAttachmentTemplate *tpl = [self.father templateWithId:identifier];
-        if (tpl) {
-            NSMutableArray *actionTags = [tpl.parasiticalObj.actionTags mutableCopy];
+- (void (^)(NSString *, ...))attachWith {
+    return ^void (NSString *identifier,...) {
+
+        NSMutableArray *tpls = HK_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        HKAttributedAttachmentTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
+        if (template) {
+            NSMutableArray *actionTags = [template.parasiticalObj.actionTags mutableCopy];
             [actionTags removeObjectsInArray:self.actionTags];
             
-            NSTextAttachment *tplAttachment = tpl.parasiticalObj.attachment;
+            NSTextAttachment *tplAttachment = template.parasiticalObj.attachment;
             if (HK_FIND_TAG(actionTags, origin)) {
                 self.origin(tplAttachment.bounds.origin.x,tplAttachment.bounds.origin.x);
             }
@@ -109,14 +110,13 @@
                 self.vertical(tplAttachment.bounds.origin.y);
             }
             if (HK_FIND_TAG(actionTags, linefeed)) {
-                self.linefeed(tpl.parasiticalObj.numOfLinefeed);
+                self.linefeed(template.parasiticalObj.numOfLinefeed);
             }
         }
-        
         NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:self.attachment];
         [self.father appendString:string];
         if (self.numOfLinefeed > 0) {
-            self.father.text(@"").linefeed(self.numOfLinefeed).attachWith(@"");
+            self.father.text(@"").linefeed(self.numOfLinefeed).attachWith(@"",nil);
         }
     };
 }
@@ -143,6 +143,14 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    HKAttributedAttachmentTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
+    tpl.parasiticalObj.actionTags = [self.parasiticalObj.actionTags mutableCopy];
+    tpl.parasiticalObj.attachment.image = self.parasiticalObj.attachment.image;
+    tpl.parasiticalObj.attachment.bounds = self.parasiticalObj.attachment.bounds;
+    return tpl;
+}
+
 - (id (^)(CGFloat, CGFloat))origin {return HKABI(CGFloat x,CGFloat y) {HKAT(origin,x,y);};}
 - (id (^)(CGFloat, CGFloat))size {return HKABI(CGFloat width,CGFloat height){HKAT(size,width,height);};}
 - (id (^)(CGFloat))vertical {return HKABI(CGFloat offset){HKAT(vertical,offset);};}
@@ -152,6 +160,26 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
     return ^void (void) {
         [self.parasiticalObj.father addTemplate:self];
     };
+}
+
+- (void)mergeTemplate:(id<HKTemplate>)tpl {
+    if ([tpl isKindOfClass:[HKAttributedAttachmentTemplate class]]) {
+        HKAttributedAttachmentTemplate *template = tpl;
+        NSTextAttachment *attachment = template.parasiticalObj.attachment;
+        NSMutableArray *actionTags = template.parasiticalObj.actionTags;
+        if (HK_FIND_TAG(actionTags, origin)) {
+            self.origin(attachment.bounds.origin.x,attachment.bounds.origin.x);
+        }
+        if (HK_FIND_TAG(actionTags, size)) {
+            self.size(attachment.bounds.size.width,attachment.bounds.size.height);
+        }
+        if (HK_FIND_TAG(actionTags, vertical)) {
+            self.vertical(attachment.bounds.origin.y);
+        }
+        if (HK_FIND_TAG(actionTags, vertical)) {
+            self.parasiticalObj.numOfLinefeed += template.parasiticalObj.numOfLinefeed;
+        }
+    }
 }
 
 @end

@@ -28,12 +28,34 @@ return self; \
 - (void)setIdentifier:(type)_prop \
 { objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
 
+#define HK_MAKE_TEMPLATE_ARRAY_FROM(firstArg,maker) [NSMutableArray new]; \
+id<HKTemplate> tpl = [maker templateWithId:identifier]; \
+if (tpl) { \
+    [tpls addObject:tpl]; \
+} \
+va_list idList ; \
+va_start(idList,firstArg); \
+NSString *nextId; \
+while ((nextId = va_arg(idList, NSString *))) { \
+    tpl = [maker templateWithId:nextId]; \
+    if (tpl) { \
+        [tpls addObject:tpl]; \
+    } \
+} \
+va_end(idList);
+
 typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
     HKBold, HKRegular, HKMedium, HKLight,
     HKThin, HKSemiBold, HKUltraLight, HKItalic,
 };
 
-@interface HKAttribute <className> : NSObject
+@protocol HKTemplate;
+
+@interface HKBase : NSObject
+- (id<HKTemplate>)mergeTemplates:(NSArray<id<HKTemplate>> *)templates;
+@end
+
+@interface HKAttribute <className> : HKBase
 
 @property (nonatomic,readonly) NSArray *fontStyles;
 
@@ -55,12 +77,15 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 - (HKAB(NSUInteger))linefeed;
 
 - (void (^)(void))attach;
-- (void (^)(NSString *))attachWith;
+- (void (^)(NSString *,...))attachWith;
+
+#define hk_attachWith(...) attachWith(__VA_ARGS__,nil)
+- (void (^)(NSString *,...))hk_attachWith;
 
 
 @end
 
-@interface HKAttachment <className> : NSObject
+@interface HKAttachment <className> : HKBase
 
 - (HKAB(CGFloat,CGFloat))origin;
 - (HKAB(CGFloat))vertical;
@@ -68,14 +93,15 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 - (HKAB(NSUInteger))linefeed;
 
 - (void (^)(void))attach;
-- (void (^)(NSString *))attachWith;
+- (void (^)(NSString *,...))attachWith;
 
 @end
 
 @class HKAttributedTextMaker;
-@protocol HKTemplate <NSObject>
+@protocol HKTemplate <NSObject,NSCopying>
 
 @property (nonatomic,copy) NSString *identifier;
 - (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier;
+- (void)mergeTemplate:(id<HKTemplate>)tpl;
 
 @end

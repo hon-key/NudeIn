@@ -221,24 +221,26 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributedTextAllTextKey);
+        self.attachWith(kHKAttributedTextAllTextKey,nil);
     };
 }
 
-- (void (^)(NSString *))attachWith {
-    return ^void (NSString *identifier) {
-        HKAttributedTextTemplate *tpl = [self.father templateWithId:identifier];
+- (void (^)(NSString *, ...))attachWith {
+    return ^void (NSString *identifier,...) {
+        
+        NSMutableArray *tpls = HK_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        HKAttributedTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (tpl) {
             
-            NSMutableDictionary *tplAttrs = [tpl.tplAttributes mutableCopy];
+            NSMutableDictionary *tplAttrs = [template.tplAttributes mutableCopy];
             [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];
             
             if ([tplAttrs objectForKey:NSLinkAttributeName]) {
-                self.link(tpl.tplLinkSelector.target,tpl.tplLinkSelector.action);
+                self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
                 [tplAttrs removeObjectForKey:NSLinkAttributeName];
             }
-            if (tpl.numOfLinefeed > 0 && self.shouldDisableLinefeed == NO) {
-                self.linefeed(tpl.numOfLinefeed);
+            if (template.numOfLinefeed > 0 && self.shouldDisableLinefeed == NO) {
+                self.linefeed(template.numOfLinefeed);
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
@@ -246,9 +248,9 @@
         
         NSAttributedString *string = [[NSAttributedString alloc] initWithString:self.string attributes:self.attributes];
         [self.father appendString:string];
+        
     };
 }
-
 
 @end
 
@@ -264,6 +266,12 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
         _numOfLinefeed = 0;
     }
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    HKAttributedTextTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
+    tpl.numOfLinefeed = self.numOfLinefeed;
+    return tpl;
 }
 
 - (id (^)(NSUInteger))font {return HKABI(NSUInteger size) {HKAT(font,size);};}
@@ -311,5 +319,17 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 - (NSDictionary *)tplAttributes {
     return self.parasiticalObj.attributes;
 }
+
+- (void)mergeTemplate:(id<HKTemplate>)tpl {
+    if ([tpl isKindOfClass:[HKAttributedTextTemplate class]]) {
+        HKAttributedTextTemplate *template = tpl;
+        [self.parasiticalObj.attributes addEntriesFromDictionary:template.parasiticalObj.attributes];
+        if (template.tplLinkSelector) {
+            self.tplLinkSelector = template.tplLinkSelector;
+        }
+        self.numOfLinefeed += template.numOfLinefeed;
+    }
+}
+
 
 @end
