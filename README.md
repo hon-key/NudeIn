@@ -1,3 +1,5 @@
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/logo.png" width = "50%" />
+
 # HKAttributedTextView
 
 HKAttributedTextView 是一个书写风格类似于 masonry 的富文本控件，它采用优雅的声明式方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
