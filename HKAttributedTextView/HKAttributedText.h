@@ -22,18 +22,18 @@
 
 #import "HKAttribute.h"
 
-@class HKAttributeTextMaker;
-@class HKAttributeText;
-@interface HKAttributeText : HKAttribute<HKAttributeText *>
+@class HKAttributedTextMaker;
+@class HKAttributedText;
+@interface HKAttributedText : HKAttribute<HKAttributedText *>
 
 @property (nonatomic,copy) NSString *string;
 
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker;
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker;
 
 @end
 
-@class HKAttributeTextTemplate;
-@interface HKAttributeTextTemplate : HKAttribute<HKAttributeTextTemplate *> <HKTemplate>
+@class HKAttributedTextTemplate;
+@interface HKAttributedTextTemplate : HKAttribute<HKAttributedTextTemplate *> <HKTemplate>
 
 - (NSDictionary *)tplAttributes;
 

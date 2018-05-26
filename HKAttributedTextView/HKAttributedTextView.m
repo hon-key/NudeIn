@@ -19,28 +19,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "HKAttributeTextView.h"
+#import "HKAttributedTextView.h"
 
 
 
-@interface HKAttributeTextView ()<UITextViewDelegate>
+@interface HKAttributedTextView ()<UITextViewDelegate>
 
-@property (nonatomic,strong) HKAttributeTextMaker *maker;
+@property (nonatomic,strong) HKAttributedTextMaker *maker;
 
 @end
 
-@implementation HKAttributeTextView
+@implementation HKAttributedTextView
 
-+ (HKAttributeTextView *)make:(void (^)(HKAttributeTextMaker *))make {
++ (HKAttributedTextView *)make:(void (^)(HKAttributedTextMaker *))make {
     
-    HKAttributeTextView *label = [[HKAttributeTextView alloc] init];
+    HKAttributedTextView *label = [[HKAttributedTextView alloc] init];
     label.scrollEnabled = NO;
     label.editable = NO;
     label.textContainer.lineFragmentPadding = 0;
     label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
     label.delegate = label;
     
-    label.maker = [[HKAttributeTextMaker alloc] init];
+    label.maker = [[HKAttributedTextMaker alloc] init];
     
     if (make) {
         make(label.maker);

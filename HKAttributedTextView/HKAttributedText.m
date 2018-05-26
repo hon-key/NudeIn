@@ -20,22 +20,22 @@
 //  SOFTWARE.
 
 
-#import "HKAttributeText.h"
-#import "HKAttributeTextView.h"
+#import "HKAttributedText.h"
+#import "HKAttributedTextView.h"
 #import <objc/runtime.h>
 
-@interface HKAttributeText ()
+@interface HKAttributedText ()
 
 @property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
-@property (nonatomic,weak) HKAttributeTextMaker *father;
+@property (nonatomic,weak) HKAttributedTextMaker *father;
 
 @property (nonatomic,assign) BOOL shouldDisableLinefeed;
 
 @end
 
-@interface HKAttributeTextTemplate ()
+@interface HKAttributedTextTemplate ()
 
-@property (nonatomic,strong) HKAttributeText *parasiticalObj;
+@property (nonatomic,strong) HKAttributedText *parasiticalObj;
 
 @property (nonatomic,strong) HKSelector *tplLinkSelector;
 @property (nonatomic,assign) NSUInteger numOfLinefeed;
@@ -43,10 +43,10 @@
 @end
 
 
-@implementation HKAttributeText
+@implementation HKAttributedText
 
 
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker {
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker {
     if (self = [super init]) {
         _attributes = [NSMutableDictionary new];
         _father = maker;
@@ -227,7 +227,7 @@
 
 - (void (^)(NSString *))attachWith {
     return ^void (NSString *identifier) {
-        HKAttributeTextTemplate *tpl = [self.father templateWithId:identifier];
+        HKAttributedTextTemplate *tpl = [self.father templateWithId:identifier];
         if (tpl) {
             
             NSMutableDictionary *tplAttrs = [tpl.tplAttributes mutableCopy];
@@ -253,13 +253,13 @@
 @end
 
 
-@implementation HKAttributeTextTemplate
+@implementation HKAttributedTextTemplate
 
 HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier {
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasiticalObj = [[HKAttributeText alloc] initWithFather:maker];
+        _parasiticalObj = [[HKAttributedText alloc] initWithFather:maker];
         self.identifier = identifier;
         _numOfLinefeed = 0;
     }

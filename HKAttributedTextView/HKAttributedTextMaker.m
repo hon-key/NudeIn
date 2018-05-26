@@ -20,8 +20,8 @@
 //  SOFTWARE.
 
 
-#import "HKAttributeTextMaker.h"
-#import "HKAttributeText.h"
+#import "HKAttributedTextMaker.h"
+#import "HKAttributedText.h"
 
 NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
 NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allImage";
@@ -39,16 +39,16 @@ NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allI
 }
 @end
 
-@interface HKAttributeTextMaker ()
+@interface HKAttributedTextMaker ()
 
 @property (nonatomic,strong,readwrite) NSMutableAttributedString *string;
 @property (nonatomic,strong) NSMutableArray<HKSelector *> *selectors;
-@property (nonatomic,strong) NSMutableArray<HKAttributeTextTemplate *> *templates;
-@property (nonatomic,strong) NSMutableArray<HKAttributeAttachmentTemplate *> *attachmentTemplates;
+@property (nonatomic,strong) NSMutableArray<HKAttributedTextTemplate *> *templates;
+@property (nonatomic,strong) NSMutableArray<HKAttributedAttachmentTemplate *> *attachmentTemplates;
 
 @end
 
-@implementation HKAttributeTextMaker
+@implementation HKAttributedTextMaker
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -59,55 +59,55 @@ NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allI
     return self;
 }
 
-- (HKAttributeText *(^)(NSString *))text {
-    return ^HKAttributeText *(NSString *string) {
+- (HKAttributedText *(^)(NSString *))text {
+    return ^HKAttributedText *(NSString *string) {
         
-        HKAttributeText *text = [[HKAttributeText alloc] initWithFather:self];
+        HKAttributedText *text = [[HKAttributedText alloc] initWithFather:self];
         text.string = string;
         return text;
         
     };
 }
 
-- (HKAttributeTextTemplate *(^)(NSString *))textTemplate {
-    return ^HKAttributeTextTemplate *(NSString *string) {
-        HKAttributeTextTemplate *template = [[HKAttributeTextTemplate alloc] initWithFather:self identifier:string];
+- (HKAttributedTextTemplate *(^)(NSString *))textTemplate {
+    return ^HKAttributedTextTemplate *(NSString *string) {
+        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:string];
         return template;
     };
 }
 
-- (HKAttributeTextTemplate *(^)(void))allText {
-    return ^HKAttributeTextTemplate *(void) {
-        HKAttributeTextTemplate *template = [[HKAttributeTextTemplate alloc] initWithFather:self identifier:kHKAttributeTextAllTextKey];
+- (HKAttributedTextTemplate *(^)(void))allText {
+    return ^HKAttributedTextTemplate *(void) {
+        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:kHKAttributeTextAllTextKey];
         return template;
     };
 }
 
-- (HKAttributeAttachment *(^)(NSString *))image {
-    return ^HKAttributeAttachment *(NSString *imageName) {
-        HKAttributeAttachment *attachment = [[HKAttributeAttachment alloc] initWithFather:self];
+- (HKAttributedAttachment *(^)(NSString *))image {
+    return ^HKAttributedAttachment *(NSString *imageName) {
+        HKAttributedAttachment *attachment = [[HKAttributedAttachment alloc] initWithFather:self];
         attachment.image = [UIImage imageNamed:imageName];
         return attachment;
     };
 }
 
-- (HKAttributeAttachmentTemplate *(^)(NSString *))imageTemplate {
-    return ^HKAttributeAttachmentTemplate *(NSString *string) {
-        HKAttributeAttachmentTemplate *template = [[HKAttributeAttachmentTemplate alloc] initWithFather:self identifier:string];
+- (HKAttributedAttachmentTemplate *(^)(NSString *))imageTemplate {
+    return ^HKAttributedAttachmentTemplate *(NSString *string) {
+        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:string];
         return template;
     };
 }
 
-- (HKAttributeAttachmentTemplate *(^)(void))allImage {
-    return ^HKAttributeAttachmentTemplate *(void) {
-        HKAttributeAttachmentTemplate *template = [[HKAttributeAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributeAttachmentAllImageKey];
+- (HKAttributedAttachmentTemplate *(^)(void))allImage {
+    return ^HKAttributedAttachmentTemplate *(void) {
+        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributeAttachmentAllImageKey];
         return template;
     };
 }
 
 @end
 
-@implementation HKAttributeTextMaker (ToolsExtension)
+@implementation HKAttributedTextMaker (ToolsExtension)
 
 - (void)appendString:(NSAttributedString *)string {
     [self.string appendAttributedString:string];

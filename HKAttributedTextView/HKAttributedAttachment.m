@@ -6,32 +6,32 @@
 //  Copyright © 2018年 com.CAI. All rights reserved.
 //
 
-#import "HKAttributeAttachment.h"
-#import "HKAttributeTextMaker.h"
+#import "HKAttributedAttachment.h"
+#import "HKAttributedTextMaker.h"
 #import <objc/runtime.h>
 
 #define HK_STORE_TAG_TO(tags) [tags addObject:NSStringFromSelector(_cmd)]
 #define HK_FIND_TAG(tags,t) [tags containsObject:NSStringFromSelector(@selector(t))]
 
-@interface HKAttributeAttachment ()
+@interface HKAttributedAttachment ()
 
 @property (nonatomic,strong) NSTextAttachment *attachment;
-@property (nonatomic,weak) HKAttributeTextMaker *father;
+@property (nonatomic,weak) HKAttributedTextMaker *father;
 
 @property (nonatomic,assign) NSUInteger numOfLinefeed;
 @property (nonatomic,strong) NSMutableArray *actionTags;
 
 @end
 
-@interface HKAttributeAttachmentTemplate ()
+@interface HKAttributedAttachmentTemplate ()
 
-@property (nonatomic,strong) HKAttributeAttachment *parasiticalObj;
+@property (nonatomic,strong) HKAttributedAttachment *parasiticalObj;
 
 @end
 
-@implementation HKAttributeAttachment
+@implementation HKAttributedAttachment
 
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker {
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker {
     if (self = [super init]) {
         _father = maker;
         _attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
@@ -93,7 +93,7 @@
 - (void (^)(NSString *))attachWith {
     return ^void (NSString *identifier) {
         
-        HKAttributeAttachmentTemplate *tpl = [self.father templateWithId:identifier];
+        HKAttributedAttachmentTemplate *tpl = [self.father templateWithId:identifier];
         if (tpl) {
             NSMutableArray *actionTags = [tpl.parasiticalObj.actionTags mutableCopy];
             [actionTags removeObjectsInArray:self.actionTags];
@@ -131,13 +131,13 @@
 
 @end
 
-@implementation HKAttributeAttachmentTemplate
+@implementation HKAttributedAttachmentTemplate
 
 HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier {
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasiticalObj = [[HKAttributeAttachment alloc] initWithFather:maker];
+        _parasiticalObj = [[HKAttributedAttachment alloc] initWithFather:maker];
         self.identifier = identifier;
     }
     return self;

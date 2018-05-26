@@ -7,15 +7,15 @@
 //
 
 #import "ViewController.h"
-#import "HKAttributeTextView.h"
+#import "HKAttributedTextView.h"
 #import <Masonry.h>
 
 
 @interface ViewController ()
 
-@property (nonatomic,strong) HKAttributeTextView *textView;
-@property (nonatomic,strong) HKAttributeTextView *textView2;
-@property (nonatomic,strong) HKAttributeTextView *textView3;
+@property (nonatomic,strong) HKAttributedTextView *textView;
+@property (nonatomic,strong) HKAttributedTextView *textView2;
+@property (nonatomic,strong) HKAttributedTextView *textView3;
 
 @end
 
@@ -40,6 +40,7 @@
         make.width.height.mas_equalTo(300);
     }];
 
+
 }
 
 - (void)linkHandler:(NSString *)text index:(NSUInteger)index {
@@ -53,9 +54,9 @@
     
 }
 
-- (HKAttributeTextView *)textView {
+- (HKAttributedTextView *)textView {
     if (!_textView) {
-        _textView = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
+        _textView = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
             
             make.text(@"this is a ").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
             
@@ -71,9 +72,9 @@
     return _textView;
 }
 
-- (HKAttributeTextView *)textView2 {
+- (HKAttributedTextView *)textView2 {
     if (!_textView2) {
-        _textView2 = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
+        _textView2 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
             
             make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1");
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
@@ -83,9 +84,9 @@
     return _textView2;
 }
 
-- (HKAttributeTextView *)textView3 {
+- (HKAttributedTextView *)textView3 {
     if (!_textView3) {
-        _textView3 = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
+        _textView3 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
             
             make.allImage().size(120,120).linefeed(3).attach();
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();

@@ -13,11 +13,11 @@
 		962F3F7720A96B16009AC22A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962F3F7620A96B16009AC22A /* Assets.xcassets */; };
 		962F3F7A20A96B16009AC22A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 962F3F7820A96B16009AC22A /* LaunchScreen.storyboard */; };
 		962F3F7D20A96B16009AC22A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 962F3F7C20A96B16009AC22A /* main.m */; };
-		96E128C520B682BE0046195A /* HKAttributeText.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128BE20B682BE0046195A /* HKAttributeText.m */; };
-		96E128C620B682BE0046195A /* HKAttributeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128BF20B682BE0046195A /* HKAttributeTextView.m */; };
-		96E128C720B682BE0046195A /* HKAttributeTextMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128C320B682BE0046195A /* HKAttributeTextMaker.m */; };
+		96E128C520B682BE0046195A /* HKAttributedText.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128BE20B682BE0046195A /* HKAttributedText.m */; };
+		96E128C620B682BE0046195A /* HKAttributedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128BF20B682BE0046195A /* HKAttributedTextView.m */; };
+		96E128C720B682BE0046195A /* HKAttributedTextMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128C320B682BE0046195A /* HKAttributedTextMaker.m */; };
 		96E128C820B682BE0046195A /* HKAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128C420B682BE0046195A /* HKAttribute.m */; };
-		96E128CE20B825330046195A /* HKAttributeAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128CC20B825330046195A /* HKAttributeAttachment.m */; };
+		96E128CE20B825330046195A /* HKAttributedAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E128CC20B825330046195A /* HKAttributedAttachment.m */; };
 		D25193C6480ED46945DEB0D0 /* libPods-textExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8961B330C281EBE7E98AF13 /* libPods-textExample.a */; };
 /* End PBXBuildFile section */
 
@@ -32,16 +32,16 @@
 		962F3F7920A96B16009AC22A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		962F3F7B20A96B16009AC22A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		962F3F7C20A96B16009AC22A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		96E128BD20B682BE0046195A /* HKAttributeText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributeText.h; path = ../../HKAttributedTextView/HKAttributeText.h; sourceTree = "<group>"; };
-		96E128BE20B682BE0046195A /* HKAttributeText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributeText.m; path = ../../HKAttributedTextView/HKAttributeText.m; sourceTree = "<group>"; };
-		96E128BF20B682BE0046195A /* HKAttributeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributeTextView.m; path = ../../HKAttributedTextView/HKAttributeTextView.m; sourceTree = "<group>"; };
+		96E128BD20B682BE0046195A /* HKAttributedText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributedText.h; path = ../../HKAttributedTextView/HKAttributedText.h; sourceTree = "<group>"; };
+		96E128BE20B682BE0046195A /* HKAttributedText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributedText.m; path = ../../HKAttributedTextView/HKAttributedText.m; sourceTree = "<group>"; };
+		96E128BF20B682BE0046195A /* HKAttributedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributedTextView.m; path = ../../HKAttributedTextView/HKAttributedTextView.m; sourceTree = "<group>"; };
 		96E128C020B682BE0046195A /* HKAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttribute.h; path = ../../HKAttributedTextView/HKAttribute.h; sourceTree = "<group>"; };
-		96E128C120B682BE0046195A /* HKAttributeTextMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributeTextMaker.h; path = ../../HKAttributedTextView/HKAttributeTextMaker.h; sourceTree = "<group>"; };
-		96E128C220B682BE0046195A /* HKAttributeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributeTextView.h; path = ../../HKAttributedTextView/HKAttributeTextView.h; sourceTree = "<group>"; };
-		96E128C320B682BE0046195A /* HKAttributeTextMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributeTextMaker.m; path = ../../HKAttributedTextView/HKAttributeTextMaker.m; sourceTree = "<group>"; };
+		96E128C120B682BE0046195A /* HKAttributedTextMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributedTextMaker.h; path = ../../HKAttributedTextView/HKAttributedTextMaker.h; sourceTree = "<group>"; };
+		96E128C220B682BE0046195A /* HKAttributedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributedTextView.h; path = ../../HKAttributedTextView/HKAttributedTextView.h; sourceTree = "<group>"; };
+		96E128C320B682BE0046195A /* HKAttributedTextMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributedTextMaker.m; path = ../../HKAttributedTextView/HKAttributedTextMaker.m; sourceTree = "<group>"; };
 		96E128C420B682BE0046195A /* HKAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttribute.m; path = ../../HKAttributedTextView/HKAttribute.m; sourceTree = "<group>"; };
-		96E128CC20B825330046195A /* HKAttributeAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributeAttachment.m; path = ../../HKAttributedTextView/HKAttributeAttachment.m; sourceTree = "<group>"; };
-		96E128CD20B825330046195A /* HKAttributeAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributeAttachment.h; path = ../../HKAttributedTextView/HKAttributeAttachment.h; sourceTree = "<group>"; };
+		96E128CC20B825330046195A /* HKAttributedAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKAttributedAttachment.m; path = ../../HKAttributedTextView/HKAttributedAttachment.m; sourceTree = "<group>"; };
+		96E128CD20B825330046195A /* HKAttributedAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKAttributedAttachment.h; path = ../../HKAttributedTextView/HKAttributedAttachment.h; sourceTree = "<group>"; };
 		A5EA43EC95AD0333799BC917 /* Pods-textExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-textExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-textExample/Pods-textExample.release.xcconfig"; sourceTree = "<group>"; };
 		AF6EEF3BF53AFB892F8217EA /* Pods-textExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-textExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-textExample/Pods-textExample.debug.xcconfig"; sourceTree = "<group>"; };
 		C8961B330C281EBE7E98AF13 /* libPods-textExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-textExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,14 +99,14 @@
 			children = (
 				96E128C020B682BE0046195A /* HKAttribute.h */,
 				96E128C420B682BE0046195A /* HKAttribute.m */,
-				96E128BD20B682BE0046195A /* HKAttributeText.h */,
-				96E128BE20B682BE0046195A /* HKAttributeText.m */,
-				96E128CD20B825330046195A /* HKAttributeAttachment.h */,
-				96E128CC20B825330046195A /* HKAttributeAttachment.m */,
-				96E128C120B682BE0046195A /* HKAttributeTextMaker.h */,
-				96E128C320B682BE0046195A /* HKAttributeTextMaker.m */,
-				96E128C220B682BE0046195A /* HKAttributeTextView.h */,
-				96E128BF20B682BE0046195A /* HKAttributeTextView.m */,
+				96E128BD20B682BE0046195A /* HKAttributedText.h */,
+				96E128BE20B682BE0046195A /* HKAttributedText.m */,
+				96E128CD20B825330046195A /* HKAttributedAttachment.h */,
+				96E128CC20B825330046195A /* HKAttributedAttachment.m */,
+				96E128C120B682BE0046195A /* HKAttributedTextMaker.h */,
+				96E128C320B682BE0046195A /* HKAttributedTextMaker.m */,
+				96E128C220B682BE0046195A /* HKAttributedTextView.h */,
+				96E128BF20B682BE0046195A /* HKAttributedTextView.m */,
 			);
 			name = HKAttributeTextView;
 			sourceTree = "<group>";
@@ -253,14 +253,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96E128C520B682BE0046195A /* HKAttributeText.m in Sources */,
-				96E128C720B682BE0046195A /* HKAttributeTextMaker.m in Sources */,
-				96E128CE20B825330046195A /* HKAttributeAttachment.m in Sources */,
+				96E128C520B682BE0046195A /* HKAttributedText.m in Sources */,
+				96E128C720B682BE0046195A /* HKAttributedTextMaker.m in Sources */,
+				96E128CE20B825330046195A /* HKAttributedAttachment.m in Sources */,
 				962F3F7220A96B16009AC22A /* ViewController.m in Sources */,
 				962F3F7D20A96B16009AC22A /* main.m in Sources */,
 				96E128C820B682BE0046195A /* HKAttribute.m in Sources */,
 				962F3F6F20A96B16009AC22A /* AppDelegate.m in Sources */,
-				96E128C620B682BE0046195A /* HKAttributeTextView.m in Sources */,
+				96E128C620B682BE0046195A /* HKAttributedTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

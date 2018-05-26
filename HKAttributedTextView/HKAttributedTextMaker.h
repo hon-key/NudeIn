@@ -21,8 +21,8 @@
 
 
 #import "HKAttribute.h"
-#import "HKAttributeText.h"
-#import "HKAttributeAttachment.h"
+#import "HKAttributedText.h"
+#import "HKAttributedAttachment.h"
 
 extern NSString * const kHKAttributeTextAllTextKey;
 extern NSString * const kHKAttributeAttachmentAllImageKey;
@@ -38,26 +38,26 @@ extern NSString * const kHKAttributeAttachmentAllImageKey;
 
 @end
 
-@interface HKAttributeTextMaker : NSObject
+@interface HKAttributedTextMaker : NSObject
 
 @property (nonatomic,strong,readonly) NSMutableAttributedString *string;
 
-- (HKAttributeText * (^)(NSString *))text;
+- (HKAttributedText * (^)(NSString *))text;
 
 // TODO: 富文本可添加自定义图片
-- (HKAttributeAttachment * (^)(NSString *))image;
-- (HKAttributeAttachment * (^)(UIImage *))imageRes;
+- (HKAttributedAttachment * (^)(NSString *))image;
+- (HKAttributedAttachment * (^)(UIImage *))imageRes;
 
-- (HKAttributeTextTemplate * (^)(void))allText;
-- (HKAttributeAttachmentTemplate * (^)(void))allImage;
+- (HKAttributedTextTemplate * (^)(void))allText;
+- (HKAttributedAttachmentTemplate * (^)(void))allImage;
 
-- (HKAttributeTextTemplate * (^)(NSString *))textTemplate;
-- (HKAttributeAttachmentTemplate * (^)(NSString *))imageTemplate;
+- (HKAttributedTextTemplate * (^)(NSString *))textTemplate;
+- (HKAttributedAttachmentTemplate * (^)(NSString *))imageTemplate;
 
 
 @end
 
-@interface HKAttributeTextMaker (ToolsExtension)
+@interface HKAttributedTextMaker (ToolsExtension)
 
 - (void)appendString:(NSAttributedString *)string;
 - (void)addSelector:(HKSelector *)selector;

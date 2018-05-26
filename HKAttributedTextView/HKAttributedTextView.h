@@ -20,18 +20,18 @@
 //  SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "HKAttributeText.h"
-#import "HKAttributeTextMaker.h"
+#import "HKAttributedText.h"
+#import "HKAttributedTextMaker.h"
 
 //TODO:增加可自定义方法的功能
 //TODO:增加update功能
 
-@interface HKAttributeTextView : UITextView
+@interface HKAttributedTextView : UITextView
 
-+ (HKAttributeTextView *)make:(void (^)(HKAttributeTextMaker *make))make;
++ (HKAttributedTextView *)make:(void (^)(HKAttributedTextMaker *make))make;
 
 // TODO: 提供一个可以给现有实例继续添加组件的功能
-- (HKAttributeTextView *)append:(void (^)(HKAttributeTextMaker *make))make;
+- (HKAttributedTextView *)append:(void (^)(HKAttributedTextMaker *make))make;
 
 
 @end

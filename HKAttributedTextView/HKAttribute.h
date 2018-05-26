@@ -72,10 +72,10 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 
 @end
 
-@class HKAttributeTextMaker;
+@class HKAttributedTextMaker;
 @protocol HKTemplate <NSObject>
 
 @property (nonatomic,copy) NSString *identifier;
-- (instancetype)initWithFather:(HKAttributeTextMaker *)maker identifier:(NSString *)identifier;
+- (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier;
 
 @end
