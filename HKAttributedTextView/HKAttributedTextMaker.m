@@ -1,4 +1,4 @@
-//  HKAttributeTextMaker.m
+//  HKAttributedTextMaker.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,8 +23,8 @@
 #import "HKAttributedTextMaker.h"
 #import "HKAttributedText.h"
 
-NSString * const kHKAttributeTextAllTextKey = @"HKAttributeTextMaker.alltext";
-NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allImage";
+NSString * const kHKAttributedTextAllTextKey = @"HKAttributedTextMaker.alltext";
+NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.allImage";
 
 @implementation HKSelector
 - (NSString *)name {
@@ -78,7 +78,7 @@ NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allI
 
 - (HKAttributedTextTemplate *(^)(void))allText {
     return ^HKAttributedTextTemplate *(void) {
-        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:kHKAttributeTextAllTextKey];
+        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:kHKAttributedTextAllTextKey];
         return template;
     };
 }
@@ -100,7 +100,7 @@ NSString * const kHKAttributeAttachmentAllImageKey = @"HKAttributeTextMaker.allI
 
 - (HKAttributedAttachmentTemplate *(^)(void))allImage {
     return ^HKAttributedAttachmentTemplate *(void) {
-        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributeAttachmentAllImageKey];
+        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributedAttachmentAllImageKey];
         return template;
     };
 }

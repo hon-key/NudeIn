@@ -1,5 +1,5 @@
 //
-//  HKAttributeAttachment.m
+//  HKAttributedAttachment.m
 //  textExample
 //
 //  Created by 工作 on 2018/5/24.
@@ -86,7 +86,7 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributeAttachmentAllImageKey);
+        self.attachWith(kHKAttributedAttachmentAllImageKey);
     };
 }
 

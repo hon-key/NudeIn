@@ -1,4 +1,4 @@
-//  HKAttributeTextMaker.h
+//  HKAttributedTextMaker.h
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,8 +24,8 @@
 #import "HKAttributedText.h"
 #import "HKAttributedAttachment.h"
 
-extern NSString * const kHKAttributeTextAllTextKey;
-extern NSString * const kHKAttributeAttachmentAllImageKey;
+extern NSString * const kHKAttributedTextAllTextKey;
+extern NSString * const kHKAttributedAttachmentAllImageKey;
 
 @interface HKSelector : NSObject
 

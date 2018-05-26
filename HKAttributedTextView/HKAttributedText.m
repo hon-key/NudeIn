@@ -1,4 +1,4 @@
-//  HKAttributeText.m
+//  HKAttributedText.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -221,7 +221,7 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributeTextAllTextKey);
+        self.attachWith(kHKAttributedTextAllTextKey);
     };
 }
 
@@ -282,7 +282,7 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(id, SEL))link {
     return HKABI(id target,SEL action) {
         
-        self.parasiticalObj.string = kHKAttributeTextAllTextKey;
+        self.parasiticalObj.string = kHKAttributedTextAllTextKey;
         self.parasiticalObj.link(target,action);
         self.tplLinkSelector = [[self.parasiticalObj.father linkSelectors] lastObject];
         [self.parasiticalObj.father removeLinkSelector:self.tplLinkSelector];

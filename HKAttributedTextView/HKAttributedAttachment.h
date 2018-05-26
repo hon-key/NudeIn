@@ -1,5 +1,5 @@
 //
-//  HKAttributeAttachment.h
+//  HKAttributedAttachment.h
 //  textExample
 //
 //  Created by 工作 on 2018/5/24.
