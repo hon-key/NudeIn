@@ -1,4 +1,4 @@
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/logo.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/logo.png" width = "100%" />
 
 # HKAttributedTextView
 
