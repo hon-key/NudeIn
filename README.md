@@ -1,27 +1,27 @@
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/logo.png" width = "100%" />
 
-# HKAttributedTextView
+# NudeIn
 
-HKAttributedTextView 是一个书写风格类似于 masonry 的富文本控件，它采用优雅的声明式方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
+NudeIn 是一个书写风格类似于 masonry 的富文本控件，它采用优雅的声明式方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
 
 ## Usage
 
-HKAttributedTextView 的用法非常简单明了:
+NudeIn 的用法非常简单明了:
 
 1、引入控件
 ```Objective-C
-#import "HKAttributeTextView.h"
+#import "NudeIn.h"
 ```
 
 2、声明控件为你的成员变量
 
 ```Objective-C
-@property (nonatomic,strong) HKAttributeTextView *attrLabel;
+@property (nonatomic,strong) NudeIn *attrLabel;
 ```
 
 3、初始化
 ```Objective-C
-_attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
+_attrLabel = [NudeIn make:^(HKAttributeTextMaker *make) {
     make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
     make.text(@"BlueLink").font(17).color([UIColor blueColor]).link(self,@selector(linkHandler:index:)).attach();
     make.text(@", and this is a ").font(14).color([UIColor blackColor]).attach();
@@ -89,7 +89,7 @@ _attrLabel = [HKAttributeTextView make:^(HKAttributeTextMaker *make) {
 ## Installation
 
 ```
-pod 'HKAttributedTextView'
+pod 'NudeIn'
 ```
 最新 pod 版本：`1.1`
 
