@@ -21,7 +21,7 @@ NudeIn 的用法非常简单明了:
 
 3、初始化
 ```Objective-C
-_attrLabel = [NudeIn make:^(HKAttributeTextMaker *make) {
+_attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
     make.text(@"BlueLink").font(17).color([UIColor blueColor]).link(self,@selector(linkHandler:index:)).attach();
     make.text(@", and this is a ").font(14).color([UIColor blackColor]).attach();
