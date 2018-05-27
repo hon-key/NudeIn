@@ -6,7 +6,7 @@ NudeIn 是一个基于 UITextView ，书写风格类似于 masonry 的 iOS 端�
 
 ## Usage
 
-NudeIn 的用法非常简单明了:
+NudeIn 的用法非常简单明了，这里给出一个非常简单的例子，相信你会被这样的用法惊艳到，一旦用起来就会爱不释手:
 
 1、引入控件
 ```Objective-C
