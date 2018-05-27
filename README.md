@@ -19,7 +19,7 @@ NudeIn 的用法非常简单明了，这里给出一个非常简单的例子，�
 @property (nonatomic,strong) NudeIn *attrLabel;
 ```
 
-3、初始化
+3、Do it yourself
 ```Objective-C
 _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
