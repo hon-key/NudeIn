@@ -33,13 +33,20 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 3、对声明了 **`link`** 属性的部分定义回调
 ```Objective-C
 
-- (void)linkHandler:(NSString *)text index:(NSUInteger)index {
+- (void)linkHandler:(NUDAction *)action {
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:text message:nil preferredStyle:UIAlertControllerStyleAlert];
+    if ([action isKindOfClass:[NUDLinkAction class]]) {
+        
+        NUDLinkAction *linkAction = (NUDLinkAction *)action;
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:linkAction.string message:nil preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
     
 }
 
