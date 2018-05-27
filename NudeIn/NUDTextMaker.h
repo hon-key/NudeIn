@@ -22,22 +22,13 @@
 
 
 #import "NudeIn-Prefix.h"
-@class NUDText,NUDAttachment,NUDTextTemplate,NUDAttachmentTemplate;
+
+@class NUDText,NUDAttachment,NUDTextTemplate,NUDAttachmentTemplate,NUDSelector;
 @protocol NUDTemplate;
 
 extern NSString * const kNUDTextAllText;
 extern NSString * const kNUDAttachmentAllImageKey;
 
-@interface NUDSelector : NSObject
-
-@property (nonatomic,weak) id target;
-@property (nonatomic) SEL action;
-@property (nonatomic,strong) id obj;
-
-- (NSString *)name;
-- (void)callWithIndex:(NSUInteger)index name:(NSString *)name;
-
-@end
 
 @interface NUDTextMaker : NSObject
 

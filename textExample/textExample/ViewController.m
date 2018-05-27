@@ -13,9 +13,9 @@
 
 @interface ViewController ()
 
-@property (nonatomic,strong) NUDTextView *textView;
-@property (nonatomic,strong) NUDTextView *textView2;
-@property (nonatomic,strong) NUDTextView *textView3;
+@property (nonatomic,strong) NudeIn *textView;
+@property (nonatomic,strong) NudeIn *textView2;
+@property (nonatomic,strong) NudeIn *textView3;
 
 @end
 
@@ -43,28 +43,34 @@
 
 }
 
-- (void)linkHandler:(NSString *)text index:(NSUInteger)index {
+- (void)linkHandler:(NUDAction *)action {
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:text message:nil preferredStyle:UIAlertControllerStyleAlert];
+    if ([action isKindOfClass:[NUDLinkAction class]]) {
+        
+        NUDLinkAction *linkAction = (NUDLinkAction *)action;
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:linkAction.string message:nil preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
     
 }
 
-- (NUDTextView *)textView {
+- (NudeIn *)textView {
     if (!_textView) {
-        _textView = [NUDTextView make:^(NUDTextMaker *make) {
+        _textView = [NudeIn make:^(NUDTextMaker *make) {
             
             make.text(@"this is a ").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
             
-            make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:index:))._(HKDashDotDot,[UIColor redColor]).attach();
+            make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:))._(HKDashDotDot,[UIColor redColor]).attach();
             
             make.text(@", and this is a ").font(14).color([UIColor blackColor]).kern(4).attach();
             
-            make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:index:))._(HK__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
+            make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(HK__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
             
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
         }];
@@ -72,9 +78,9 @@
     return _textView;
 }
 
-- (NUDTextView *)textView2 {
+- (NudeIn *)textView2 {
     if (!_textView2) {
-        _textView2 = [NUDTextView make:^(NUDTextMaker *make) {
+        _textView2 = [NudeIn make:^(NUDTextMaker *make) {
             
             make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
@@ -84,9 +90,9 @@
     return _textView2;
 }
 
-- (NUDTextView *)textView3 {
+- (NudeIn *)textView3 {
     if (!_textView3) {
-        _textView3 = [NUDTextView make:^(NUDTextMaker *make) {
+        _textView3 = [NudeIn make:^(NUDTextMaker *make) {
             
             make.allImage().size(120,120).linefeed(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();

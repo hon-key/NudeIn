@@ -23,22 +23,11 @@
 #import "NUDTextMaker.h"
 #import "NUDText.h"
 #import "NUDAttachment.h"
+#import "NUDAction.h"
 
 NSString * const kNUDTextAllText = @"NUDTextMaker.alltext";
 NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 
-@implementation NUDSelector
-- (NSString *)name {
-    return NSStringFromSelector(self.action);
-}
-- (void)callWithIndex:(NSUInteger)index name:(NSString *)name {
-    if ([self.target respondsToSelector:self.action]) {
-        IMP p = [self.target methodForSelector:self.action];
-        void (*method)(id,SEL,id,NSUInteger) = (void *)p;
-        method(self.target,self.action,name,index);
-    }
-}
-@end
 
 @interface NUDTextMaker ()
 

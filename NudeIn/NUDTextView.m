@@ -22,6 +22,7 @@
 #import "NUDTextView.h"
 #import "NUDText.h"
 #import "NUDTextMaker.h"
+#import "NUDAction.h"
 
 
 @interface NUDTextView ()<UITextViewDelegate>
@@ -62,12 +63,17 @@
         keys = [urlComp[1] componentsSeparatedByString:@"&"];
     }
     
-    [self.maker emurateSelector:^(NUDSelector *selector,BOOL *stop) {
-        if ([[selector name] isEqualToString:keys[1]]) {
-            [selector callWithIndex:((NSString *)keys[2]).integerValue name:[keys[0] stringByRemovingPercentEncoding]];
-            *stop = YES;
-        }
-    }];
+    if (keys.count >= 3) {
+        [self.maker emurateSelector:^(NUDSelector *selector,BOOL *stop) {
+            if ([[selector name] isEqualToString:keys[1]]) {
+                NUDLinkAction *action = [NUDLinkAction new];
+                action.string = [keys[0] stringByRemovingPercentEncoding];
+                action.index = ((NSString *)keys[2]).integerValue;
+                [selector performAction:action];
+                *stop = YES;
+            }
+        }];
+    }
     
     
     return NO;
