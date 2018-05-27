@@ -49,6 +49,14 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
     HKThin, HKSemiBold, HKUltraLight, HKItalic,
 };
 
+typedef NS_ENUM(NSInteger, HKAttributeUnderlineStyle) {
+    HK_ = NSUnderlineStyleSingle,       HKDot = NSUnderlinePatternDot,              HKByWord = NSUnderlineByWord,
+    HK__ = NSUnderlineStyleDouble,      HKDotDot = NSUnderlinePatternDashDotDot,
+    HKThick_ = NSUnderlineStyleThick,   HKDash = NSUnderlinePatternDash,
+                                        HKDashDot = NSUnderlinePatternDashDot,
+                                        HKDashDotDot = NSUnderlinePatternDashDotDot
+};
+
 @protocol HKTemplate;
 
 @interface HKBase : NSObject
@@ -70,7 +78,7 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 - (HKAB(UIColor *))mark;
 - (HKAB(NSUInteger,UIColor *))hollow;
 - (HKAB(id target,SEL action))link;
-- (HKAB(UIColor *))_;
+- (HKAB(HKAttributeUnderlineStyle,UIColor *))_;
 - (HKAB(UIColor *))deprecated;
 - (HKAB(CGFloat))skew;
 - (HKAB(CGFloat))kern;
@@ -94,6 +102,8 @@ typedef NS_ENUM(NSUInteger, HKAttributeFontStyle) {
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
+
+- (void (^)(NSString *,...))hk_attachWith;
 
 @end
 

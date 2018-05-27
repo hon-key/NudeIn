@@ -47,7 +47,7 @@
 - (id (^)(NSString *, NSUInteger))fontName {HKMethodNotImplemented();}
 - (id (^)(UIColor *))mark {HKMethodNotImplemented();}
 - (id (^)(NSUInteger, UIColor *))hollow {HKMethodNotImplemented();}
-- (id (^)(UIColor *))_ {HKMethodNotImplemented();}
+- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {HKMethodNotImplemented();}
 - (id (^)(CGFloat))kern {HKMethodNotImplemented();}
 - (id (^)(void))bold {HKMethodNotImplemented();}
 - (id (^)(CGFloat))skew {HKMethodNotImplemented();}
@@ -80,6 +80,7 @@
 - (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
+- (void (^)(NSString *, ...))hk_attachWith{return nil;}
 
 @end
 

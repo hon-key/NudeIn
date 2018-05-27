@@ -140,10 +140,15 @@
     };
 }
 
-- (id (^)(UIColor *))_ {
-    return HKABI(UIColor *color) {
+- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {
+    return HKABI(HKAttributeUnderlineStyle style,UIColor *color) {
         
-        [self.attributes setObject:@1 forKey:NSUnderlineStyleAttributeName];
+        if (!(style & NSUnderlineStyleSingle ||
+            style & NSUnderlineStyleDouble ||
+            style & NSUnderlineStyleThick)) {
+            style = style | NSUnderlineStyleSingle;
+        }
+        [self.attributes setObject:@(style) forKey:NSUnderlineStyleAttributeName];
         if (color) {
             [self.attributes setObject:color forKey:NSUnderlineColorAttributeName];
         }
@@ -282,7 +287,7 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(UIColor *))color {return HKABI(UIColor *c) {HKAT(color,c);};}
 - (id (^)(UIColor *))mark {return HKABI(UIColor *c) {HKAT(mark,c);};}
 - (id (^)(NSUInteger, UIColor *))hollow {return HKABI(NSUInteger width,UIColor *c) {HKAT(hollow,width,c);};}
-- (id (^)(UIColor *))_ {return HKABI(UIColor *c) {HKAT(_,c);};}
+- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {return HKABI(HKAttributeUnderlineStyle style,UIColor *c) {HKAT(_,style,c);};}
 - (id (^)(UIColor *))deprecated {return HKABI(UIColor *c) {HKAT(deprecated,c);};}
 - (id (^)(CGFloat))skew {return HKABI(CGFloat value) {HKAT(skew,value);};}
 - (id (^)(CGFloat))kern {return HKABI(CGFloat value) {HKAT(kern,value);};}
