@@ -7,15 +7,15 @@
 //
 
 #import "ViewController.h"
-#import "HKAttributedTextView.h"
 #import <Masonry.h>
+#import "NudeIn.h"
 
 
 @interface ViewController ()
 
-@property (nonatomic,strong) HKAttributedTextView *textView;
-@property (nonatomic,strong) HKAttributedTextView *textView2;
-@property (nonatomic,strong) HKAttributedTextView *textView3;
+@property (nonatomic,strong) NUDTextView *textView;
+@property (nonatomic,strong) NUDTextView *textView2;
+@property (nonatomic,strong) NUDTextView *textView3;
 
 @end
 
@@ -54,9 +54,9 @@
     
 }
 
-- (HKAttributedTextView *)textView {
+- (NUDTextView *)textView {
     if (!_textView) {
-        _textView = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
+        _textView = [NUDTextView make:^(NUDTextMaker *make) {
             
             make.text(@"this is a ").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
             
@@ -72,9 +72,9 @@
     return _textView;
 }
 
-- (HKAttributedTextView *)textView2 {
+- (NUDTextView *)textView2 {
     if (!_textView2) {
-        _textView2 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
+        _textView2 = [NUDTextView make:^(NUDTextMaker *make) {
             
             make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
             make.text(@"大战").font(17).color([UIColor blackColor]).attach();
@@ -84,9 +84,9 @@
     return _textView2;
 }
 
-- (HKAttributedTextView *)textView3 {
+- (NUDTextView *)textView3 {
     if (!_textView3) {
-        _textView3 = [HKAttributedTextView make:^(HKAttributedTextMaker *make) {
+        _textView3 = [NUDTextView make:^(NUDTextMaker *make) {
             
             make.allImage().size(120,120).linefeed(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();

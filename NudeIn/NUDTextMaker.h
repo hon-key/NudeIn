@@ -1,4 +1,4 @@
-//  HKAttributedTextMaker.h
+//  NUDTextMaker.h
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,14 +20,15 @@
 //  SOFTWARE.
 
 
-#import "HKAttribute.h"
-#import "HKAttributedText.h"
-#import "HKAttributedAttachment.h"
 
-extern NSString * const kHKAttributedTextAllTextKey;
-extern NSString * const kHKAttributedAttachmentAllImageKey;
+#import "NudeIn-Prefix.h"
+@class NUDText,NUDAttachment,NUDTextTemplate,NUDAttachmentTemplate;
+@protocol NUDTemplate;
 
-@interface HKSelector : NSObject
+extern NSString * const kNUDTextAllText;
+extern NSString * const kNUDAttachmentAllImageKey;
+
+@interface NUDSelector : NSObject
 
 @property (nonatomic,weak) id target;
 @property (nonatomic) SEL action;
@@ -38,34 +39,34 @@ extern NSString * const kHKAttributedAttachmentAllImageKey;
 
 @end
 
-@interface HKAttributedTextMaker : NSObject
+@interface NUDTextMaker : NSObject
 
 @property (nonatomic,strong,readonly) NSMutableAttributedString *string;
 
-- (HKAttributedText * (^)(NSString *))text;
+- (NUDText * (^)(NSString *))text;
 
 // TODO: 富文本可添加自定义图片
-- (HKAttributedAttachment * (^)(NSString *))image;
-- (HKAttributedAttachment * (^)(UIImage *))imageRes;
+- (NUDAttachment * (^)(NSString *))image;
+- (NUDAttachment * (^)(UIImage *))imageRes;
 
-- (HKAttributedTextTemplate * (^)(void))allText;
-- (HKAttributedAttachmentTemplate * (^)(void))allImage;
+- (NUDTextTemplate * (^)(void))allText;
+- (NUDAttachmentTemplate * (^)(void))allImage;
 
-- (HKAttributedTextTemplate * (^)(NSString *))textTemplate;
-- (HKAttributedAttachmentTemplate * (^)(NSString *))imageTemplate;
+- (NUDTextTemplate * (^)(NSString *))textTemplate;
+- (NUDAttachmentTemplate * (^)(NSString *))imageTemplate;
 
 
 @end
 
-@interface HKAttributedTextMaker (ToolsExtension)
+@interface NUDTextMaker (ToolsExtension)
 
 - (void)appendString:(NSAttributedString *)string;
-- (void)addSelector:(HKSelector *)selector;
-- (NSUInteger)indexOfSelector:(HKSelector *)selector;
-- (void)emurateSelector:(void(^)(HKSelector *selector,BOOL *stop))handler;
-- (void)addTemplate:(id<HKTemplate>)tpl;
-- (id<HKTemplate>)templateWithId:(NSString *)identifier;
+- (void)addSelector:(NUDSelector *)selector;
+- (NSUInteger)indexOfSelector:(NUDSelector *)selector;
+- (void)emurateSelector:(void(^)(NUDSelector *selector,BOOL *stop))handler;
+- (void)addTemplate:(id<NUDTemplate>)tpl;
+- (id<NUDTemplate>)templateWithId:(NSString *)identifier;
 - (NSArray *)linkSelectors;
-- (void)removeLinkSelector:(HKSelector *)sel;
+- (void)removeLinkSelector:(NUDSelector *)sel;
 
 @end

@@ -1,4 +1,4 @@
-//  HKAttributedAttachment.h
+//  NUDText.h
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,20 +19,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "HKAttribute.h"
 
-@class HKAttributedTextMaker;
-@class HKAttributedAttachment;
-@interface HKAttributedAttachment : HKAttachment<HKAttributedAttachment *>
+#import "NUDAttribute.h"
 
-@property (nonatomic,strong) UIImage *image;
+@class NUDTextMaker,NUDText;
+@interface NUDText : NUDAttribute<NUDText *>
 
-- (instancetype)initWithFather:(HKAttributedTextMaker *)maker;
+@property (nonatomic,copy) NSString *string;
+
+- (instancetype)initWithFather:(NUDTextMaker *)maker;
 
 @end
 
+@class NUDTextTemplate;
+@interface NUDTextTemplate : NUDAttribute<NUDTextTemplate *> <NUDTemplate>
 
-@class HKAttributedAttachmentTemplate;
-@interface HKAttributedAttachmentTemplate : HKAttachment<HKAttributedAttachmentTemplate *> <HKTemplate>
+- (NSDictionary *)tplAttributes;
 
 @end

@@ -1,4 +1,4 @@
-//  HKAttributedTextMaker.m
+//  NUDTextMaker.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,13 +20,14 @@
 //  SOFTWARE.
 
 
-#import "HKAttributedTextMaker.h"
-#import "HKAttributedText.h"
+#import "NUDTextMaker.h"
+#import "NUDText.h"
+#import "NUDAttachment.h"
 
-NSString * const kHKAttributedTextAllTextKey = @"HKAttributedTextMaker.alltext";
-NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.allImage";
+NSString * const kNUDTextAllText = @"NUDTextMaker.alltext";
+NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 
-@implementation HKSelector
+@implementation NUDSelector
 - (NSString *)name {
     return NSStringFromSelector(self.action);
 }
@@ -39,16 +40,16 @@ NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.al
 }
 @end
 
-@interface HKAttributedTextMaker ()
+@interface NUDTextMaker ()
 
 @property (nonatomic,strong,readwrite) NSMutableAttributedString *string;
-@property (nonatomic,strong) NSMutableArray<HKSelector *> *selectors;
-@property (nonatomic,strong) NSMutableArray<HKAttributedTextTemplate *> *templates;
-@property (nonatomic,strong) NSMutableArray<HKAttributedAttachmentTemplate *> *attachmentTemplates;
+@property (nonatomic,strong) NSMutableArray<NUDSelector *> *selectors;
+@property (nonatomic,strong) NSMutableArray<NUDTextTemplate *> *templates;
+@property (nonatomic,strong) NSMutableArray<NUDAttachmentTemplate *> *attachmentTemplates;
 
 @end
 
-@implementation HKAttributedTextMaker
+@implementation NUDTextMaker
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -59,73 +60,73 @@ NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.al
     return self;
 }
 
-- (HKAttributedText *(^)(NSString *))text {
-    return ^HKAttributedText *(NSString *string) {
+- (NUDText *(^)(NSString *))text {
+    return ^NUDText *(NSString *string) {
         
-        HKAttributedText *text = [[HKAttributedText alloc] initWithFather:self];
+        NUDText *text = [[NUDText alloc] initWithFather:self];
         text.string = string;
         return text;
         
     };
 }
 
-- (HKAttributedTextTemplate *(^)(NSString *))textTemplate {
-    return ^HKAttributedTextTemplate *(NSString *string) {
-        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:string];
+- (NUDTextTemplate *(^)(NSString *))textTemplate {
+    return ^NUDTextTemplate *(NSString *string) {
+        NUDTextTemplate *template = [[NUDTextTemplate alloc] initWithFather:self identifier:string];
         return template;
     };
 }
 
-- (HKAttributedTextTemplate *(^)(void))allText {
-    return ^HKAttributedTextTemplate *(void) {
-        HKAttributedTextTemplate *template = [[HKAttributedTextTemplate alloc] initWithFather:self identifier:kHKAttributedTextAllTextKey];
+- (NUDTextTemplate *(^)(void))allText {
+    return ^NUDTextTemplate *(void) {
+        NUDTextTemplate *template = [[NUDTextTemplate alloc] initWithFather:self identifier:kNUDTextAllText];
         return template;
     };
 }
 
-- (HKAttributedAttachment *(^)(NSString *))image {
-    return ^HKAttributedAttachment *(NSString *imageName) {
-        HKAttributedAttachment *attachment = [[HKAttributedAttachment alloc] initWithFather:self];
+- (NUDAttachment *(^)(NSString *))image {
+    return ^NUDAttachment *(NSString *imageName) {
+        NUDAttachment *attachment = [[NUDAttachment alloc] initWithFather:self];
         attachment.image = [UIImage imageNamed:imageName];
         return attachment;
     };
 }
 
-- (HKAttributedAttachmentTemplate *(^)(NSString *))imageTemplate {
-    return ^HKAttributedAttachmentTemplate *(NSString *string) {
-        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:string];
+- (NUDAttachmentTemplate *(^)(NSString *))imageTemplate {
+    return ^NUDAttachmentTemplate *(NSString *string) {
+        NUDAttachmentTemplate *template = [[NUDAttachmentTemplate alloc] initWithFather:self identifier:string];
         return template;
     };
 }
 
-- (HKAttributedAttachmentTemplate *(^)(void))allImage {
-    return ^HKAttributedAttachmentTemplate *(void) {
-        HKAttributedAttachmentTemplate *template = [[HKAttributedAttachmentTemplate alloc] initWithFather:self identifier:kHKAttributedAttachmentAllImageKey];
+- (NUDAttachmentTemplate *(^)(void))allImage {
+    return ^NUDAttachmentTemplate *(void) {
+        NUDAttachmentTemplate *template = [[NUDAttachmentTemplate alloc] initWithFather:self identifier:kNUDAttachmentAllImageKey];
         return template;
     };
 }
 
 @end
 
-@implementation HKAttributedTextMaker (ToolsExtension)
+@implementation NUDTextMaker (ToolsExtension)
 
 - (void)appendString:(NSAttributedString *)string {
     [self.string appendAttributedString:string];
 }
 
-- (void)addSelector:(HKSelector *)selector {
+- (void)addSelector:(NUDSelector *)selector {
     [self.selectors addObject:selector];
 }
 
-- (NSUInteger)indexOfSelector:(HKSelector *)selector {
+- (NSUInteger)indexOfSelector:(NUDSelector *)selector {
     return [self.selectors indexOfObject:selector];
 }
 
-- (void)emurateSelector:(void (^)(HKSelector *, BOOL *))handler {
+- (void)emurateSelector:(void (^)(NUDSelector *, BOOL *))handler {
     if (!handler) {
         return;
     }
-    for (HKSelector *selector in self.selectors) {
+    for (NUDSelector *selector in self.selectors) {
         BOOL stop = NO;
         handler(selector,&stop);
         if (stop) {
@@ -134,19 +135,19 @@ NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.al
     }
 }
 
-- (void)addTemplate:(id<HKTemplate>)tpl {
+- (void)addTemplate:(id<NUDTemplate>)tpl {
     if ([tpl.identifier isEqualToString:@""] && tpl.identifier != nil) {
         return;
     }
-    id<HKTemplate> existTpl = [self templateWithId:tpl.identifier];
+    id<NUDTemplate> existTpl = [self templateWithId:tpl.identifier];
     if (existTpl) {
         [self.templates removeObject:existTpl];
     }
     [self.templates addObject:tpl];
 }
 
-- (id<HKTemplate>)templateWithId:(NSString *)identifier {
-    for (id<HKTemplate> tpl in self.templates) {
+- (id<NUDTemplate>)templateWithId:(NSString *)identifier {
+    for (id<NUDTemplate> tpl in self.templates) {
         if ([tpl.identifier isEqualToString:identifier]) {
             return tpl;
         }
@@ -158,7 +159,7 @@ NSString * const kHKAttributedAttachmentAllImageKey = @"HKAttributedTextMaker.al
     return [self.selectors copy];
 }
 
-- (void)removeLinkSelector:(HKSelector *)sel {
+- (void)removeLinkSelector:(NUDSelector *)sel {
     [self.selectors removeObject:sel];
 }
 

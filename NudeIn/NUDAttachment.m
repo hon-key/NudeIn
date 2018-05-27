@@ -1,4 +1,4 @@
-//  HKAttributedAttachment.m
+//  NUDAttachment.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,32 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "HKAttributedAttachment.h"
-#import "HKAttributedTextMaker.h"
+#import "NUDAttachment.h"
+#import "NUDTextMaker.h"
+#import "NUDText.h"
 #import <objc/runtime.h>
 
 #define HK_STORE_TAG_TO(tags) [tags addObject:NSStringFromSelector(_cmd)]
 #define HK_FIND_TAG(tags,t) [tags containsObject:NSStringFromSelector(@selector(t))]
 
-@interface HKAttributedAttachment ()
+@interface NUDAttachment ()
 
 @property (nonatomic,strong) NSTextAttachment *attachment;
-@property (nonatomic,weak) HKAttributedTextMaker *father;
+@property (nonatomic,weak) NUDTextMaker *father;
 
 @property (nonatomic,assign) NSUInteger numOfLinefeed;
 @property (nonatomic,strong) NSMutableArray *actionTags;
 
 @end
 
-@interface HKAttributedAttachmentTemplate ()
+@interface NUDAttachmentTemplate ()
 
-@property (nonatomic,strong) HKAttributedAttachment *parasiticalObj;
+@property (nonatomic,strong) NUDAttachment *parasiticalObj;
 
 @end
 
-@implementation HKAttributedAttachment
+@implementation NUDAttachment
 
-- (instancetype)initWithFather:(HKAttributedTextMaker *)maker {
+- (instancetype)initWithFather:(NUDTextMaker *)maker {
     if (self = [super init]) {
         _father = maker;
         _attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
@@ -56,7 +57,7 @@
 }
 
 - (id (^)(CGFloat, CGFloat))origin {
-    return HKABI(CGFloat x,CGFloat y) {
+    return NUDABI(CGFloat x,CGFloat y) {
         CGRect bounds = self.attachment.bounds;
         bounds.origin.x = x;
         bounds.origin.y = y;
@@ -67,7 +68,7 @@
 }
 
 - (id (^)(CGFloat, CGFloat))size {
-    return HKABI(CGFloat width,CGFloat height) {
+    return NUDABI(CGFloat width,CGFloat height) {
         CGRect bounds = self.attachment.bounds;
         bounds.size.width = width;
         bounds.size.height = height;
@@ -78,7 +79,7 @@
 }
 
 - (id (^)(CGFloat))vertical {
-    return HKABI(CGFloat offset) {
+    return NUDABI(CGFloat offset) {
         self.origin(0,offset);
         HK_STORE_TAG_TO(self.actionTags);
         return self;
@@ -86,7 +87,7 @@
 }
 
 - (id (^)(NSUInteger))linefeed {
-    return HKABI(NSUInteger num) {
+    return NUDABI(NSUInteger num) {
         if (num > 0) {
             self.numOfLinefeed += num;
         }else {
@@ -99,15 +100,15 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributedAttachmentAllImageKey,nil);
+        self.attachWith(kNUDAttachmentAllImageKey,nil);
     };
 }
 
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
 
-        NSMutableArray *tpls = HK_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
-        HKAttributedAttachmentTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
+        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        NUDAttachmentTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (template) {
             NSMutableArray *actionTags = [template.parasiticalObj.actionTags mutableCopy];
             [actionTags removeObjectsInArray:self.actionTags];
@@ -144,30 +145,30 @@
 
 @end
 
-@implementation HKAttributedAttachmentTemplate
+@implementation NUDAttachmentTemplate
 
-HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
+NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 
-- (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier {
+- (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasiticalObj = [[HKAttributedAttachment alloc] initWithFather:maker];
+        _parasiticalObj = [[NUDAttachment alloc] initWithFather:maker];
         self.identifier = identifier;
     }
     return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    HKAttributedAttachmentTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
+    NUDAttachmentTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
     tpl.parasiticalObj.actionTags = [self.parasiticalObj.actionTags mutableCopy];
     tpl.parasiticalObj.attachment.image = self.parasiticalObj.attachment.image;
     tpl.parasiticalObj.attachment.bounds = self.parasiticalObj.attachment.bounds;
     return tpl;
 }
 
-- (id (^)(CGFloat, CGFloat))origin {return HKABI(CGFloat x,CGFloat y) {HKAT(origin,x,y);};}
-- (id (^)(CGFloat, CGFloat))size {return HKABI(CGFloat width,CGFloat height){HKAT(size,width,height);};}
-- (id (^)(CGFloat))vertical {return HKABI(CGFloat offset){HKAT(vertical,offset);};}
-- (id (^)(NSUInteger))linefeed {return HKABI(NSUInteger num){HKAT(linefeed,num);};}
+- (id (^)(CGFloat, CGFloat))origin {return NUDABI(CGFloat x,CGFloat y) {NUDAT(origin,x,y);};}
+- (id (^)(CGFloat, CGFloat))size {return NUDABI(CGFloat width,CGFloat height){NUDAT(size,width,height);};}
+- (id (^)(CGFloat))vertical {return NUDABI(CGFloat offset){NUDAT(vertical,offset);};}
+- (id (^)(NSUInteger))linefeed {return NUDABI(NSUInteger num){NUDAT(linefeed,num);};}
 
 - (void (^)(void))attach {
     return ^void (void) {
@@ -175,9 +176,9 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
     };
 }
 
-- (void)mergeTemplate:(id<HKTemplate>)tpl {
-    if ([tpl isKindOfClass:[HKAttributedAttachmentTemplate class]]) {
-        HKAttributedAttachmentTemplate *template = tpl;
+- (void)mergeTemplate:(id<NUDTemplate>)tpl {
+    if ([tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
+        NUDAttachmentTemplate *template = tpl;
         NSTextAttachment *attachment = template.parasiticalObj.attachment;
         NSMutableArray *actionTags = template.parasiticalObj.actionTags;
         if (HK_FIND_TAG(actionTags, origin)) {

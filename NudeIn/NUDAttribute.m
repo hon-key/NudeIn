@@ -1,4 +1,4 @@
-//  HKAttribute.m
+//  NUDAttribute.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,16 +20,16 @@
 //  SOFTWARE.
 
 
-#import "HKAttribute.h"
+#import "NUDAttribute.h"
 
 #define HKMethodNotImplemented() \
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException \
                                                reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
                                              userInfo:nil]
 
-@implementation HKBase
-- (id<HKTemplate>)mergeTemplates:(NSArray<id<HKTemplate>> *)templates {
-    id<HKTemplate> result = nil;
+@implementation NUDBase
+- (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates {
+    id<NUDTemplate> result = nil;
     if (templates.count > 0) {
         result = [[templates firstObject] copyWithZone:nil];
         for (int i = 1; i <templates.count; i++) {
@@ -40,18 +40,18 @@
 }
 @end
 
-@implementation HKAttribute
+@implementation NUDAttribute
 
 - (id (^)(UIColor *))color {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))font {HKMethodNotImplemented();}
 - (id (^)(NSString *, NSUInteger))fontName {HKMethodNotImplemented();}
 - (id (^)(UIColor *))mark {HKMethodNotImplemented();}
 - (id (^)(NSUInteger, UIColor *))hollow {HKMethodNotImplemented();}
-- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {HKMethodNotImplemented();}
+- (id (^)(NUDUnderlineStyle, UIColor *))_ {HKMethodNotImplemented();}
 - (id (^)(CGFloat))kern {HKMethodNotImplemented();}
 - (id (^)(void))bold {HKMethodNotImplemented();}
 - (id (^)(CGFloat))skew {HKMethodNotImplemented();}
-- (id (^)(HKAttributeFontStyle))fontStyle {HKMethodNotImplemented();}
+- (id (^)(NUDFontStyle))fontStyle {HKMethodNotImplemented();}
 - (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
 - (void (^)(void))attach {HKMethodNotImplemented();}
 - (id (^)(id, SEL))link {HKMethodNotImplemented();}
@@ -72,7 +72,7 @@
 
 @end
 
-@implementation HKAttachment
+@implementation NUDAttributedAtachment
 
 - (id (^)(CGFloat, CGFloat))origin {HKMethodNotImplemented();}
 - (id (^)(CGFloat, CGFloat))size {HKMethodNotImplemented();}

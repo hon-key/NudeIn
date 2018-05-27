@@ -1,4 +1,4 @@
-//  HKAttributedText.m
+//  NUDText.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,33 +20,34 @@
 //  SOFTWARE.
 
 
-#import "HKAttributedText.h"
-#import "HKAttributedTextView.h"
+#import "NUDText.h"
+#import "NUDTextView.h"
+#import "NUDTextMaker.h"
 #import <objc/runtime.h>
 
-@interface HKAttributedText ()
+@interface NUDText ()
 
 @property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
-@property (nonatomic,weak) HKAttributedTextMaker *father;
+@property (nonatomic,weak) NUDTextMaker *father;
 
 @property (nonatomic,assign) BOOL shouldDisableLinefeed;
 
 @end
 
-@interface HKAttributedTextTemplate ()
+@interface NUDTextTemplate ()
 
-@property (nonatomic,strong) HKAttributedText *parasiticalObj;
+@property (nonatomic,strong) NUDText *parasiticalObj;
 
-@property (nonatomic,strong) HKSelector *tplLinkSelector;
+@property (nonatomic,strong) NUDSelector *tplLinkSelector;
 @property (nonatomic,assign) NSUInteger numOfLinefeed;
 
 @end
 
 
-@implementation HKAttributedText
+@implementation NUDText
 
 
-- (instancetype)initWithFather:(HKAttributedTextMaker *)maker {
+- (instancetype)initWithFather:(NUDTextMaker *)maker {
     if (self = [super init]) {
         _attributes = [NSMutableDictionary new];
         _father = maker;
@@ -57,7 +58,7 @@
 }
 
 - (id (^)(NSUInteger))font {
-    return HKABI(NSUInteger size) {
+    return NUDABI(NSUInteger size) {
         
         [self.attributes setObject:[UIFont systemFontOfSize:size] forKey:NSFontAttributeName];
         return self;
@@ -65,9 +66,9 @@
     };
 }
 
-- (id (^)(HKAttributeFontStyle))fontStyle {
+- (id (^)(NUDFontStyle))fontStyle {
     
-    return HKABI(HKAttributeFontStyle style) {
+    return NUDABI(NUDFontStyle style) {
         
         UIFont *font = [self.attributes objectForKey:NSFontAttributeName];
         if (!font) {
@@ -97,7 +98,7 @@
 }
 
 - (id (^)(void))bold {
-    return HKABI(void) {
+    return NUDABI(void) {
         
         self.fontStyle(HKBold);
         return self;
@@ -106,7 +107,7 @@
 }
 
 - (id (^)(NSString *, NSUInteger))fontName {
-    return HKABI(NSString *name,NSUInteger size) {
+    return NUDABI(NSString *name,NSUInteger size) {
         
         [self.attributes setObject:[UIFont fontWithName:name size:size] forKey:NSFontAttributeName];
         return self;
@@ -115,7 +116,7 @@
 }
 
 - (id (^)(UIFont *))fontRes {
-    return HKABI(UIFont *font) {
+    return NUDABI(UIFont *font) {
         [self.attributes setObject:font forKey:NSFontAttributeName];
         return self;
     };
@@ -123,7 +124,7 @@
 
 
 - (id (^)(UIColor *))color {
-    return HKABI(UIColor *color) {
+    return NUDABI(UIColor *color) {
         
         [self.attributes setObject:color forKey:NSForegroundColorAttributeName];
         return self;
@@ -132,7 +133,7 @@
 }
 
 - (id (^)(UIColor *))mark {
-    return HKABI(UIColor *color) {
+    return NUDABI(UIColor *color) {
         
         [self.attributes setObject:color forKey:NSBackgroundColorAttributeName];
         return self;
@@ -140,8 +141,8 @@
     };
 }
 
-- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {
-    return HKABI(HKAttributeUnderlineStyle style,UIColor *color) {
+- (id (^)(NUDUnderlineStyle, UIColor *))_ {
+    return NUDABI(NUDUnderlineStyle style,UIColor *color) {
         
         if (!(style & NSUnderlineStyleSingle ||
             style & NSUnderlineStyleDouble ||
@@ -158,7 +159,7 @@
 }
 
 - (id (^)(UIColor *))deprecated {
-    return HKABI(UIColor *color) {
+    return NUDABI(UIColor *color) {
         
         [self.attributes setObject:@1 forKey:NSStrikethroughStyleAttributeName];
         if (color) {
@@ -170,7 +171,7 @@
 }
 
 - (id (^)(CGFloat))skew {
-    return HKABI(CGFloat value) {
+    return NUDABI(CGFloat value) {
         
         [self.attributes setObject:@(value) forKey:NSObliquenessAttributeName];
         return self;
@@ -179,7 +180,7 @@
 }
 
 - (id (^)(CGFloat))kern {
-    return HKABI(CGFloat value) {
+    return NUDABI(CGFloat value) {
         
         [self.attributes setObject:@(value) forKey:NSKernAttributeName];
         return self;
@@ -188,7 +189,7 @@
 }
 
 - (id (^)(NSUInteger, UIColor *))hollow {
-    return HKABI(NSUInteger width, UIColor *color) {
+    return NUDABI(NSUInteger width, UIColor *color) {
         
         [self.attributes setObject:@(width) forKey:NSStrokeWidthAttributeName];
         [self.attributes setObject:color forKey:NSStrokeColorAttributeName];
@@ -198,9 +199,9 @@
 }
 
 - (id (^)(id, SEL))link {
-    return HKABI(id target,SEL selector) {
+    return NUDABI(id target,SEL selector) {
         
-        HKSelector *s = [HKSelector new];
+        NUDSelector *s = [NUDSelector new];
         s.target = target;
         s.action = selector;
         [self.father addSelector:s];
@@ -213,7 +214,7 @@
 }
 
 - (id (^)(NSUInteger))linefeed {
-    return HKABI(NSUInteger num) {
+    return NUDABI(NSUInteger num) {
         
         self.shouldDisableLinefeed = num == 0 ? YES : NO;
         
@@ -226,15 +227,15 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kHKAttributedTextAllTextKey,nil);
+        self.attachWith(kNUDTextAllText,nil);
     };
 }
 
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
         
-        NSMutableArray *tpls = HK_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
-        HKAttributedTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
+        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        NUDTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (tpl) {
             
             NSMutableDictionary *tplAttrs = [template.tplAttributes mutableCopy];
@@ -260,13 +261,13 @@
 @end
 
 
-@implementation HKAttributedTextTemplate
+@implementation NUDTextTemplate
 
-HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
+NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 
-- (instancetype)initWithFather:(HKAttributedTextMaker *)maker identifier:(NSString *)identifier {
+- (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasiticalObj = [[HKAttributedText alloc] initWithFather:maker];
+        _parasiticalObj = [[NUDText alloc] initWithFather:maker];
         self.identifier = identifier;
         _numOfLinefeed = 0;
     }
@@ -274,28 +275,28 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    HKAttributedTextTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
+    NUDTextTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
     tpl.numOfLinefeed = self.numOfLinefeed;
     return tpl;
 }
 
-- (id (^)(NSUInteger))font {return HKABI(NSUInteger size) {HKAT(font,size);};}
-- (id (^)(NSString *, NSUInteger))fontName {return HKABI(NSString *string,NSUInteger size) {HKAT(fontName,string,size);};}
-- (id (^)(UIFont *))fontRes {return HKABI(UIFont *font){HKAT(fontRes,font);};}
-- (id (^)(HKAttributeFontStyle))fontStyle {return HKABI(HKAttributeFontStyle style){HKAT(fontStyle,style);};}
-- (id (^)(void))bold {return HKABI(void){HKAT(bold);};}
-- (id (^)(UIColor *))color {return HKABI(UIColor *c) {HKAT(color,c);};}
-- (id (^)(UIColor *))mark {return HKABI(UIColor *c) {HKAT(mark,c);};}
-- (id (^)(NSUInteger, UIColor *))hollow {return HKABI(NSUInteger width,UIColor *c) {HKAT(hollow,width,c);};}
-- (id (^)(HKAttributeUnderlineStyle, UIColor *))_ {return HKABI(HKAttributeUnderlineStyle style,UIColor *c) {HKAT(_,style,c);};}
-- (id (^)(UIColor *))deprecated {return HKABI(UIColor *c) {HKAT(deprecated,c);};}
-- (id (^)(CGFloat))skew {return HKABI(CGFloat value) {HKAT(skew,value);};}
-- (id (^)(CGFloat))kern {return HKABI(CGFloat value) {HKAT(kern,value);};}
+- (id (^)(NSUInteger))font {return NUDABI(NSUInteger size) {NUDAT(font,size);};}
+- (id (^)(NSString *, NSUInteger))fontName {return NUDABI(NSString *string,NSUInteger size) {NUDAT(fontName,string,size);};}
+- (id (^)(UIFont *))fontRes {return NUDABI(UIFont *font){NUDAT(fontRes,font);};}
+- (id (^)(NUDFontStyle))fontStyle {return NUDABI(NUDFontStyle style){NUDAT(fontStyle,style);};}
+- (id (^)(void))bold {return NUDABI(void){NUDAT(bold);};}
+- (id (^)(UIColor *))color {return NUDABI(UIColor *c) {NUDAT(color,c);};}
+- (id (^)(UIColor *))mark {return NUDABI(UIColor *c) {NUDAT(mark,c);};}
+- (id (^)(NSUInteger, UIColor *))hollow {return NUDABI(NSUInteger width,UIColor *c) {NUDAT(hollow,width,c);};}
+- (id (^)(NUDUnderlineStyle, UIColor *))_ {return NUDABI(NUDUnderlineStyle style,UIColor *c) {NUDAT(_,style,c);};}
+- (id (^)(UIColor *))deprecated {return NUDABI(UIColor *c) {NUDAT(deprecated,c);};}
+- (id (^)(CGFloat))skew {return NUDABI(CGFloat value) {NUDAT(skew,value);};}
+- (id (^)(CGFloat))kern {return NUDABI(CGFloat value) {NUDAT(kern,value);};}
 
 - (id (^)(id, SEL))link {
-    return HKABI(id target,SEL action) {
+    return NUDABI(id target,SEL action) {
         
-        self.parasiticalObj.string = kHKAttributedTextAllTextKey;
+        self.parasiticalObj.string = kNUDTextAllText;
         self.parasiticalObj.link(target,action);
         self.tplLinkSelector = [[self.parasiticalObj.father linkSelectors] lastObject];
         [self.parasiticalObj.father removeLinkSelector:self.tplLinkSelector];
@@ -309,7 +310,7 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
 }
 
 - (id (^)(NSUInteger))linefeed {
-    return HKABI(NSUInteger num) {
+    return NUDABI(NSUInteger num) {
         self.numOfLinefeed += num;
         return self;
     };
@@ -325,9 +326,9 @@ HKAT_SYNTHESIZE(HKAT_COPY_NONATOMIC,NSString *,identifier)
     return self.parasiticalObj.attributes;
 }
 
-- (void)mergeTemplate:(id<HKTemplate>)tpl {
-    if ([tpl isKindOfClass:[HKAttributedTextTemplate class]]) {
-        HKAttributedTextTemplate *template = tpl;
+- (void)mergeTemplate:(id<NUDTemplate>)tpl {
+    if ([tpl isKindOfClass:[NUDTextTemplate class]]) {
+        NUDTextTemplate *template = tpl;
         [self.parasiticalObj.attributes addEntriesFromDictionary:template.parasiticalObj.attributes];
         if (template.tplLinkSelector) {
             self.tplLinkSelector = template.tplLinkSelector;

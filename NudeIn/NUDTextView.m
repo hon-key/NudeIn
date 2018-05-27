@@ -1,4 +1,4 @@
-//  HKAttributedTextView.m
+//  NUDTextView.m
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,28 +19,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "HKAttributedTextView.h"
+#import "NUDTextView.h"
+#import "NUDText.h"
+#import "NUDTextMaker.h"
 
 
+@interface NUDTextView ()<UITextViewDelegate>
 
-@interface HKAttributedTextView ()<UITextViewDelegate>
-
-@property (nonatomic,strong) HKAttributedTextMaker *maker;
+@property (nonatomic,strong) NUDTextMaker *maker;
 
 @end
 
-@implementation HKAttributedTextView
+@implementation NUDTextView
 
-+ (HKAttributedTextView *)make:(void (^)(HKAttributedTextMaker *))make {
++ (NUDTextView *)make:(void (^)(NUDTextMaker *))make {
     
-    HKAttributedTextView *label = [[HKAttributedTextView alloc] init];
+    NUDTextView *label = [[NUDTextView alloc] init];
     label.scrollEnabled = NO;
     label.editable = NO;
     label.textContainer.lineFragmentPadding = 0;
     label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
     label.delegate = label;
     
-    label.maker = [[HKAttributedTextMaker alloc] init];
+    label.maker = [[NUDTextMaker alloc] init];
     
     if (make) {
         make(label.maker);
@@ -61,7 +62,7 @@
         keys = [urlComp[1] componentsSeparatedByString:@"&"];
     }
     
-    [self.maker emurateSelector:^(HKSelector *selector,BOOL *stop) {
+    [self.maker emurateSelector:^(NUDSelector *selector,BOOL *stop) {
         if ([[selector name] isEqualToString:keys[1]]) {
             [selector callWithIndex:((NSString *)keys[2]).integerValue name:[keys[0] stringByRemovingPercentEncoding]];
             *stop = YES;

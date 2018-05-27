@@ -1,4 +1,4 @@
-//  HKAttributedTextView.h
+//  NudeIn.h
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,19 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "HKAttributedText.h"
-#import "HKAttributedTextMaker.h"
 
-//TODO:增加可自定义方法的功能
-//TODO:增加update功能
-
-@interface HKAttributedTextView : UITextView
-
-+ (HKAttributedTextView *)make:(void (^)(HKAttributedTextMaker *make))make;
-
-// TODO: 提供一个可以给现有实例继续添加组件的功能
-- (HKAttributedTextView *)append:(void (^)(HKAttributedTextMaker *make))make;
-
-
-@end
+#import "NUDAttribute.h"
+#import "NUDAttachment.h"
+#import "NUDText.h"
+#import "NUDTextMaker.h"
+#import "NUDTextView.h"
