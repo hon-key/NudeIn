@@ -96,9 +96,11 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ## Installation
 
 ```
-pod 'NudeIn'
+pod 'NudeIn' '~> 1.2.1-beta'
 ```
-最新 pod 版本：`1.1`
+最新 pod 版本：`1.2.1-beta`
+
+目前该版本属于不稳定版本
 
 最低 iOS 版本： `8.0`
 
