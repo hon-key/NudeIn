@@ -57,16 +57,16 @@ while ((nextId = va_arg(idList, NSString *))) { \
 va_end(idList);
 
 typedef NS_ENUM(NSUInteger, NUDFontStyle) {
-    HKBold, HKRegular, HKMedium, HKLight,
-    HKThin, HKSemiBold, HKUltraLight, HKItalic,
+    NUDBold, NUDRegular, NUDMedium, NUDLight,
+    NUDThin, NUDSemiBold, NUDUltraLight, NUDItalic,
 };
 
 typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
-    HK_ = NSUnderlineStyleSingle,       HKDot = NSUnderlinePatternDot,              HKByWord = NSUnderlineByWord,
-    HK__ = NSUnderlineStyleDouble,      HKDotDot = NSUnderlinePatternDashDotDot,
-    HKThick_ = NSUnderlineStyleThick,   HKDash = NSUnderlinePatternDash,
-                                        HKDashDot = NSUnderlinePatternDashDot,
-                                        HKDashDotDot = NSUnderlinePatternDashDotDot
+    NUD_ = NSUnderlineStyleSingle,       NUDDot = NSUnderlinePatternDot,              NUDByWord = NSUnderlineByWord,
+    NUD__ = NSUnderlineStyleDouble,      NUDDotDot = NSUnderlinePatternDashDotDot,
+    NUDThick_ = NSUnderlineStyleThick,   NUDDash = NSUnderlinePatternDash,
+                                        NUDDashDot = NSUnderlinePatternDashDot,
+                                        NUDDashDotDot = NSUnderlinePatternDashDotDot
 };
 
 @protocol NUDTemplate;

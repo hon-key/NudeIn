@@ -66,11 +66,11 @@
             
             make.text(@"this is a ").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
             
-            make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:))._(HKDashDotDot,[UIColor redColor]).attach();
+            make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:))._(NUDDashDotDot,[UIColor redColor]).attach();
             
             make.text(@", and this is a ").font(14).color([UIColor blackColor]).kern(4).attach();
             
-            make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(HK__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
+            make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(NUD__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
             
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
         }];

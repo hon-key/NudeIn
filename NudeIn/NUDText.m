@@ -101,7 +101,7 @@
 - (id (^)(void))bold {
     return NUDABI(void) {
         
-        self.fontStyle(HKBold);
+        self.fontStyle(NUDBold);
         return self;
         
     };
