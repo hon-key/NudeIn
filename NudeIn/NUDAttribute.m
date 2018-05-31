@@ -22,7 +22,7 @@
 
 #import "NUDAttribute.h"
 
-#define HKMethodNotImplemented() \
+#define NUDMethodNotImplemented() \
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException \
                                                reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
                                              userInfo:nil]
@@ -42,22 +42,22 @@
 
 @implementation NUDAttribute
 
-- (id (^)(UIColor *))color {HKMethodNotImplemented();}
-- (id (^)(NSUInteger))font {HKMethodNotImplemented();}
-- (id (^)(NSString *, NSUInteger))fontName {HKMethodNotImplemented();}
-- (id (^)(UIColor *))mark {HKMethodNotImplemented();}
-- (id (^)(NSUInteger, UIColor *))hollow {HKMethodNotImplemented();}
-- (id (^)(NUDUnderlineStyle, UIColor *))_ {HKMethodNotImplemented();}
-- (id (^)(CGFloat))kern {HKMethodNotImplemented();}
-- (id (^)(void))bold {HKMethodNotImplemented();}
-- (id (^)(CGFloat))skew {HKMethodNotImplemented();}
-- (id (^)(NUDFontStyle))fontStyle {HKMethodNotImplemented();}
-- (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
-- (void (^)(void))attach {HKMethodNotImplemented();}
-- (id (^)(id, SEL))link {HKMethodNotImplemented();}
-- (id (^)(UIColor *))deprecated {HKMethodNotImplemented();}
-- (id (^)(UIFont *))fontRes {HKMethodNotImplemented();}
-- (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
+- (id (^)(UIColor *))color {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger))font {NUDMethodNotImplemented();}
+- (id (^)(NSString *, NSUInteger))fontName {NUDMethodNotImplemented();}
+- (id (^)(UIColor *))mark {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented();}
+- (id (^)(NUDUnderlineStyle, UIColor *))_ {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))kern {NUDMethodNotImplemented();}
+- (id (^)(void))bold {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))skew {NUDMethodNotImplemented();}
+- (id (^)(NUDFontStyle))fontStyle {NUDMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
+- (void (^)(void))attach {NUDMethodNotImplemented();}
+- (id (^)(id, SEL))link {NUDMethodNotImplemented();}
+- (id (^)(UIColor *))deprecated {NUDMethodNotImplemented();}
+- (id (^)(UIFont *))fontRes {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger))linefeed {NUDMethodNotImplemented();}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 
@@ -74,12 +74,12 @@
 
 @implementation NUDAttributedAtachment
 
-- (id (^)(CGFloat, CGFloat))origin {HKMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat))size {HKMethodNotImplemented();}
-- (void (^)(void))attach {HKMethodNotImplemented();}
-- (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
-- (id (^)(CGFloat))vertical {HKMethodNotImplemented();}
-- (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))origin {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))size {NUDMethodNotImplemented();}
+- (void (^)(void))attach {NUDMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger))linefeed {NUDMethodNotImplemented();}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @end
