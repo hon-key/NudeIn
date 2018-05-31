@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "NudeIn"
-  s.version      = "1.2-beta"
+  s.version      = "1.2.1-beta"
   s.summary      = "A attributed text component like masonry."
 
   # This description is used to generate tags and improve search results.
