@@ -237,7 +237,7 @@
         
         NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
         NUDTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
-        if (tpl) {
+        if (template) {
             
             NSMutableDictionary *tplAttrs = [template.tplAttributes mutableCopy];
             [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];

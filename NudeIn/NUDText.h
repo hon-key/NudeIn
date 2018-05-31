@@ -23,6 +23,7 @@
 #import "NUDAttribute.h"
 
 @class NUDTextMaker,NUDText;
+
 @interface NUDText : NUDAttribute<NUDText *>
 
 @property (nonatomic,copy) NSString *string;
