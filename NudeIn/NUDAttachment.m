@@ -124,7 +124,7 @@
             if (HK_FIND_TAG(actionTags, vertical)) {
                 self.vertical(tplAttachment.bounds.origin.y);
             }
-            if (HK_FIND_TAG(actionTags, linefeed)) {
+            if (template.parasiticalObj.numOfLinefeed > 0) {
                 self.linefeed(template.parasiticalObj.numOfLinefeed);
             }
         }
@@ -163,6 +163,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
     tpl.parasiticalObj.actionTags = [self.parasiticalObj.actionTags mutableCopy];
     tpl.parasiticalObj.attachment.image = self.parasiticalObj.attachment.image;
     tpl.parasiticalObj.attachment.bounds = self.parasiticalObj.attachment.bounds;
+    tpl.parasiticalObj.numOfLinefeed = self.parasiticalObj.numOfLinefeed;
     return tpl;
 }
 

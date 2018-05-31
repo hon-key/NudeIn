@@ -99,7 +99,7 @@
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();
             make.text(@"RNG").color([UIColor blueColor]).attach();
             make.text(@"\ue056大战").attach();
-            make.image(@"replayIcon").linefeed(1).nud_attachWith(@"im1",@"im2");
+            make.image(@"replayIcon").linefeed(1).attach();
             
             make.textTemplate(@"tp1").color([UIColor purpleColor]).linefeed(1).attach();
             make.textTemplate(@"tp2").font(40).color([UIColor redColor]).linefeed(1).attach();
