@@ -58,7 +58,7 @@
 - (id (^)(UIColor *))deprecated {HKMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
-- (void (^)(NSString *, ...))hk_attachWith{return nil;}
+- (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 
 @synthesize fontStyles = _fontStyles;
@@ -80,7 +80,7 @@
 - (void (^)(NSString *,...))attachWith {HKMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {HKMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {HKMethodNotImplemented();}
-- (void (^)(NSString *, ...))hk_attachWith{return nil;}
+- (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @end
 

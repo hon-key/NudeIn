@@ -99,8 +99,8 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
 
-#define hk_attachWith(...) attachWith(__VA_ARGS__,nil)
-- (void (^)(NSString *,...))hk_attachWith;
+#define nud_attachWith(...) attachWith(__VA_ARGS__,nil)
+- (void (^)(NSString *,...))nud_attachWith;
 
 
 @end
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
 
-- (void (^)(NSString *,...))hk_attachWith;
+- (void (^)(NSString *,...))nud_attachWith;
 
 @end
 
