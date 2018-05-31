@@ -81,6 +81,14 @@ NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
     };
 }
 
+- (NUDAttachment *(^)(UIImage *))imageRes {
+    return ^NUDAttachment *(UIImage *image) {
+        NUDAttachment *attachment = [[NUDAttachment alloc] initWithFather:self];
+        attachment.image = image;
+        return attachment;
+    };
+}
+
 - (NUDAttachmentTemplate *(^)(NSString *))imageTemplate {
     return ^NUDAttachmentTemplate *(NSString *string) {
         NUDAttachmentTemplate *template = [[NUDAttachmentTemplate alloc] initWithFather:self identifier:string];

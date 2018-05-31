@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint HKAttributedTextView.podspec' to ensure this is a
+#  Be sure to run `pod spec lint NudeIn.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
@@ -15,8 +15,8 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "HKAttributedTextView"
-  s.version      = "1.1"
+  s.name         = "NudeIn"
+  s.version      = "1.2-beta"
   s.summary      = "A attributed text component like masonry."
 
   # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   #                     A attributed text component like masonry..
   #                  DESC
 
-  s.homepage     = "https://github.com/hon-key/HKAttributedTextView"
+  s.homepage     = "https://github.com/hon-key/Nudeln"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/hon-key/HKAttributedTextView.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/hon-key/Nudeln.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -91,7 +91,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "HKAttributedTextView", "HKAttributedTextView/**/*.{h,m}"
+  s.source_files  = "NudeIn", "NudeIn/**/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -117,7 +117,7 @@ Pod::Spec.new do |s|
   #  the lib prefix of their name.
   #
 
-  s.framework  = "UIKit"
+  s.framework  = "UIKit", "Foundation"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"

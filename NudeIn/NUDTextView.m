@@ -55,6 +55,11 @@
     
 }
 
+// TODO: append
+- (NUDTextView *)append:(void (^)(NUDTextMaker *))make {
+    return nil;
+}
+
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     
     NSArray *urlComp = [URL.absoluteString componentsSeparatedByString:@"://"];
