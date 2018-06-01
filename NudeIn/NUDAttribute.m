@@ -67,6 +67,10 @@
 - (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented();}
 - (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented();}
+- (id (^)(void))Letterpress {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))stretch {NUDMethodNotImplemented();}
+- (id (^)(void))reverse {NUDMethodNotImplemented();}
 
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 

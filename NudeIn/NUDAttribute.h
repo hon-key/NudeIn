@@ -112,6 +112,11 @@ typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
 - (NUDAB(UIColor *))shadowColor;
 - (NUDAB(NSShadow *))shadowRes;
 
+- (NUDAB(void))Letterpress;
+- (NUDAB(CGFloat))vertical;
+- (NUDAB(CGFloat))stretch;
+- (NUDAB(void))reverse;
+
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;

@@ -311,6 +311,34 @@
     };
 }
 
+- (id (^)(void))Letterpress {
+    return NUDABI(void) {
+        [self.attributes setObject:NSTextEffectLetterpressStyle forKey:NSTextEffectAttributeName];
+        return self;
+    };
+}
+
+- (id (^)(CGFloat))vertical {
+    return NUDABI(CGFloat value) {
+        [self.attributes setObject:@(value) forKey:NSBaselineOffsetAttributeName];
+        return self;
+    };
+}
+
+- (id (^)(CGFloat))stretch {
+    return NUDABI(CGFloat value) {
+        [self.attributes setObject:@(value) forKey:NSExpansionAttributeName];
+        return self;
+    };
+}
+
+- (id (^)(void))reverse {
+    return NUDABI(void) {
+        [self.attributes setObject:@[@(NSWritingDirectionRightToLeft | NSWritingDirectionOverride)] forKey:NSWritingDirectionAttributeName];
+        return self;
+    };
+}
+
 - (void (^)(void))attach {
     return ^void (void) {
         self.attachWith(kNUDTextAllText,nil);
@@ -388,6 +416,10 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(CGFloat))shadowBlur {return NUDABI(CGFloat value) {NUDAT(shadowBlur,value);};}
 - (id (^)(UIColor *))shadowColor {return NUDABI(UIColor *color) {NUDAT(shadowColor,color);};}
 - (id (^)(NSShadow *))shadowRes {return NUDABI(NSShadow *shadow) {NUDAT(shadowRes,shadow);};}
+- (id (^)(void))Letterpress {return NUDABI(void) {NUDAT(Letterpress);};}
+- (id (^)(CGFloat))vertical {return NUDABI(CGFloat value) {NUDAT(vertical,value);};}
+- (id (^)(CGFloat))stretch {return NUDABI(CGFloat value) {NUDAT(stretch,value);};}
+- (id (^)(void))reverse {return NUDABI(void) {NUDAT(reverse);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {

@@ -113,7 +113,16 @@
             make.image(@"replayIcon").linefeed(4).nud_attachWith(@"im1",@"im2");
             
             make.text(@"hey,this is shadow").font(40).color([UIColor blueColor]).mark([UIColor grayColor]).linefeed(1).nud_attachWith(@"shadow");
-            make.text(@"use shadowRes").font(40).color([UIColor blueColor]).nud_attachWith(@"shadowRes");
+            make.text(@"use shadowRes").font(40).color([UIColor blueColor]).linefeed(1).nud_attachWith(@"shadowRes");
+            make.text(@"Text effect").font(40).color([UIColor redColor]).Letterpress().linefeed(1).nud_attachWith(@"");
+            make.text(@"Base").font(40).color([UIColor blackColor]).nud_attachWith(@"");
+            make.text(@"L").font(40).color([UIColor blueColor]).vertical(-10).nud_attachWith(@"");
+            make.text(@"ine").font(40).color([UIColor blackColor]).linefeed(1).nud_attachWith(@"");
+            make.text(@"stretch").font(17).color([UIColor blueColor]).stretch(0.5).linefeed(1).nud_attachWith(@"");
+            make.text(@"reverse").font(35).reverse().linefeed(1).nud_attachWith(@"");
+            make.text(@"vertical layout").font(17).nud_attachWith(@"");
+            NSParagraphStyleAttributeName
+            NSParagraphStyle 
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
