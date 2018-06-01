@@ -47,6 +47,7 @@
 - (id (^)(NSString *, NSUInteger))fontName {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))mark {NUDMethodNotImplemented();}
 - (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger, UIColor *))solid {NUDMethodNotImplemented();}
 - (id (^)(NUDUnderlineStyle, UIColor *))_ {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))kern {NUDMethodNotImplemented();}
 - (id (^)(void))bold {NUDMethodNotImplemented();}
@@ -58,8 +59,16 @@
 - (id (^)(UIColor *))deprecated {NUDMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {NUDMethodNotImplemented();}
 - (id (^)(NSUInteger))linefeed {NUDMethodNotImplemented();}
-- (void (^)(NSString *, ...))nud_attachWith{return nil;}
+- (id (^)(BOOL))ligature {NUDMethodNotImplemented();}
+// shadow
+- (id (^)(void))shadow {NUDMethodNotImplemented();}
+- (id (^)(NUDShadowDirection))shadowDirection {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))shadowOffset {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented();}
+- (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented();}
+- (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented();}
 
+- (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @synthesize fontStyles = _fontStyles;
 - (NSArray *)fontStyles {

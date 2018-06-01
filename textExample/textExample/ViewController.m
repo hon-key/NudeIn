@@ -97,15 +97,23 @@
             make.allImage().size(120,120).linefeed(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();
+            make.textTemplate(@"shadow").shadowOffset(-5,-3).shadowBlur(5).shadowColor([UIColor redColor]).attach();
+            NSShadow *shadow = [NSShadow new];
+            shadow.shadowOffset = CGSizeMake(5,5);
+            shadow.shadowColor = [UIColor purpleColor];
+            shadow.shadowBlurRadius = 7;
+            make.textTemplate(@"shadowRes").shadowRes(shadow).attach();
+            make.textTemplate(@"tp1").font(20).color([UIColor purpleColor]).linefeed(1).attach();
+            make.textTemplate(@"tp2").font(10).color([UIColor redColor]).linefeed(1).attach();
+            
             make.text(@"RNG").color([UIColor blueColor]).attach();
             make.text(@"\ue056大战").attach();
             make.image(@"replayIcon").linefeed(1).attach();
+            make.text(@"KZ").solid(3,[UIColor redColor]).nud_attachWith(@"tp1",@"tp2");
+            make.image(@"replayIcon").linefeed(4).nud_attachWith(@"im1",@"im2");
             
-            make.textTemplate(@"tp1").color([UIColor purpleColor]).linefeed(1).attach();
-            make.textTemplate(@"tp2").font(40).color([UIColor redColor]).linefeed(1).attach();
-            
-            make.text(@"KZ").nud_attachWith(@"tp1",@"tp2");
-            make.image(@"replayIcon").nud_attachWith(@"im1",@"im2");
+            make.text(@"hey,this is shadow").font(40).color([UIColor blueColor]).mark([UIColor grayColor]).linefeed(1).nud_attachWith(@"shadow");
+            make.text(@"use shadowRes").font(40).color([UIColor blueColor]).nud_attachWith(@"shadowRes");
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;

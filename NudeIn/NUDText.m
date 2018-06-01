@@ -58,6 +58,14 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    NUDText *text = [[[self class] alloc] initWithFather:self.father];
+    text.attributes = [self.attributes mutableCopy];
+    text.string = self.string;
+    text.shouldDisableLinefeed = self.shouldDisableLinefeed;
+    return text;
+}
+
 - (id (^)(NSUInteger))font {
     return NUDABI(NSUInteger size) {
         
@@ -199,6 +207,14 @@
     };
 }
 
+- (id (^)(NSUInteger, UIColor *))solid {
+    return NUDABI(NSUInteger width, UIColor *color) {
+        [self.attributes setObject:@(-(NSInteger)width) forKey:NSStrokeWidthAttributeName];
+        [self.attributes setObject:color forKey:NSStrokeColorAttributeName];
+        return self;
+    };
+}
+
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL selector) {
         
@@ -222,6 +238,75 @@
         for (int i = 0; i < num; i++) {
             self.string = [self.string stringByAppendingString:@"\n"];
         }
+        return self;
+    };
+}
+
+
+- (id (^)(BOOL))ligature {
+    return NUDABI(BOOL value) {
+        [self.attributes setObject:@(value) forKey:NSLigatureAttributeName];
+        return self;
+    };
+}
+
+- (id (^)(void))shadow {
+    return NUDABI(void) {
+        NSShadow *shadow = [[NSShadow alloc] init];
+        shadow.shadowOffset = CGSizeMake(1, 1);
+        shadow.shadowBlurRadius = 1.0;
+        [self.attributes setObject:shadow forKey:NSShadowAttributeName];
+        return self;
+    };
+}
+
+- (NSShadow *)currentShadow {
+    NSShadow *shadow = [self.attributes objectForKey:NSShadowAttributeName];
+    if (!shadow) {
+        self.shadow();
+        shadow = [self.attributes objectForKey:NSShadowAttributeName];
+    }
+    return shadow;
+}
+
+- (id (^)(NUDShadowDirection))shadowDirection {
+    return NUDABI(NUDShadowDirection direction) {
+        CGSize offset = CGSizeZero;
+        offset.width  = direction & NUDLeft   ? -1 : 0;
+        offset.width  = direction & NUDRight  ?  1 : 0;
+        offset.height = direction & NUDTop    ? -1 : 0;
+        offset.height = direction & NUDBottom ?  1 : 0;
+        [self currentShadow].shadowOffset = offset;
+        return self;
+    };
+}
+
+- (id (^)(CGFloat, CGFloat))shadowOffset {
+    return NUDABI(CGFloat x,CGFloat y) {
+        [self currentShadow].shadowOffset = CGSizeMake(x, y);
+        return self;
+    };
+}
+
+- (id (^)(CGFloat))shadowBlur {
+    return NUDABI(CGFloat value) {
+        if (value >= 0) {
+            [self currentShadow].shadowBlurRadius = value;
+        }
+        return self;
+    };
+}
+
+- (id (^)(UIColor *))shadowColor {
+    return NUDABI(UIColor *color) {
+        [self currentShadow].shadowColor = color;
+        return self;
+    };
+}
+
+- (id (^)(NSShadow *))shadowRes {
+    return NUDABI(NSShadow *shadow) {
+        [self.attributes setObject:shadow forKey:NSShadowAttributeName];
         return self;
     };
 }
@@ -278,6 +363,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 - (id)copyWithZone:(NSZone *)zone {
     NUDTextTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
     tpl.numOfLinefeed = self.numOfLinefeed;
+    tpl.parasiticalObj = [self.parasiticalObj copy];
     return tpl;
 }
 
@@ -289,10 +375,19 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(UIColor *))color {return NUDABI(UIColor *c) {NUDAT(color,c);};}
 - (id (^)(UIColor *))mark {return NUDABI(UIColor *c) {NUDAT(mark,c);};}
 - (id (^)(NSUInteger, UIColor *))hollow {return NUDABI(NSUInteger width,UIColor *c) {NUDAT(hollow,width,c);};}
+- (id (^)(NSUInteger, UIColor *))solid {return NUDABI(NSUInteger width,UIColor *c) {NUDAT(solid,width,c);};}
 - (id (^)(NUDUnderlineStyle, UIColor *))_ {return NUDABI(NUDUnderlineStyle style,UIColor *c) {NUDAT(_,style,c);};}
 - (id (^)(UIColor *))deprecated {return NUDABI(UIColor *c) {NUDAT(deprecated,c);};}
 - (id (^)(CGFloat))skew {return NUDABI(CGFloat value) {NUDAT(skew,value);};}
 - (id (^)(CGFloat))kern {return NUDABI(CGFloat value) {NUDAT(kern,value);};}
+- (id (^)(BOOL))ligature {return NUDABI(BOOL value) {NUDAT(ligature,value);};}
+
+- (id (^)(void))shadow {return NUDABI(void) {NUDAT(shadow);};}
+- (id (^)(NUDShadowDirection))shadowDirection {return NUDABI(NUDShadowDirection direction) {NUDAT(shadowDirection,direction);};}
+- (id (^)(CGFloat, CGFloat))shadowOffset {return NUDABI(CGFloat x,CGFloat y) {NUDAT(shadowOffset,x,y);};}
+- (id (^)(CGFloat))shadowBlur {return NUDABI(CGFloat value) {NUDAT(shadowBlur,value);};}
+- (id (^)(UIColor *))shadowColor {return NUDABI(UIColor *color) {NUDAT(shadowColor,color);};}
+- (id (^)(NSShadow *))shadowRes {return NUDABI(NSShadow *shadow) {NUDAT(shadowRes,shadow);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {

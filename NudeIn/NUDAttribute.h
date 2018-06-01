@@ -69,6 +69,13 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
                                         NUDDashDotDot = NSUnderlinePatternDashDotDot
 };
 
+typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
+    NUDLeft   =  1 << 0,
+    NUDTop    =  1 << 1,
+    NUDRight  =  1 << 2,
+    NUDBottom =  1 << 3
+};
+
 @protocol NUDTemplate;
 
 @interface NUDBase : NSObject
@@ -89,12 +96,22 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
 - (NUDAB(UIColor *))color;
 - (NUDAB(UIColor *))mark;
 - (NUDAB(NSUInteger,UIColor *))hollow;
+- (NUDAB(NSUInteger,UIColor *))solid;
 - (NUDAB(id target,SEL action))link;
 - (NUDAB(NUDUnderlineStyle,UIColor *))_;
 - (NUDAB(UIColor *))deprecated;
 - (NUDAB(CGFloat))skew;
 - (NUDAB(CGFloat))kern;
 - (NUDAB(NSUInteger))linefeed;
+- (NUDAB(BOOL))ligature;
+// shadow
+- (NUDAB(void))shadow;
+- (NUDAB(NUDShadowDirection))shadowDirection;
+- (NUDAB(CGFloat,CGFloat))shadowOffset;
+- (NUDAB(CGFloat))shadowBlur;
+- (NUDAB(UIColor *))shadowColor;
+- (NUDAB(NSShadow *))shadowRes;
+
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
