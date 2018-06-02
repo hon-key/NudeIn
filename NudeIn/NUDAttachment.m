@@ -87,7 +87,7 @@
     };
 }
 
-- (id (^)(NSUInteger))linefeed {
+- (id (^)(NSUInteger))ln {
     return NUDABI(NSUInteger num) {
         if (num > 0) {
             self.numOfLinefeed += num;
@@ -125,13 +125,13 @@
                 self.vertical(tplAttachment.bounds.origin.y);
             }
             if (template.parasiticalObj.numOfLinefeed > 0) {
-                self.linefeed(template.parasiticalObj.numOfLinefeed);
+                self.ln(template.parasiticalObj.numOfLinefeed);
             }
         }
         NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:self.attachment];
         [self.father appendString:string];
         if (self.numOfLinefeed > 0) {
-            self.father.text(@"").linefeed(self.numOfLinefeed).attachWith(@"",nil);
+            self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
         }
     };
 }
@@ -170,7 +170,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(CGFloat, CGFloat))origin {return NUDABI(CGFloat x,CGFloat y) {NUDAT(origin,x,y);};}
 - (id (^)(CGFloat, CGFloat))size {return NUDABI(CGFloat width,CGFloat height){NUDAT(size,width,height);};}
 - (id (^)(CGFloat))vertical {return NUDABI(CGFloat offset){NUDAT(vertical,offset);};}
-- (id (^)(NSUInteger))linefeed {return NUDABI(NSUInteger num){NUDAT(linefeed,num);};}
+- (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
 
 - (void (^)(void))attach {
     return ^void (void) {

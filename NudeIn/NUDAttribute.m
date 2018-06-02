@@ -58,7 +58,7 @@
 - (id (^)(id, SEL))link {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))deprecated {NUDMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger))linefeed {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger))ln {NUDMethodNotImplemented();}
 - (id (^)(BOOL))ligature {NUDMethodNotImplemented();}
 // shadow
 - (id (^)(void))shadow {NUDMethodNotImplemented();}
@@ -67,10 +67,18 @@
 - (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented();}
 - (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented();}
-- (id (^)(void))Letterpress {NUDMethodNotImplemented();}
+- (id (^)(void))letterpress {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))stretch {NUDMethodNotImplemented();}
 - (id (^)(void))reverse {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))lineSpacing {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat,CGFloat))lineHeight {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))paraSpacing {NUDMethodNotImplemented();}
+- (id (^)(NUDAlignment))aligment {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))indent {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented();}
+- (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented();}
+
 
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
@@ -92,7 +100,7 @@
 - (void (^)(void))attach {NUDMethodNotImplemented();}
 - (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger))linefeed {NUDMethodNotImplemented();}
+- (id (^)(NSUInteger))ln {NUDMethodNotImplemented();}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @end

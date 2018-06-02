@@ -94,35 +94,42 @@
     if (!_textView3) {
         _textView3 = [NudeIn make:^(NUDTextMaker *make) {
             
-            make.allImage().size(120,120).linefeed(3).attach();
+            make.allImage().size(120,120).ln(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();
-            make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).linefeed(2).attach();
+            make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).ln(2).attach();
             make.textTemplate(@"shadow").shadowOffset(-5,-3).shadowBlur(5).shadowColor([UIColor redColor]).attach();
             NSShadow *shadow = [NSShadow new];
             shadow.shadowOffset = CGSizeMake(5,5);
             shadow.shadowColor = [UIColor purpleColor];
             shadow.shadowBlurRadius = 7;
             make.textTemplate(@"shadowRes").shadowRes(shadow).attach();
-            make.textTemplate(@"tp1").font(20).color([UIColor purpleColor]).linefeed(1).attach();
-            make.textTemplate(@"tp2").font(10).color([UIColor redColor]).linefeed(1).attach();
+            make.textTemplate(@"tp1").font(20).color([UIColor purpleColor]).ln(1).attach();
+            make.textTemplate(@"tp2").font(10).color([UIColor redColor]).ln(1).attach();
             
             make.text(@"RNG").color([UIColor blueColor]).attach();
             make.text(@"\ue056大战").attach();
-            make.image(@"replayIcon").linefeed(1).attach();
+            make.image(@"replayIcon").ln(1).attach();
             make.text(@"KZ").solid(3,[UIColor redColor]).nud_attachWith(@"tp1",@"tp2");
-            make.image(@"replayIcon").linefeed(4).nud_attachWith(@"im1",@"im2");
+            make.image(@"replayIcon").ln(4).nud_attachWith(@"im1",@"im2");
             
-            make.text(@"hey,this is shadow").font(40).color([UIColor blueColor]).mark([UIColor grayColor]).linefeed(1).nud_attachWith(@"shadow");
-            make.text(@"use shadowRes").font(40).color([UIColor blueColor]).linefeed(1).nud_attachWith(@"shadowRes");
-            make.text(@"Text effect").font(40).color([UIColor redColor]).Letterpress().linefeed(1).nud_attachWith(@"");
+            make.text(@"hey,this is shadow").font(40).color([UIColor blueColor]).mark([UIColor grayColor]).ln(1).nud_attachWith(@"shadow");
+            make.text(@"use shadowRes").font(40).color([UIColor blueColor]).ln(1).nud_attachWith(@"shadowRes");
+            make.text(@"Text effect").font(40).color([UIColor redColor]).letterpress().ln(1).nud_attachWith(@"");
             make.text(@"Base").font(40).color([UIColor blackColor]).nud_attachWith(@"");
             make.text(@"L").font(40).color([UIColor blueColor]).vertical(-10).nud_attachWith(@"");
-            make.text(@"ine").font(40).color([UIColor blackColor]).linefeed(1).nud_attachWith(@"");
-            make.text(@"stretch").font(17).color([UIColor blueColor]).stretch(0.5).linefeed(1).nud_attachWith(@"");
-            make.text(@"reverse").font(35).reverse().linefeed(1).nud_attachWith(@"");
-            make.text(@"vertical layout").font(17).nud_attachWith(@"");
-            NSParagraphStyleAttributeName
-            NSParagraphStyle 
+            make.text(@"ine").font(40).color([UIColor blackColor]).ln(1).nud_attachWith(@"");
+            make.text(@"stretch").font(17).color([UIColor blueColor]).stretch(0.5).ln(1).nud_attachWith(@"");
+            make.text(@"reverse").font(35).reverse().ln(1).nud_attachWith(@"");
+            
+            make.textTemplate(@"para").lineSpacing(0).attach();
+            make.text(@"vertical layout,vertical layoutvertical layoutvertical layoutvertical layoutvertical layoutvertical layoutvertical layoutvertical layout").font(17).ln(1).nud_attachWith(@"para");
+            make.text(@"line height.").font(17).lineHeight(0,50,100).ln(1).mark([UIColor grayColor]).nud_attachWith(@"");
+            make.text(@"this is paragraph,this is paragraph.this is paragraph,this is paragraph.\n this is paragraph,this is paragraph.\n this is paragraph,this is paragraph.").font(17).paraSpacing(10,10).ln(1).nud_attachWith(@"");
+            make.text(@"left").font(17).aligment(NUDAliLeft).ln(1).nud_attachWith(@"");
+            make.text(@"center").font(17).aligment(NUDAliCenter).ln(1).nud_attachWith(@"");
+            make.text(@"right").font(17).aligment(NUDAliRight).ln(1).nud_attachWith(@"");
+            make.text(@"We don’t have class and all we dooooooo is to enjoy the games.").font(17).fl_headIndent(40).indent(10,0).linebreak(NUDChar).nud_attachWith(@"");
+
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;

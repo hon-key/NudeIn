@@ -230,7 +230,7 @@
     };
 }
 
-- (id (^)(NSUInteger))linefeed {
+- (id (^)(NSUInteger))ln {
     return NUDABI(NSUInteger num) {
         
         self.shouldDisableLinefeed = num == 0 ? YES : NO;
@@ -311,7 +311,7 @@
     };
 }
 
-- (id (^)(void))Letterpress {
+- (id (^)(void))letterpress {
     return NUDABI(void) {
         [self.attributes setObject:NSTextEffectLetterpressStyle forKey:NSTextEffectAttributeName];
         return self;
@@ -339,6 +339,72 @@
     };
 }
 
+- (NSMutableParagraphStyle *)currentParagraphStyle {
+    NSMutableParagraphStyle *style = [self.attributes objectForKey:NSParagraphStyleAttributeName];
+    if (!style) {
+        style = [NSMutableParagraphStyle new];
+        [self.attributes setObject:style forKey:NSParagraphStyleAttributeName];
+    }
+    return style;
+}
+
+- (id (^)(CGFloat))lineSpacing {
+    return NUDABI(CGFloat value) {
+        [self currentParagraphStyle].lineSpacing = value;
+        return self;
+    };
+}
+
+- (id (^)(CGFloat, CGFloat, CGFloat))lineHeight {
+    return NUDABI(CGFloat min,CGFloat max,CGFloat mul) {
+        [self currentParagraphStyle].lineHeightMultiple = mul;
+        [self currentParagraphStyle].maximumLineHeight = max;
+        [self currentParagraphStyle].minimumLineHeight = min;
+        return self;
+    };
+}
+
+- (id (^)(CGFloat, CGFloat))paraSpacing {
+    return NUDABI(CGFloat before,CGFloat next) {
+        [self currentParagraphStyle].paragraphSpacing = next;
+        [self currentParagraphStyle].paragraphSpacingBefore = before;
+        return self;
+    };
+}
+
+- (id (^)(NUDAlignment))aligment {
+    return NUDABI(NUDAlignment aligment) {
+        [self currentParagraphStyle].alignment = (NSTextAlignment)aligment;
+        return self;
+    };
+}
+
+- (id (^)(CGFloat, CGFloat))indent {
+    return NUDABI(CGFloat head,CGFloat tail) {
+        [self currentParagraphStyle].headIndent = head > 0 ? head : 0;
+        if ([self currentParagraphStyle].firstLineHeadIndent == 0) {
+            [self currentParagraphStyle].firstLineHeadIndent = head > 0 ? head : 0;
+        }
+        [self currentParagraphStyle].tailIndent = tail > 0 ? -tail : 0;
+        return self;
+    };
+}
+
+- (id (^)(CGFloat))fl_headIndent {
+    return NUDABI(CGFloat value) {
+        [self currentParagraphStyle].firstLineHeadIndent = value > 0 ? value : 0;
+        return self;
+    };
+}
+
+- (id (^)(NUDLineBreakMode))linebreak {
+    return NUDABI(NUDLineBreakMode mode) {
+        [self currentParagraphStyle].lineBreakMode = (NSLineBreakMode)mode;
+        return self;
+    };
+}
+
+
 - (void (^)(void))attach {
     return ^void (void) {
         self.attachWith(kNUDTextAllText,nil);
@@ -360,7 +426,7 @@
                 [tplAttrs removeObjectForKey:NSLinkAttributeName];
             }
             if (template.numOfLinefeed > 0 && self.shouldDisableLinefeed == NO) {
-                self.linefeed(template.numOfLinefeed);
+                self.ln(template.numOfLinefeed);
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
@@ -371,6 +437,7 @@
         
     };
 }
+
 
 @end
 
@@ -416,10 +483,17 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 - (id (^)(CGFloat))shadowBlur {return NUDABI(CGFloat value) {NUDAT(shadowBlur,value);};}
 - (id (^)(UIColor *))shadowColor {return NUDABI(UIColor *color) {NUDAT(shadowColor,color);};}
 - (id (^)(NSShadow *))shadowRes {return NUDABI(NSShadow *shadow) {NUDAT(shadowRes,shadow);};}
-- (id (^)(void))Letterpress {return NUDABI(void) {NUDAT(Letterpress);};}
+- (id (^)(void))letterpress {return NUDABI(void) {NUDAT(letterpress);};}
 - (id (^)(CGFloat))vertical {return NUDABI(CGFloat value) {NUDAT(vertical,value);};}
 - (id (^)(CGFloat))stretch {return NUDABI(CGFloat value) {NUDAT(stretch,value);};}
 - (id (^)(void))reverse {return NUDABI(void) {NUDAT(reverse);};}
+- (id (^)(CGFloat))lineSpacing {return NUDABI(CGFloat value) {NUDAT(lineSpacing,value);};}
+- (id (^)(CGFloat, CGFloat, CGFloat))lineHeight {return NUDABI(CGFloat max,CGFloat min,CGFloat mul) {NUDAT(lineHeight,max,min,mul);};}
+- (id (^)(CGFloat, CGFloat))paraSpacing {return NUDABI(CGFloat before,CGFloat next){NUDAT(paraSpacing,before,next);};}
+- (id (^)(NUDAlignment))aligment {return NUDABI(NUDAlignment ali){NUDAT(aligment,ali);};}
+- (id (^)(CGFloat, CGFloat))indent {return NUDABI(CGFloat head,CGFloat tail){NUDAT(indent,head,tail);};}
+- (id (^)(CGFloat))fl_headIndent {return NUDABI(CGFloat value){NUDAT(fl_headIndent,value);};}
+- (id (^)(NUDLineBreakMode))linebreak {return NUDABI(NUDLineBreakMode mode){NUDAT(linebreak,mode);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {
@@ -437,7 +511,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
     };
 }
 
-- (id (^)(NSUInteger))linefeed {
+- (id (^)(NSUInteger))ln {
     return NUDABI(NSUInteger num) {
         self.numOfLinefeed += num;
         return self;

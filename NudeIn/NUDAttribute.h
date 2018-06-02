@@ -76,6 +76,22 @@ typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
     NUDBottom =  1 << 3
 };
 
+typedef NS_ENUM(NSUInteger, NUDAlignment) {
+    NUDAliLeft = NSTextAlignmentLeft,
+    NUDAliCenter = NSTextAlignmentCenter,
+    NUDAliRight = NSTextAlignmentRight,
+    NUDAliJustified = NSTextAlignmentJustified
+};
+
+typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
+    NUDWord = NSLineBreakByWordWrapping,
+    NUDChar = NSLineBreakByCharWrapping,
+    NUDClip = NSLineBreakByClipping,
+    NUDTr_head = NSLineBreakByTruncatingHead,
+    NUDTr_tail = NSLineBreakByTruncatingTail,
+    NUDTr_middle = NSLineBreakByTruncatingMiddle,
+};
+
 @protocol NUDTemplate;
 
 @interface NUDBase : NSObject
@@ -102,8 +118,12 @@ typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
 - (NUDAB(UIColor *))deprecated;
 - (NUDAB(CGFloat))skew;
 - (NUDAB(CGFloat))kern;
-- (NUDAB(NSUInteger))linefeed;
+- (NUDAB(NSUInteger))ln;
 - (NUDAB(BOOL))ligature;
+- (NUDAB(void))letterpress;
+- (NUDAB(CGFloat))vertical;
+- (NUDAB(CGFloat))stretch;
+- (NUDAB(void))reverse;
 // shadow
 - (NUDAB(void))shadow;
 - (NUDAB(NUDShadowDirection))shadowDirection;
@@ -112,11 +132,14 @@ typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
 - (NUDAB(UIColor *))shadowColor;
 - (NUDAB(NSShadow *))shadowRes;
 
-- (NUDAB(void))Letterpress;
-- (NUDAB(CGFloat))vertical;
-- (NUDAB(CGFloat))stretch;
-- (NUDAB(void))reverse;
-
+// paragraph
+- (NUDAB(CGFloat))lineSpacing; // spacingValue
+- (NUDAB(CGFloat,CGFloat,CGFloat))lineHeight; //minimum,maximum,multiple
+- (NUDAB(CGFloat,CGFloat))paraSpacing;//before,next
+- (NUDAB(NUDAlignment))aligment;
+- (NUDAB(CGFloat,CGFloat))indent; //head,tail
+- (NUDAB(CGFloat))fl_headIndent;
+- (NUDAB(NUDLineBreakMode))linebreak;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
@@ -132,7 +155,7 @@ typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
 - (NUDAB(CGFloat,CGFloat))origin;
 - (NUDAB(CGFloat))vertical;
 - (NUDAB(CGFloat,CGFloat))size;
-- (NUDAB(NSUInteger))linefeed;
+- (NUDAB(NSUInteger))ln;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
