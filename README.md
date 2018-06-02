@@ -106,4 +106,4 @@ pod 'NudeIn' '~> 1.2.1-beta'
 
 ## License
 
-HKAttributedTextView is released under the MIT license. See [LICENSE](https://github.com/hon-key/HKAttributedTextView/raw/master/LICENSE) for details.
+NudeIn is released under the MIT license. See [LICENSE](https://github.com/hon-key/HKAttributedTextView/raw/master/LICENSE) for details.
