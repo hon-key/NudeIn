@@ -15,12 +15,12 @@ NudeIn 的用法非常简单明了，这里给出一个非常简单的例子，�
 
 2、声明控件为你的成员变量
 
-```Objective-C
+```objc
 @property (nonatomic,strong) NudeIn *attrLabel;
 ```
 
 3、Do it yourself
-```Objective-C
+```objc
 _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"this is a ").font(14).color([UIColor blackColor]).attach();
     make.text(@"BlueLink").font(17).color([UIColor blueColor]).link(self,@selector(linkHandler:)).attach();
@@ -31,7 +31,7 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 
 3、对声明了 **`link`** 属性的部分定义回调
-```Objective-C
+```objc
 
 - (void)linkHandler:(NUDAction *)action {
     
