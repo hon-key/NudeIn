@@ -32,5 +32,7 @@
 // TODO: 提供一个可以给现有实例继续添加组件的功能
 - (NUDTextView *)append:(void (^)(NUDTextMaker *make))make;
 
+- (void)p;
+
 
 @end

@@ -29,6 +29,8 @@
 @interface NUDText ()
 
 @property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
+
+@property (nonatomic,copy,readwrite) NSString *string;
 @property (nonatomic,weak) NUDTextMaker *father;
 
 @property (nonatomic,assign) BOOL shouldDisableLinefeed;
@@ -48,10 +50,11 @@
 @implementation NUDText
 
 
-- (instancetype)initWithFather:(NUDTextMaker *)maker {
+- (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str {
     if (self = [super init]) {
         _attributes = [NSMutableDictionary new];
         _father = maker;
+        _string = str;
         _shouldDisableLinefeed = NO;
 
     }
@@ -59,9 +62,8 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    NUDText *text = [[[self class] alloc] initWithFather:self.father];
+    NUDText *text = [[[self class] alloc] initWithFather:self.father string:_string];
     text.attributes = [self.attributes mutableCopy];
-    text.string = self.string;
     text.shouldDisableLinefeed = self.shouldDisableLinefeed;
     return text;
 }
@@ -399,7 +401,15 @@
 
 - (id (^)(NUDLineBreakMode))linebreak {
     return NUDABI(NUDLineBreakMode mode) {
-        [self currentParagraphStyle].lineBreakMode = (NSLineBreakMode)mode;
+        [self currentParagraphStyle].lineBreakMode = mode == NUDWord_HyphenationOff ? (NSLineBreakMode)NUDWord:(NSLineBreakMode)mode;
+        [self currentParagraphStyle].hyphenationFactor = mode == NUDWord ? 1:0;
+        return self;
+    };
+}
+
+- (id (^)(NSString *))Highlighted {
+    return NUDABI(NSString *tplName) {
+        
         return self;
     };
 }
@@ -433,7 +443,12 @@
         }
         
         NSAttributedString *string = [[NSAttributedString alloc] initWithString:self.string attributes:self.attributes];
-        [self.father appendString:string];
+        NSRange strRange = [self.father appendString:string];
+        
+        Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+        object_setIvar(self, ivar, NUD_VALUE_OF_RANGE(strRange));
+        
+        [self.father storeTextComponent:self];
         
     };
 }
@@ -448,7 +463,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
-        _parasiticalObj = [[NUDText alloc] initWithFather:maker];
+        _parasiticalObj = [[NUDText alloc] initWithFather:maker string:nil];
         self.identifier = identifier;
         _numOfLinefeed = 0;
     }

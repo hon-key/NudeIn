@@ -27,7 +27,13 @@
                                                reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
                                              userInfo:nil]
 
+@interface NUDBase () {
+    NSValue *_range;
+}
+@end
+
 @implementation NUDBase
+
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates {
     id<NUDTemplate> result = nil;
     if (templates.count > 0) {
@@ -38,6 +44,13 @@
     }
     return result;
 }
+
+- (NSRange)range {
+    NSRange range;
+    [_range getValue:&range];
+    return range;
+}
+
 @end
 
 @implementation NUDAttribute
@@ -67,6 +80,7 @@
 - (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented();}
 - (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented();}
+/// 内存占用很高
 - (id (^)(void))letterpress {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))stretch {NUDMethodNotImplemented();}
@@ -78,6 +92,8 @@
 - (id (^)(CGFloat, CGFloat))indent {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented();}
 - (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented();}
+
+- (id (^)(NSString *))Highlighted {NUDMethodNotImplemented();}
 
 
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}

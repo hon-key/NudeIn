@@ -46,12 +46,13 @@
 
 @implementation NUDAttachment
 
+NUD_LAZY_LOAD_ARRAY(actionTags)
+
 - (instancetype)initWithFather:(NUDTextMaker *)maker {
     if (self = [super init]) {
         _father = maker;
         _attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
         _numOfLinefeed = 0;
-        self.actionTags = [NSMutableArray new];
         
     }
     return self;
@@ -129,7 +130,13 @@
             }
         }
         NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:self.attachment];
-        [self.father appendString:string];
+        NSRange strRange = [self.father appendString:string];
+        
+        Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+        object_setIvar(self, ivar, NUD_VALUE_OF_RANGE(strRange));
+        
+        [self.father storeTextComponent:self];
+        
         if (self.numOfLinefeed > 0) {
             self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
         }

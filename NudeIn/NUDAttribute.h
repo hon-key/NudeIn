@@ -29,6 +29,15 @@
 self.parasiticalObj.method(__VA_ARGS__); \
 return self; \
 
+#define NUD_LAZY_LOAD_ARRAY(array)\
+- (NSMutableArray *)array { \
+if (!_##array) { _##array = [NSMutableArray new]; } \
+return _##array; \
+}
+
+#define NUD_VALUE_OF_RANGE(range) [NSValue valueWithBytes:&range objCType:@encode(NSRange)]
+
+
 #define NUDAT_ASSIGN OBJC_ASSOCIATION_ASSIGN
 #define NUDAT_RETAIN OBJC_ASSOCIATION_RETAIN
 #define NUDAT_RETAIN_NONATOMIC OBJC_ASSOCIATION_RETAIN_NONATOMIC
@@ -90,12 +99,18 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDTr_head = NSLineBreakByTruncatingHead,
     NUDTr_tail = NSLineBreakByTruncatingTail,
     NUDTr_middle = NSLineBreakByTruncatingMiddle,
+    
+    NUDWord_HyphenationOff = NSUIntegerMax,
 };
 
 @protocol NUDTemplate;
 
 @interface NUDBase : NSObject
+
+@property (nonatomic,assign,readonly) NSRange range;
+
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates;
+
 @end
 
 @interface NUDAttribute <className> : NUDBase
@@ -140,6 +155,10 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(CGFloat,CGFloat))indent; //head,tail
 - (NUDAB(CGFloat))fl_headIndent;
 - (NUDAB(NUDLineBreakMode))linebreak;
+
+- (NUDAB(id,SEL))press;
+- (NUDAB(id,SEL))longPress;
+- (NUDAB(NSString *))Highlighted;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;

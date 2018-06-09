@@ -26,9 +26,9 @@
 
 @interface NUDText : NUDAttribute<NUDText *> <NSCopying>
 
-@property (nonatomic,copy) NSString *string;
+@property (nonatomic,copy,readonly) NSString *string;
 
-- (instancetype)initWithFather:(NUDTextMaker *)maker;
+- (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str;
 
 @end
 

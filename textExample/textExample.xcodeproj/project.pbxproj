@@ -19,6 +19,7 @@
 		962F3F7720A96B16009AC22A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962F3F7620A96B16009AC22A /* Assets.xcassets */; };
 		962F3F7A20A96B16009AC22A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 962F3F7820A96B16009AC22A /* LaunchScreen.storyboard */; };
 		962F3F7D20A96B16009AC22A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 962F3F7C20A96B16009AC22A /* main.m */; };
+		969B313A20C65B97006D1609 /* NUDTextUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B313920C65B97006D1609 /* NUDTextUpdate.m */; };
 		D25193C6480ED46945DEB0D0 /* libPods-textExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8961B330C281EBE7E98AF13 /* libPods-textExample.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		962F3F7920A96B16009AC22A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		962F3F7B20A96B16009AC22A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		962F3F7C20A96B16009AC22A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		969B313820C65B97006D1609 /* NUDTextUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NUDTextUpdate.h; sourceTree = "<group>"; };
+		969B313920C65B97006D1609 /* NUDTextUpdate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NUDTextUpdate.m; sourceTree = "<group>"; };
 		A5EA43EC95AD0333799BC917 /* Pods-textExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-textExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-textExample/Pods-textExample.release.xcconfig"; sourceTree = "<group>"; };
 		AF6EEF3BF53AFB892F8217EA /* Pods-textExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-textExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-textExample/Pods-textExample.debug.xcconfig"; sourceTree = "<group>"; };
 		C8961B330C281EBE7E98AF13 /* libPods-textExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-textExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +80,8 @@
 				9601DF2F20BA78E2004811F0 /* NUDText.m */,
 				9601DF2E20BA78E2004811F0 /* NUDTextMaker.h */,
 				9601DF3520BA78E2004811F0 /* NUDTextMaker.m */,
+				969B313820C65B97006D1609 /* NUDTextUpdate.h */,
+				969B313920C65B97006D1609 /* NUDTextUpdate.m */,
 				9601DF3420BA78E2004811F0 /* NUDTextView.h */,
 				9601DF3620BA78E2004811F0 /* NUDTextView.m */,
 				9601DF4920BA8E43004811F0 /* NudeIn-Prefix.h */,
@@ -263,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				962F3F7220A96B16009AC22A /* ViewController.m in Sources */,
+				969B313A20C65B97006D1609 /* NUDTextUpdate.m in Sources */,
 				9601DF3820BA78E2004811F0 /* NUDText.m in Sources */,
 				9601DF4A20BA8E43004811F0 /* NUDAction.m in Sources */,
 				9601DF3A20BA78E2004811F0 /* NUDTextMaker.m in Sources */,

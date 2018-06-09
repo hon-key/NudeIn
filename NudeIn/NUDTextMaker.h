@@ -23,7 +23,7 @@
 
 #import "NudeIn-Prefix.h"
 
-@class NUDText,NUDAttachment,NUDTextTemplate,NUDAttachmentTemplate,NUDSelector;
+@class NUDBase,NUDText,NUDAttachment,NUDTextTemplate,NUDAttachmentTemplate,NUDSelector;
 @protocol NUDTemplate;
 
 extern NSString * const kNUDTextAllText;
@@ -36,7 +36,6 @@ extern NSString * const kNUDAttachmentAllImageKey;
 
 - (NUDText * (^)(NSString *))text;
 
-// TODO: 富文本可添加自定义图片
 - (NUDAttachment * (^)(NSString *))image;
 - (NUDAttachment * (^)(UIImage *))imageRes;
 
@@ -51,7 +50,9 @@ extern NSString * const kNUDAttachmentAllImageKey;
 
 @interface NUDTextMaker (ToolsExtension)
 
-- (void)appendString:(NSAttributedString *)string;
+- (NSRange)appendString:(NSAttributedString *)string;
+- (void)storeTextComponent:(NUDBase *)compoenent;
+- (NUDBase *)componentInCharacterLocation:(NSUInteger)location;
 - (void)addSelector:(NUDSelector *)selector;
 - (NSUInteger)indexOfSelector:(NUDSelector *)selector;
 - (void)emurateSelector:(void(^)(NUDSelector *selector,BOOL *stop))handler;
@@ -59,5 +60,6 @@ extern NSString * const kNUDAttachmentAllImageKey;
 - (id<NUDTemplate>)templateWithId:(NSString *)identifier;
 - (NSArray *)linkSelectors;
 - (void)removeLinkSelector:(NUDSelector *)sel;
+- (void)p;
 
 @end

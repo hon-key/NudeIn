@@ -23,6 +23,7 @@
 #import "NUDText.h"
 #import "NUDTextMaker.h"
 #import "NUDAction.h"
+#import "NUDAttachment.h"
 
 
 @interface NUDTextView ()<UITextViewDelegate>
@@ -41,6 +42,7 @@
     label.textContainer.lineFragmentPadding = 0;
     label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
     label.delegate = label;
+    label.textDragInteraction.enabled = NO;
     
     label.maker = [[NUDTextMaker alloc] init];
     
@@ -54,6 +56,11 @@
     return label;
     
 }
+
+- (void)p {
+    [self.maker p];
+}
+
 
 // TODO: append
 - (NUDTextView *)append:(void (^)(NUDTextMaker *))make {
@@ -86,9 +93,55 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange {
-//    NSLog(@"%@,%d,%d",textAttachment,characterRange.location,characterRange.length);
     return NO;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
+//    NSLog(@"begin");
+    
+    NSUInteger index = [self.layoutManager glyphIndexForPoint:[touches.anyObject locationInView:self] inTextContainer:self.textContainer fractionOfDistanceThroughGlyph:nil];
+    NSLog(@"%ld",index);
+    CGPoint targetLocation = [self.layoutManager locationForGlyphAtIndex:index];
+    CGPoint currentLocation = [touches.anyObject locationInView:self];
+    CGRect rect = [self.layoutManager boundingRectForGlyphRange:NSMakeRange(index, 1) inTextContainer:self.textContainer];
+//    NSLog(@"%@",NSStringFromCGPoint(currentLocation));
+//    NSLog(@"%@",NSStringFromCGPoint(targetLocation));
+//    NSLog(@"%@",NSStringFromCGRect(rect));
+    if (currentLocation.x > rect.origin.x &&
+        currentLocation.x < rect.origin.x + rect.size.width) {
+         NUDBase *base = [self.maker componentInCharacterLocation:index];
+        if ([base isKindOfClass:[NUDText class]]) {
+            NUDText *textComp = (NUDText *)base;
+            NSLog(@"%@",[textComp.string substringWithRange:NSMakeRange(index - [textComp range].location, 1)]);
+        }else if ([base isKindOfClass:[NUDAttachment class]]) {
+            NSLog(@"image");
+        }
+    }
+    
+    
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+//    NSLog(@"moved");
+    
+    [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+//    NSLog(@"ended");
+    
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+//    NSLog(@"cancelled");
+    
+    [super touchesCancelled:touches withEvent:event];
 }
 
 

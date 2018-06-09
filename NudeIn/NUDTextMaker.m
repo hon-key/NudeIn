@@ -33,18 +33,20 @@ NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 
 @property (nonatomic,strong,readwrite) NSMutableAttributedString *string;
 @property (nonatomic,strong) NSMutableArray<NUDSelector *> *selectors;
-@property (nonatomic,strong) NSMutableArray<NUDTextTemplate *> *templates;
-@property (nonatomic,strong) NSMutableArray<NUDAttachmentTemplate *> *attachmentTemplates;
+@property (nonatomic,strong) NSMutableArray<id<NUDTemplate>> *templates;
+@property (nonatomic,strong) NSMutableArray<NUDBase *> *components;
 
 @end
 
 @implementation NUDTextMaker
 
+NUD_LAZY_LOAD_ARRAY(selectors)
+NUD_LAZY_LOAD_ARRAY(templates)
+NUD_LAZY_LOAD_ARRAY(components)
+
 - (instancetype)init {
     if (self = [super init]) {
         _string = [[NSMutableAttributedString alloc] init];
-        _selectors = [NSMutableArray new];
-        _templates = [NSMutableArray new];
     }
     return self;
 }
@@ -52,8 +54,7 @@ NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 - (NUDText *(^)(NSString *))text {
     return ^NUDText *(NSString *string) {
         
-        NUDText *text = [[NUDText alloc] initWithFather:self];
-        text.string = string;
+        NUDText *text = [[NUDText alloc] initWithFather:self string:string];
         return text;
         
     };
@@ -107,8 +108,29 @@ NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 
 @implementation NUDTextMaker (ToolsExtension)
 
-- (void)appendString:(NSAttributedString *)string {
+- (NSRange)appendString:(NSAttributedString *)string {
+    
+    NSUInteger start = self.string.length;
     [self.string appendAttributedString:string];
+    return NSMakeRange(start, string.length);
+}
+
+- (void)storeTextComponent:(NUDBase *)compoenent {
+    [self.components addObject:compoenent];
+}
+
+- (NUDBase *)componentInCharacterLocation:(NSUInteger)location {
+    
+    __block NUDBase *component = nil;
+    [self.components enumerateObjectsUsingBlock:^(NUDBase * _Nonnull comp, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSRange charRange = [comp range];
+        if (location >= charRange.location && location <= charRange.location + charRange.length - 1) {
+            component = comp;
+            *stop = YES;
+        }
+        
+    }];
+    return component;
 }
 
 - (void)addSelector:(NUDSelector *)selector {
@@ -158,6 +180,12 @@ NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
 
 - (void)removeLinkSelector:(NUDSelector *)sel {
     [self.selectors removeObject:sel];
+}
+
+- (void)p {
+    for (NUDBase *t in self.components) {
+        NSLog(@"%@",NSStringFromRange([t range]));
+    }
 }
 
 @end
