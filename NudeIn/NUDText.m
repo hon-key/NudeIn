@@ -344,7 +344,8 @@
 
 - (id (^)(void))reverse {
     return NUDABI(void) {
-        [self.attributes setObject:@[@(NSWritingDirectionRightToLeft | NSWritingDirectionOverride)] forKey:NSWritingDirectionAttributeName];
+        
+        [self.attributes setObject:@[@(NSWritingDirectionRightToLeft | NSTextWritingDirectionOverride)] forKey:NSWritingDirectionAttributeName];
         return self;
     };
 }
