@@ -155,7 +155,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 @implementation NUDAttachmentTemplate
 
-NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
+NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {

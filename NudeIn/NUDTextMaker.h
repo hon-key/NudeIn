@@ -50,9 +50,13 @@ extern NSString * const kNUDAttachmentAllImageKey;
 
 @interface NUDTextMaker (ToolsExtension)
 
+@property (nonatomic,strong,readonly) NSArray<NUDBase *> *textComponents;
+
 - (NSRange)appendString:(NSAttributedString *)string;
-- (void)storeTextComponent:(NUDBase *)compoenent;
+- (void)storeTextComponent:(NUDBase *)component;
+- (BOOL)containsComponent:(NUDBase *)component;
 - (NUDBase *)componentInCharacterLocation:(NSUInteger)location;
+- (void)applyComponentUpdate:(NSArray<NUDBase *> *)components;
 - (void)addSelector:(NUDSelector *)selector;
 - (NSUInteger)indexOfSelector:(NUDSelector *)selector;
 - (void)emurateSelector:(void(^)(NUDSelector *selector,BOOL *stop))handler;

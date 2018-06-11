@@ -22,11 +22,13 @@
 
 #import "NUDAttribute.h"
 
-@class NUDTextMaker,NUDText;
+@class NUDTextMaker,NUDText,NUDTextUpdate;
 
 @interface NUDText : NUDAttribute<NUDText *> <NSCopying>
 
 @property (nonatomic,copy,readonly) NSString *string;
+
+@property (nonatomic,weak) NUDTextUpdate *update;
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str;
 

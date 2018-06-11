@@ -26,5 +26,6 @@
 #import "NUDTextMaker.h"
 #import "NUDTextView.h"
 #import "NUDAction.h"
+#import "NUDTextUpdate.h"
 
 typedef NUDTextView NudeIn;

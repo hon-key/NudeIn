@@ -140,6 +140,10 @@
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
         [_textView3 p];
+        
+        [_textView3 update:^(NUDTextUpdate *update) {
+            update.comp(0).asText.font(90).color([UIColor redColor]).apply();
+        }];
     }
     return _textView3;
 }

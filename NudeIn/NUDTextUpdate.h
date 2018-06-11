@@ -1,4 +1,4 @@
-//  NUDTextView.h
+//  NUDTextUpdate.h
 //  Copyright (c) 2018 HJ-Cai
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,21 +21,25 @@
 
 #import "NudeIn-Prefix.h"
 
-@class NUDText,NUDTextMaker,NUDTextUpdate;
-//TODO:增加可自定义方法的功能
-//TODO:增加update功能
+@class NUDText,NUDAttachment,NUDBase;
 
-@interface NUDTextView : UITextView
+@interface NUDTextUpdate : NSObject
 
-+ (NUDTextView *)make:(void (^)(NUDTextMaker *make))make;
+- (NUDBase * (^)(NSUInteger))comp;
+- (NUDText * (^)(NSString *))textTemplate;
+- (NUDAttachment * (^)(NSString *))imageTemplate;
 
-// TODO: 提供一个可以给现有实例继续添加组件的功能
-- (NUDTextView *)append:(void (^)(NUDTextMaker *make))make;
+@end
 
-// TODO: 能够更新 NUDTextView 对象
-- (void)update:(void (^)(NUDTextUpdate *update))update;
 
-- (void)p;
+@interface NUDTextUpdate (UpdateHanlder)
 
+@property (nonatomic,strong,readonly) NSMutableArray *textComponent;
+
+- (instancetype)initWithComponents:(NSMutableArray *)components;
+
+- (void)applyComp:(NUDBase *)comp;
+
+- (NSAttributedString *)generateString;
 
 @end

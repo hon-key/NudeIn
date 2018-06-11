@@ -24,6 +24,7 @@
 #import "NUDTextMaker.h"
 #import "NUDAction.h"
 #import "NUDAttachment.h"
+#import "NUDTextUpdate.h"
 
 
 @interface NUDTextView ()<UITextViewDelegate>
@@ -65,6 +66,16 @@
 // TODO: append
 - (NUDTextView *)append:(void (^)(NUDTextMaker *))make {
     return nil;
+}
+
+- (void)update:(void (^)(NUDTextUpdate *))update {
+    NUDTextUpdate *up = [[NUDTextUpdate alloc] initWithComponents:[self.maker.textComponents mutableCopy]];
+    if (update) {
+        update(up);
+    }
+    // override
+    [self.maker applyComponentUpdate:up.textComponent];
+//    self.attributedText = [up generateString];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {

@@ -44,9 +44,9 @@ return _##array; \
 #define NUDAT_COPY OBJC_ASSOCIATION_COPY
 #define NUDAT_COPY_NONATOMIC OBJC_ASSOCIATION_COPY_NONATOMIC
 
-#define NUDAT_SYNTHESIZE(tag,type,prop) \
+#define NUDAT_SYNTHESIZE(tag,type,prop,upperCaseProp) \
 - (type)prop {return objc_getAssociatedObject(self, _cmd);} \
-- (void)setIdentifier:(type)_prop \
+- (void)set##upperCaseProp:(type)_prop \
 { objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
 
 #define NUD_MAKE_TEMPLATE_ARRAY_FROM(firstArg,maker) [NSMutableArray new]; \
@@ -103,19 +103,27 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDWord_HyphenationOff = NSUIntegerMax,
 };
 
+@class NUDText,NUDAttachment;
+
 @protocol NUDTemplate;
 
-@interface NUDBase : NSObject
+@interface NUDBase : NSObject <NSCopying>
 
 @property (nonatomic,assign,readonly) NSRange range;
 
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates;
+
+- (NUDText *)asText;
+- (NUDAttachment *)asImage;
 
 @end
 
 @interface NUDAttribute <className> : NUDBase
 
 @property (nonatomic,readonly) NSArray *fontStyles;
+
+// TODO : 匹配字符串
+- (NUDAB(NSString *))inText;
 
 // font
 - (NUDAB(NSUInteger))font;
@@ -156,12 +164,15 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(CGFloat))fl_headIndent;
 - (NUDAB(NUDLineBreakMode))linebreak;
 
+// TODO:重写link属性
 - (NUDAB(id,SEL))press;
 - (NUDAB(id,SEL))longPress;
 - (NUDAB(NSString *))Highlighted;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
+
+- (void (^)(void))apply;
 
 #define nud_attachWith(...) attachWith(__VA_ARGS__,nil)
 - (void (^)(NSString *,...))nud_attachWith;

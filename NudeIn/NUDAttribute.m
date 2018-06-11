@@ -21,6 +21,9 @@
 
 
 #import "NUDAttribute.h"
+#import "NUDText.h"
+#import "NUDAttachment.h"
+#import <objc/runtime.h>
 
 #define NUDMethodNotImplemented() \
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException \
@@ -33,6 +36,14 @@
 @end
 
 @implementation NUDBase
+
+- (id)copyWithZone:(NSZone *)zone {
+    NUDBase *newObject = [[[self class] alloc] init];
+    Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+    object_setIvar(newObject, ivar, _range);
+    
+    return newObject;
+}
 
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates {
     id<NUDTemplate> result = nil;
@@ -51,6 +62,23 @@
     return range;
 }
 
+- (NUDText *)asText {
+    if ([self isKindOfClass:[NUDText class]]) {
+        return (NUDText *)self;
+    }else {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"component is not a textComponent" userInfo:nil];
+    }
+}
+
+- (NUDAttachment *)asImage {
+    if ([self isKindOfClass:[NUDAttachment class]]) {
+        return (NUDAttachment *)self;
+    }else {
+        return nil;
+    }
+}
+
 @end
 
 @implementation NUDAttribute
@@ -66,8 +94,6 @@
 - (id (^)(void))bold {NUDMethodNotImplemented();}
 - (id (^)(CGFloat))skew {NUDMethodNotImplemented();}
 - (id (^)(NUDFontStyle))fontStyle {NUDMethodNotImplemented();}
-- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
-- (void (^)(void))attach {NUDMethodNotImplemented();}
 - (id (^)(id, SEL))link {NUDMethodNotImplemented();}
 - (id (^)(UIColor *))deprecated {NUDMethodNotImplemented();}
 - (id (^)(UIFont *))fontRes {NUDMethodNotImplemented();}
@@ -96,6 +122,9 @@
 - (id (^)(NSString *))Highlighted {NUDMethodNotImplemented();}
 
 
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
+- (void (^)(void))attach {NUDMethodNotImplemented();}
+- (void (^)(void))apply {NUDMethodNotImplemented();}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @synthesize fontStyles = _fontStyles;

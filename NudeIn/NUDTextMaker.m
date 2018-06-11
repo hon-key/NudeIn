@@ -115,8 +115,24 @@ NUD_LAZY_LOAD_ARRAY(components)
     return NSMakeRange(start, string.length);
 }
 
-- (void)storeTextComponent:(NUDBase *)compoenent {
-    [self.components addObject:compoenent];
+- (NSArray<NUDBase *> *)textComponents {
+    return [self.components copy];
+}
+
+- (void)storeTextComponent:(NUDBase *)component {
+    [self.components addObject:component];
+}
+
+- (BOOL)containsComponent:(NUDBase *)component {
+    if ([self.components containsObject:component]) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
+
+- (void)applyComponentUpdate:(NSArray<NUDBase *> *)components {
+    self.components = [components mutableCopy];
 }
 
 - (NUDBase *)componentInCharacterLocation:(NSUInteger)location {

@@ -24,6 +24,7 @@
 #import "NUDTextView.h"
 #import "NUDTextMaker.h"
 #import "NUDAction.h"
+#import "NUDTextUpdate.h"
 #import <objc/runtime.h>
 
 @interface NUDText ()
@@ -31,7 +32,11 @@
 @property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
 
 @property (nonatomic,copy,readwrite) NSString *string;
+
 @property (nonatomic,weak) NUDTextMaker *father;
+
+// TODO: inText
+@property (nonatomic,strong) NSMutableArray<NUDText *> *innerTexts;
 
 @property (nonatomic,assign) BOOL shouldDisableLinefeed;
 
@@ -62,9 +67,12 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    NUDText *text = [[[self class] alloc] initWithFather:self.father string:_string];
+    NUDText *text = [super copyWithZone:zone];
+    text.father = self.father;
+    text.string = self.string;
     text.attributes = [self.attributes mutableCopy];
     text.shouldDisableLinefeed = self.shouldDisableLinefeed;
+    text.update = self.update;
     return text;
 }
 
@@ -417,7 +425,11 @@
 
 - (void (^)(void))attach {
     return ^void (void) {
-        self.attachWith(kNUDTextAllText,nil);
+        if ([self.father containsComponent:self]) {
+            self.apply();
+        } else {
+            self.attachWith(kNUDTextAllText,nil);
+        }
     };
 }
 
@@ -448,8 +460,17 @@
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
         object_setIvar(self, ivar, NUD_VALUE_OF_RANGE(strRange));
         
+        
         [self.father storeTextComponent:self];
         
+    };
+}
+
+- (void (^)(void))apply {
+    return ^void (void) {
+        if (self.update) {
+            [self.update applyComp:self];
+        }
     };
 }
 
@@ -459,7 +480,7 @@
 
 @implementation NUDTextTemplate
 
-NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
+NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
@@ -471,7 +492,9 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier)
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    NUDTextTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
+    NUDTextTemplate *tpl = [super copyWithZone:zone];
+    tpl.parasiticalObj = [[NUDText alloc] initWithFather:self.parasiticalObj.father string:nil];
+    tpl.identifier = self.identifier;
     tpl.numOfLinefeed = self.numOfLinefeed;
     tpl.parasiticalObj = [self.parasiticalObj copy];
     return tpl;
