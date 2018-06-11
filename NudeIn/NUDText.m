@@ -361,24 +361,30 @@
 
 - (id (^)(CGFloat))lineSpacing {
     return NUDABI(CGFloat value) {
-        [self currentParagraphStyle].lineSpacing = value;
+        if (value >= 0) {
+             [self currentParagraphStyle].lineSpacing = value;
+        }
         return self;
     };
 }
 
 - (id (^)(CGFloat, CGFloat, CGFloat))lineHeight {
     return NUDABI(CGFloat min,CGFloat max,CGFloat mul) {
-        [self currentParagraphStyle].lineHeightMultiple = mul;
-        [self currentParagraphStyle].maximumLineHeight = max;
-        [self currentParagraphStyle].minimumLineHeight = min;
+        if (min >= 0 && max >= 0 && mul >= 0) {
+            [self currentParagraphStyle].lineHeightMultiple = mul;
+            [self currentParagraphStyle].maximumLineHeight = max;
+            [self currentParagraphStyle].minimumLineHeight = min;
+        }
         return self;
     };
 }
 
 - (id (^)(CGFloat, CGFloat))paraSpacing {
     return NUDABI(CGFloat before,CGFloat next) {
-        [self currentParagraphStyle].paragraphSpacing = next;
-        [self currentParagraphStyle].paragraphSpacingBefore = before;
+        if (before >=0 && next >= 0) {
+            [self currentParagraphStyle].paragraphSpacing = next;
+            [self currentParagraphStyle].paragraphSpacingBefore = before;
+        }
         return self;
     };
 }
