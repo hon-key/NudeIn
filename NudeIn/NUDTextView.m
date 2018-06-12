@@ -48,10 +48,7 @@
     label.textDragInteraction.enabled = NO;
     
     label.maker = [[NUDTextMaker alloc] init];
-    
-    if (make) {
-        make(label.maker);
-    }
+    make(label.maker);
     
     label.attributedText = label.maker.string;
     label.linkTextAttributes = @{};
@@ -72,10 +69,7 @@
 
 - (void)update:(void (^)(NUDTextUpdate *))update {
     NUDTextUpdate *up = [[NUDTextUpdate alloc] initWithComponents:[self.maker.textComponents mutableCopy]];
-    if (update) {
-        update(up);
-    }
-    // override
+    update(up);
     [self.maker applyComponentUpdate:up.textComponent];
     self.attributedText = [up generateString];
 }
