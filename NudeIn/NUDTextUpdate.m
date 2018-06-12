@@ -24,6 +24,7 @@
 #import "NUDText.h"
 #import "NUDAttachment.h"
 #import <objc/runtime.h>
+#import "NUDAction.h"
 
 @interface NUDTextUpdate ()
 
@@ -79,6 +80,35 @@
             [self.components replaceObjectAtIndex:index.unsignedIntegerValue withObject:comp];
         }
     }
+}
+
+- (NSAttributedString *)generateString {
+    
+    if (!self.components) {
+        return nil;
+    }
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
+    for (NUDBase *comp in self.components) {
+        if ([comp isKindOfClass:[NUDText class]]) {
+        
+            [NUDSelector perFormSelectorWithString:@"clearLineFeed" target:comp];
+            [NUDSelector perFormSelectorWithString:@"appendLineFeed" target:comp];
+            
+        }else if ([comp isKindOfClass:[NUDAttachment class]]) {
+            
+            
+        }
+        
+        NSAttributedString *compString = [comp attributedString];
+        NSUInteger start = string.length;
+        [string appendAttributedString:compString];
+        NSRange range = NSMakeRange(start, compString.length);
+        Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+        object_setIvar(comp, ivar, NUD_VALUE_OF_RANGE(range));
+    }
+    return string;
+    
 }
 
 - (NSMutableArray *)textComponent {

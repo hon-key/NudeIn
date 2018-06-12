@@ -79,6 +79,8 @@
     }
 }
 
+- (NSAttributedString *)attributedString {NUDMethodNotImplemented();}
+
 @end
 
 @implementation NUDAttribute

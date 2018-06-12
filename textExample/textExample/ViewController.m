@@ -98,7 +98,7 @@
             
             make.allImage().size(120,120).ln(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();
-            make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).ln(2).attach();
+            make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).ln(3).attach();
             make.textTemplate(@"shadow").shadowOffset(-5,-3).shadowBlur(5).shadowColor([UIColor redColor]).attach();
             NSShadow *shadow = [NSShadow new];
             shadow.shadowOffset = CGSizeMake(5,5);
@@ -141,9 +141,11 @@
         _textView3.scrollEnabled = YES;
         [_textView3 p];
         
-        [_textView3 update:^(NUDTextUpdate *update) {
-            update.comp(0).asText.font(90).color([UIColor redColor]).apply();
-        }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_textView3 update:^(NUDTextUpdate *update) {
+                update.comp(0).asText.font(90).color([UIColor redColor]).ln(1).apply();
+            }];
+        });
     }
     return _textView3;
 }

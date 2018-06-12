@@ -46,4 +46,12 @@
     }
 }
 
++ (void)perFormSelectorWithString:(NSString *)string target:(id)target {
+    IMP p = [target methodForSelector:NSSelectorFromString(string)];
+    void (*method)(id,SEL) = (void *)p;
+    method(target,NSSelectorFromString(string));
+}
+
+
+
 @end

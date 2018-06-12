@@ -129,7 +129,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
                 self.ln(template.parasiticalObj.numOfLinefeed);
             }
         }
-        NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:self.attachment];
+        NSAttributedString *string = [self attributedString];
         NSRange strRange = [self.father appendString:string];
         
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
@@ -141,6 +141,10 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
             self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
         }
     };
+}
+
+- (NSAttributedString *)attributedString {
+    return [NSAttributedString attributedStringWithAttachment:self.attachment];
 }
 
 - (UIImage *)image {

@@ -50,4 +50,6 @@
 - (NSString *)name;
 - (void)performAction:(NUDAction *)action;
 
++ (void)perFormSelectorWithString:(NSString *)string target:(id)target;
+
 @end

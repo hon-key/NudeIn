@@ -116,6 +116,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDText *)asText;
 - (NUDAttachment *)asImage;
 
+- (NSAttributedString *)attributedString;
+
 @end
 
 @interface NUDAttribute <className> : NUDBase

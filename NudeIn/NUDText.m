@@ -38,7 +38,7 @@
 // TODO: inText
 @property (nonatomic,strong) NSMutableArray<NUDText *> *innerTexts;
 
-@property (nonatomic,assign) BOOL shouldDisableLinefeed;
+@property (nonatomic,assign) NSUInteger countOfLinefeed;
 
 @end
 
@@ -47,7 +47,6 @@
 @property (nonatomic,strong) NUDText *parasiticalObj;
 
 @property (nonatomic,strong) NUDSelector *tplLinkSelector;
-@property (nonatomic,assign) NSUInteger numOfLinefeed;
 
 @end
 
@@ -60,7 +59,7 @@
         _attributes = [NSMutableDictionary new];
         _father = maker;
         _string = str;
-        _shouldDisableLinefeed = NO;
+        _countOfLinefeed = NSUIntegerMax;
 
     }
     return self;
@@ -71,7 +70,7 @@
     text.father = self.father;
     text.string = self.string;
     text.attributes = [self.attributes mutableCopy];
-    text.shouldDisableLinefeed = self.shouldDisableLinefeed;
+    text.countOfLinefeed = self.countOfLinefeed;
     text.update = self.update;
     return text;
 }
@@ -243,11 +242,8 @@
 - (id (^)(NSUInteger))ln {
     return NUDABI(NSUInteger num) {
         
-        self.shouldDisableLinefeed = num == 0 ? YES : NO;
+        self.countOfLinefeed = num;
         
-        for (int i = 0; i < num; i++) {
-            self.string = [self.string stringByAppendingString:@"\n"];
-        }
         return self;
     };
 }
@@ -454,14 +450,16 @@
                 self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
                 [tplAttrs removeObjectForKey:NSLinkAttributeName];
             }
-            if (template.numOfLinefeed > 0 && self.shouldDisableLinefeed == NO) {
-                self.ln(template.numOfLinefeed);
+            if (self.countOfLinefeed == NSUIntegerMax) {
+                self.countOfLinefeed = template.parasiticalObj.countOfLinefeed;
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
         }
         
-        NSAttributedString *string = [[NSAttributedString alloc] initWithString:self.string attributes:self.attributes];
+        [self appendLineFeed];
+        
+        NSAttributedString *string = [self attributedString];
         NSRange strRange = [self.father appendString:string];
         
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
@@ -481,6 +479,24 @@
     };
 }
 
+- (NSAttributedString *)attributedString {
+    return [[NSAttributedString alloc] initWithString:self.string attributes:self.attributes];
+}
+
+- (void)clearLineFeed {
+    while ([self.string hasSuffix:@"\n"]) {
+        self.string = [self.string substringToIndex:self.string.length - 1];
+    }
+}
+
+- (void)appendLineFeed {
+    if (self.countOfLinefeed != NSUIntegerMax) {
+        for (int i = 0; i < self.countOfLinefeed; i++) {
+            self.string = [self.string stringByAppendingString:@"\n"];
+        }
+    }
+}
+
 
 @end
 
@@ -493,7 +509,6 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
     if (self = [super init]) {
         _parasiticalObj = [[NUDText alloc] initWithFather:maker string:nil];
         self.identifier = identifier;
-        _numOfLinefeed = 0;
     }
     return self;
 }
@@ -502,7 +517,6 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
     NUDTextTemplate *tpl = [super copyWithZone:zone];
     tpl.parasiticalObj = [[NUDText alloc] initWithFather:self.parasiticalObj.father string:nil];
     tpl.identifier = self.identifier;
-    tpl.numOfLinefeed = self.numOfLinefeed;
     tpl.parasiticalObj = [self.parasiticalObj copy];
     return tpl;
 }
@@ -539,6 +553,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 - (id (^)(CGFloat, CGFloat))indent {return NUDABI(CGFloat head,CGFloat tail){NUDAT(indent,head,tail);};}
 - (id (^)(CGFloat))fl_headIndent {return NUDABI(CGFloat value){NUDAT(fl_headIndent,value);};}
 - (id (^)(NUDLineBreakMode))linebreak {return NUDABI(NUDLineBreakMode mode){NUDAT(linebreak,mode);};}
+- (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {
@@ -552,13 +567,6 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         url = [[url substringToIndex:url.length-1] stringByAppendingString:@"-1"];
         [self.parasiticalObj.attributes setObject:[NSURL URLWithString:url] forKey:NSLinkAttributeName];
         
-        return self;
-    };
-}
-
-- (id (^)(NSUInteger))ln {
-    return NUDABI(NSUInteger num) {
-        self.numOfLinefeed += num;
         return self;
     };
 }
@@ -580,7 +588,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         if (template.tplLinkSelector) {
             self.tplLinkSelector = template.tplLinkSelector;
         }
-        self.numOfLinefeed += template.numOfLinefeed;
+        self.parasiticalObj.countOfLinefeed += template.parasiticalObj.countOfLinefeed;
     }
 }
 

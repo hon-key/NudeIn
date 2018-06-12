@@ -75,7 +75,7 @@
     }
     // override
     [self.maker applyComponentUpdate:up.textComponent];
-//    self.attributedText = [up generateString];
+    self.attributedText = [up generateString];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
