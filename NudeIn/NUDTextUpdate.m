@@ -53,7 +53,7 @@
         if ([comp isKindOfClass:[NUDText class]]) {
             ((NUDText *)comp).update = self;
         }else if ([comp isKindOfClass:[NUDAttributedAtachment class]]) {
-            // TODO: attachment.update = self;
+            ((NUDAttachment *)comp).update = self;
         }else {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                            reason:@"components has unkown object" userInfo:nil];

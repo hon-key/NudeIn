@@ -22,6 +22,7 @@
 #import "NUDAttachment.h"
 #import "NUDTextMaker.h"
 #import "NUDText.h"
+#import "NUDTextUpdate.h"
 #import <objc/runtime.h>
 
 
@@ -52,10 +53,22 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
     if (self = [super init]) {
         _father = maker;
         _attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
-        _numOfLinefeed = 0;
+        _numOfLinefeed = NSUIntegerMax;
         
     }
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    NUDAttachment *attachment = [super copyWithZone:zone];
+    attachment.father = self.father;
+    attachment.attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
+    attachment.attachment.bounds = self.attachment.bounds;
+    attachment.attachment.image = [UIImage imageWithCGImage:self.attachment.image.CGImage];
+    attachment.numOfLinefeed = self.numOfLinefeed;
+    attachment.actionTags = [self.actionTags mutableCopy];
+    attachment.update = self.update;
+    return attachment;
 }
 
 - (id (^)(CGFloat, CGFloat))origin {
@@ -90,11 +103,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 - (id (^)(NSUInteger))ln {
     return NUDABI(NSUInteger num) {
-        if (num > 0) {
-            self.numOfLinefeed += num;
-        }else {
-            self.numOfLinefeed = 0;
-        }
+        self.numOfLinefeed = num;
         HK_STORE_TAG_TO(self.actionTags);
         return self;
     };
@@ -125,8 +134,8 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
             if (HK_FIND_TAG(actionTags, vertical)) {
                 self.vertical(tplAttachment.bounds.origin.y);
             }
-            if (template.parasiticalObj.numOfLinefeed > 0) {
-                self.ln(template.parasiticalObj.numOfLinefeed);
+            if (self.numOfLinefeed == NSUIntegerMax) {
+                self.numOfLinefeed = template.parasiticalObj.numOfLinefeed;
             }
         }
         NSAttributedString *string = [self attributedString];
@@ -137,10 +146,22 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
         
         [self.father storeTextComponent:self];
         
-        if (self.numOfLinefeed > 0) {
-            self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
+        [self appendLineFeed];
+    };
+}
+
+- (void (^)(void))apply {
+    return ^void (void) {
+        if (self.update) {
+            [self.update applyComp:self];
         }
     };
+}
+
+- (void)appendLineFeed {
+    if (self.numOfLinefeed != 0 && self.numOfLinefeed != NSUIntegerMax) {
+        self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
+    }
 }
 
 - (NSAttributedString *)attributedString {
@@ -203,9 +224,10 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         if (HK_FIND_TAG(actionTags, vertical)) {
             self.vertical(attachment.bounds.origin.y);
         }
-        if (HK_FIND_TAG(actionTags, vertical)) {
+        if (HK_FIND_TAG(actionTags, ln)) {
             self.parasiticalObj.numOfLinefeed += template.parasiticalObj.numOfLinefeed;
         }
+
     }
 }
 

@@ -192,6 +192,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
 
+- (void (^)(void))apply;
+
 - (void (^)(NSString *,...))nud_attachWith;
 
 @end

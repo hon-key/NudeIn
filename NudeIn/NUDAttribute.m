@@ -145,9 +145,13 @@
 - (id (^)(CGFloat, CGFloat))origin {NUDMethodNotImplemented();}
 - (id (^)(CGFloat, CGFloat))size {NUDMethodNotImplemented();}
 - (void (^)(void))attach {NUDMethodNotImplemented();}
-- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
+
 - (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
 - (id (^)(NSUInteger))ln {NUDMethodNotImplemented();}
+
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
+- (void (^)(void))apply {NUDMethodNotImplemented();}
+
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @end

@@ -25,9 +25,10 @@
 #import "NUDAction.h"
 #import "NUDAttachment.h"
 #import "NUDTextUpdate.h"
+#import <objc/runtime.h>
 
 
-@interface NUDTextView ()<UITextViewDelegate>
+@interface NUDTextView ()<UITextViewDelegate,NSLayoutManagerDelegate>
 
 @property (nonatomic,strong) NUDTextMaker *maker;
 
@@ -43,6 +44,7 @@
     label.textContainer.lineFragmentPadding = 0;
     label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
     label.delegate = label;
+    label.layoutManager.delegate = label;
     label.textDragInteraction.enabled = NO;
     
     label.maker = [[NUDTextMaker alloc] init];
@@ -125,6 +127,9 @@
         if ([base isKindOfClass:[NUDText class]]) {
             NUDText *textComp = (NUDText *)base;
             NSLog(@"%@",[textComp.string substringWithRange:NSMakeRange(index - [textComp range].location, 1)]);
+//            [self update:^(NUDTextUpdate *update) {
+//                update.comp([[self.maker textComponents] indexOfObject:textComp]).asText.mark([UIColor blackColor]).apply();
+//            }];
         }else if ([base isKindOfClass:[NUDAttachment class]]) {
             NSLog(@"image");
         }
@@ -154,6 +159,29 @@
     
     [super touchesCancelled:touches withEvent:event];
 }
+
+//- (BOOL)layoutManager:(NSLayoutManager *)layoutManager shouldBreakLineByHyphenatingBeforeCharacterAtIndex:(NSUInteger)charIndex {
+//    NSArray *components = self.maker.textComponents;
+//    NUDBase *startComp = [self.maker componentInCharacterLocation:charIndex];
+//    NSRange startCompRange = [startComp range];
+//    startCompRange.length++;
+//    Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+//    object_setIvar(startComp, ivar, NUD_VALUE_OF_RANGE(startCompRange));
+//
+//    if ([components lastObject] != startComp) {
+//        NSUInteger compIndexInArray = [components indexOfObject:startComp];
+//        for (NSUInteger i = compIndexInArray + 1; i < components.count; i++) {
+//            NUDBase *comp = components[i];
+//            NSRange compRange = [comp range];
+//            compRange.location++;
+//            Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
+//            object_setIvar(comp, ivar, NUD_VALUE_OF_RANGE(compRange));
+//        }
+//    }
+//
+//
+//    return YES;
+//}
 
 
 @end

@@ -21,11 +21,13 @@
 
 #import "NUDAttribute.h"
 
-@class NUDTextMaker,NUDAttachment;
+@class NUDTextMaker,NUDAttachment,NUDTextUpdate;
 
 @interface NUDAttachment : NUDAttributedAtachment<NUDAttachment *>
 
 @property (nonatomic,strong) UIImage *image;
+
+@property (nonatomic,weak) NUDTextUpdate *update;
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker;
 

@@ -130,10 +130,10 @@
             make.text(@"left").font(17).aligment(NUDAliLeft).ln(1).nud_attachWith(@"");
             make.text(@"center").font(17).aligment(NUDAliCenter).ln(1).nud_attachWith(@"");
             make.text(@"right").font(17).aligment(NUDAliRight).ln(1).nud_attachWith(@"");
-            make.text(@"There is a \"significant\" link between higher temperatures and lower school achievement, say economic researchers.\nAn analysis of test scores of 10 million US secondary school students over 13 years shows hot weather has a negative impact on results.\nThe study says a practical response could be to use more air conditioning.\nStudents taking exams in a summer heatwave might have always complained that they were ").fl_headIndent(20).font(17).linebreak(NUDWord).ln(1).nud_attachWith(@"");
+            make.text(@"There is a \"significant\" link between higher temperatures and lower school achievement, say economic researchers.\nAn analysis of test scores of 10 million US secondary school students over 13 years shows hot weather has a negative impact on results.\nThe study says a practical response could be to use more air conditioning.\nStudents taking exams in a summer heatwave might have always complained that they were ").fl_headIndent(20).font(17).linebreak(NUDWord_HyphenationOff).ln(1).nud_attachWith(@"");
             make.text(@"Hello World").font(30).color([UIColor greenColor]).shadowOffset(-3,3).shadowBlur(4).shadowColor([[UIColor blackColor] colorWithAlphaComponent:0.33]).aligment(NUDAliCenter).ln(1).nud_attachWith(@"");
             make.text(@"M416").font(20).nud_attachWith(@"");
-            make.text(@"[1]").font(10).vertical(10).link(self,@selector(linkHandler:)).nud_attachWith(@"");
+            make.text(@"[1]").font(10).vertical(10).nud_attachWith(@"");
  
 
         }];
@@ -143,7 +143,8 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [_textView3 update:^(NUDTextUpdate *update) {
-                update.comp(0).asText.font(90).color([UIColor redColor]).ln(1).apply();
+//                update.comp(0).asText.font(90).color([UIColor redColor]).ln(1).apply();
+                update.comp(2).asImage.apply();
             }];
         });
     }
