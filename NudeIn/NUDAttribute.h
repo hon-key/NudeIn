@@ -103,18 +103,20 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDWord_HyphenationOn = NSUIntegerMax,
 };
 
-@class NUDText,NUDAttachment;
+@class NUDText,NUDAttachment,NUDAttribute<T>,NUDAttributedAtachment<T>,NUDBase;
 
 @protocol NUDTemplate;
 
 @interface NUDBase : NSObject <NSCopying>
 
+@property (nonatomic,assign,readwrite) BOOL implementedEmpty;
+
 @property (nonatomic,assign,readonly) NSRange range;
 
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates;
 
-- (NUDText *)asText;
-- (NUDAttachment *)asImage;
+- (NUDAttribute<NUDAttribute *> *)asText;
+- (NUDAttributedAtachment<NUDAttributedAtachment *> *)asImage;
 
 - (NSAttributedString *)attributedString;
 

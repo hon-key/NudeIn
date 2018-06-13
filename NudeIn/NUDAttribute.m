@@ -25,10 +25,19 @@
 #import "NUDAttachment.h"
 #import <objc/runtime.h>
 
-#define NUDMethodNotImplemented() \
-                @throw [NSException exceptionWithName:NSInternalInconsistencyException \
-                                               reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
-                                             userInfo:nil]
+#define NUDOverrideASubclass() \
+                            @throw [NSException exceptionWithName:NSInternalInconsistencyException \
+                                                           reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
+                                                         userInfo:nil]
+
+#define NUDMethodNotImplemented(...) \
+                                    if (self.implementedEmpty) {return ^id (__VA_ARGS__) {return self;};} \
+                                    else { NUDOverrideASubclass(); }
+
+#define NUDMethodNotImplementedReturnVoid(...) \
+                                   if (self.implementedEmpty) {return ^void (__VA_ARGS__) {return;};} \
+                                   else { NUDOverrideASubclass(); }
+
 
 @interface NUDBase () {
     NSValue *_range;
@@ -36,6 +45,13 @@
 @end
 
 @implementation NUDBase
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _implementedEmpty = NO; // default;
+    }
+    return self;
+}
 
 - (id)copyWithZone:(NSZone *)zone {
     NUDBase *newObject = [[[self class] alloc] init];
@@ -62,72 +78,77 @@
     return range;
 }
 
-- (NUDText *)asText {
+- (NUDAttribute<NUDAttribute *> *)asText {
     if ([self isKindOfClass:[NUDText class]]) {
-        return (NUDText *)self;
+        return (NUDAttribute<NUDAttribute *> *)self;
     }else {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"component is not a text component" userInfo:nil];
+        NUDAttribute<NUDAttribute *> *emptyAttribute = [[NUDAttribute alloc] init];
+        emptyAttribute.implementedEmpty = YES;
+        return emptyAttribute;
     }
 }
 
-- (NUDAttachment *)asImage {
+- (NUDAttributedAtachment<NUDAttributedAtachment *> *)asImage {
+    
     if ([self isKindOfClass:[NUDAttachment class]]) {
-        return (NUDAttachment *)self;
+        return (NUDAttributedAtachment<NUDAttributedAtachment *> *)self;
     }else {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"component is not a image component" userInfo:nil];
+        NUDAttributedAtachment<NUDAttributedAtachment *> *emptyAttrAttachment = [[NUDAttributedAtachment alloc] init];
+        emptyAttrAttachment.implementedEmpty = YES;
+        return emptyAttrAttachment;
     }
+    
 }
 
-- (NSAttributedString *)attributedString {NUDMethodNotImplemented();}
+
+- (NSAttributedString *)attributedString {NUDOverrideASubclass();}
 
 @end
 
 @implementation NUDAttribute
 
-- (id (^)(UIColor *))color {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger))font {NUDMethodNotImplemented();}
-- (id (^)(NSString *, NSUInteger))fontName {NUDMethodNotImplemented();}
-- (id (^)(UIColor *))mark {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger, UIColor *))solid {NUDMethodNotImplemented();}
-- (id (^)(NUDUnderlineStyle, UIColor *))_ {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))kern {NUDMethodNotImplemented();}
-- (id (^)(void))bold {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))skew {NUDMethodNotImplemented();}
-- (id (^)(NUDFontStyle))fontStyle {NUDMethodNotImplemented();}
-- (id (^)(id, SEL))link {NUDMethodNotImplemented();}
-- (id (^)(UIColor *))deprecated {NUDMethodNotImplemented();}
-- (id (^)(UIFont *))fontRes {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger))ln {NUDMethodNotImplemented();}
-- (id (^)(BOOL))ligature {NUDMethodNotImplemented();}
+- (id (^)(UIColor *))color {NUDMethodNotImplemented(UIColor *c);}
+- (id (^)(NSUInteger))font {NUDMethodNotImplemented(NSUInteger i);}
+- (id (^)(NSString *, NSUInteger))fontName {NUDMethodNotImplemented(NSString *s,NSUInteger i);}
+- (id (^)(UIColor *))mark {NUDMethodNotImplemented(UIColor *c);}
+- (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
+- (id (^)(NSUInteger, UIColor *))solid {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
+- (id (^)(NUDUnderlineStyle, UIColor *))_ {NUDMethodNotImplemented(NUDUnderlineStyle s,UIColor *c);}
+- (id (^)(CGFloat))kern {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(void))bold {NUDMethodNotImplemented(void);}
+- (id (^)(CGFloat))skew {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(NUDFontStyle))fontStyle {NUDMethodNotImplemented(NUDFontStyle f);}
+- (id (^)(id, SEL))link {NUDMethodNotImplemented(id d,SEL s);}
+- (id (^)(UIColor *))deprecated {NUDMethodNotImplemented(UIColor *c);}
+- (id (^)(UIFont *))fontRes {NUDMethodNotImplemented(UIFont *f);}
+- (id (^)(NSUInteger))ln {NUDMethodNotImplemented(NSUInteger i);}
+- (id (^)(BOOL))ligature {NUDMethodNotImplemented(BOOL b);}
 // shadow
-- (id (^)(void))shadow {NUDMethodNotImplemented();}
-- (id (^)(NUDShadowDirection))shadowDirection {NUDMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat))shadowOffset {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented();}
-- (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented();}
-- (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented();}
+- (id (^)(void))shadow {NUDMethodNotImplemented(void);}
+- (id (^)(NUDShadowDirection))shadowDirection {NUDMethodNotImplemented(NUDShadowDirection d);}
+- (id (^)(CGFloat, CGFloat))shadowOffset {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
+- (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented(UIColor *c);}
+- (id (^)(NSShadow *))shadowRes {NUDMethodNotImplemented(NSShadow *s);}
 /// 内存占用很高
-- (id (^)(void))letterpress {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))stretch {NUDMethodNotImplemented();}
-- (id (^)(void))reverse {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))lineSpacing {NUDMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat,CGFloat))lineHeight {NUDMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat))paraSpacing {NUDMethodNotImplemented();}
-- (id (^)(NUDAlignment))aligment {NUDMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat))indent {NUDMethodNotImplemented();}
-- (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented();}
-- (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented();}
+- (id (^)(void))letterpress {NUDMethodNotImplemented(void);}
+- (id (^)(CGFloat))vertical {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(CGFloat))stretch {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(void))reverse {NUDMethodNotImplemented(void);}
+- (id (^)(CGFloat))lineSpacing {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(CGFloat, CGFloat,CGFloat))lineHeight {NUDMethodNotImplemented(CGFloat f1,CGFloat f2,CGFloat f3);}
+- (id (^)(CGFloat, CGFloat))paraSpacing {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
+- (id (^)(NUDAlignment))aligment {NUDMethodNotImplemented(NUDAlignment a);}
+- (id (^)(CGFloat, CGFloat))indent {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
+- (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented(NUDLineBreakMode m);}
 
-- (id (^)(NSString *))Highlighted {NUDMethodNotImplemented();}
+- (id (^)(NSString *))Highlighted {NUDMethodNotImplemented(NSString *s);}
 
 
-- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
-- (void (^)(void))attach {NUDMethodNotImplemented();}
-- (void (^)(void))apply {NUDMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}
+- (void (^)(void))attach {NUDMethodNotImplementedReturnVoid(void);}
+- (void (^)(void))apply {NUDMethodNotImplementedReturnVoid(void);}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @synthesize fontStyles = _fontStyles;
@@ -143,15 +164,15 @@
 
 @implementation NUDAttributedAtachment
 
-- (id (^)(CGFloat, CGFloat))origin {NUDMethodNotImplemented();}
-- (id (^)(CGFloat, CGFloat))size {NUDMethodNotImplemented();}
-- (void (^)(void))attach {NUDMethodNotImplemented();}
+- (id (^)(CGFloat, CGFloat))origin {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
+- (id (^)(CGFloat, CGFloat))size {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
+- (void (^)(void))attach {NUDMethodNotImplementedReturnVoid(void);}
 
-- (id (^)(CGFloat))vertical {NUDMethodNotImplemented();}
-- (id (^)(NSUInteger))ln {NUDMethodNotImplemented();}
+- (id (^)(CGFloat))vertical {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(NSUInteger))ln {NUDMethodNotImplemented(NSUInteger i);}
 
-- (void (^)(NSString *,...))attachWith {NUDMethodNotImplemented();}
-- (void (^)(void))apply {NUDMethodNotImplemented();}
+- (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}
+- (void (^)(void))apply {NUDMethodNotImplementedReturnVoid(void);}
 
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
