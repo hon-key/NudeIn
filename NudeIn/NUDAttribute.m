@@ -67,7 +67,7 @@
         return (NUDText *)self;
     }else {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"component is not a textComponent" userInfo:nil];
+                                       reason:@"component is not a text component" userInfo:nil];
     }
 }
 
@@ -75,7 +75,8 @@
     if ([self isKindOfClass:[NUDAttachment class]]) {
         return (NUDAttachment *)self;
     }else {
-        return nil;
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"component is not a image component" userInfo:nil];
     }
 }
 

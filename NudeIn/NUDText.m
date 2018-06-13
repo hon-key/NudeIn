@@ -412,8 +412,8 @@
 
 - (id (^)(NUDLineBreakMode))linebreak {
     return NUDABI(NUDLineBreakMode mode) {
-        [self currentParagraphStyle].lineBreakMode = mode == NUDWord_HyphenationOff ? (NSLineBreakMode)NUDWord:(NSLineBreakMode)mode;
-        [self currentParagraphStyle].hyphenationFactor = mode == NUDWord ? 1:0;
+        [self currentParagraphStyle].lineBreakMode = mode == NUDWord_HyphenationOn ? (NSLineBreakMode)NUDWord:(NSLineBreakMode)mode;
+        [self currentParagraphStyle].hyphenationFactor = mode == NUDWord_HyphenationOn ? 0:0; // 由于hyphenation会改变glyph的数量，会和目前的点击处理逻辑冲突，解决以后再开通使用
         return self;
     };
 }

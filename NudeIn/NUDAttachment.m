@@ -26,7 +26,7 @@
 #import <objc/runtime.h>
 
 
-#define HK_STORE_TAG_TO(tags) [tags addObject:NSStringFromSelector(_cmd)]
+#define HK_STORE_TAG_TO(tags) if(![tags containsObject:NSStringFromSelector(_cmd)]) {[tags addObject:NSStringFromSelector(_cmd)];}
 #define HK_FIND_TAG(tags,t) [tags containsObject:NSStringFromSelector(@selector(t))]
 
 @interface NUDAttachment ()
@@ -61,13 +61,22 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 - (id)copyWithZone:(NSZone *)zone {
     NUDAttachment *attachment = [super copyWithZone:zone];
+    
     attachment.father = self.father;
     attachment.attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
     attachment.attachment.bounds = self.attachment.bounds;
-    attachment.attachment.image = [UIImage imageWithCGImage:self.attachment.image.CGImage];
     attachment.numOfLinefeed = self.numOfLinefeed;
     attachment.actionTags = [self.actionTags mutableCopy];
     attachment.update = self.update;
+    
+    NSData *imgData = nil;
+    if ((imgData = UIImagePNGRepresentation(self.attachment.image)) ||
+        (imgData = UIImageJPEGRepresentation(self.attachment.image,1.0))) {
+        attachment.attachment.image = [UIImage imageWithData:imgData scale:[UIScreen mainScreen].scale];
+    } else {
+        attachment.attachment.image = self.attachment.image;
+    }
+    
     return attachment;
 }
 
@@ -145,8 +154,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
         object_setIvar(self, ivar, NUD_VALUE_OF_RANGE(strRange));
         
         [self.father storeTextComponent:self];
-        
-        [self appendLineFeed];
+
     };
 }
 
@@ -158,14 +166,18 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
     };
 }
 
-- (void)appendLineFeed {
-    if (self.numOfLinefeed != 0 && self.numOfLinefeed != NSUIntegerMax) {
-        self.father.text(@"").ln(self.numOfLinefeed).attachWith(@"",nil);
-    }
-}
-
 - (NSAttributedString *)attributedString {
-    return [NSAttributedString attributedStringWithAttachment:self.attachment];
+    NSAttributedString *string =  [NSAttributedString attributedStringWithAttachment:self.attachment];
+    NSMutableAttributedString *stringM = [string mutableCopy];
+    NSMutableString *strLinefeed = [NSMutableString string];
+    if (self.numOfLinefeed != 0 && self.numOfLinefeed != NSUIntegerMax) {
+        for (int i = 0; i < self.numOfLinefeed; i++) {
+            [strLinefeed appendString:@"\n"];
+        }
+    }
+    NSAttributedString *lineFeed = [[NSAttributedString alloc] initWithString:strLinefeed attributes:nil];
+    [stringM appendAttributedString:lineFeed];
+    return stringM;
 }
 
 - (UIImage *)image {

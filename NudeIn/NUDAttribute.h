@@ -74,8 +74,8 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
     NUD_ = NSUnderlineStyleSingle,       NUDDot = NSUnderlinePatternDot,              NUDByWord = NSUnderlineByWord,
     NUD__ = NSUnderlineStyleDouble,      NUDDotDot = NSUnderlinePatternDashDotDot,
     NUDThick_ = NSUnderlineStyleThick,   NUDDash = NSUnderlinePatternDash,
-                                        NUDDashDot = NSUnderlinePatternDashDot,
-                                        NUDDashDotDot = NSUnderlinePatternDashDotDot
+                                         NUDDashDot = NSUnderlinePatternDashDot,
+                                         NUDDashDotDot = NSUnderlinePatternDashDotDot
 };
 
 typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDTr_tail = NSLineBreakByTruncatingTail,
     NUDTr_middle = NSLineBreakByTruncatingMiddle,
     
-    NUDWord_HyphenationOff = NSUIntegerMax,
+    NUDWord_HyphenationOn = NSUIntegerMax,
 };
 
 @class NUDText,NUDAttachment;
