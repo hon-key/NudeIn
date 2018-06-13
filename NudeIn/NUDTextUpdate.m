@@ -95,10 +95,7 @@
             [NUDSelector perFormSelectorWithString:@"clearLineFeed" target:comp];
             [NUDSelector perFormSelectorWithString:@"appendLineFeed" target:comp];
             
-        }else if ([comp isKindOfClass:[NUDAttachment class]]) {
-            
-            
-        }
+        }else if ([comp isKindOfClass:[NUDAttachment class]]) {}
         
         NSAttributedString *compString = [comp attributedString];
         NSUInteger start = string.length;
