@@ -114,6 +114,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 @property (nonatomic,assign,readonly) NSRange range;
 
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates;
+- (void)mergeComp:(NUDBase *)comp;
 
 - (NUDAttribute<NUDAttribute *> *)asText;
 - (NUDAttributedAtachment<NUDAttributedAtachment *> *)asImage;

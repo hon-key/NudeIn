@@ -134,7 +134,7 @@
             make.text(@"Hello World").font(30).color([UIColor greenColor]).shadowOffset(-3,3).shadowBlur(4).shadowColor([[UIColor blackColor] colorWithAlphaComponent:0.33]).aligment(NUDAliCenter).ln(1).nud_attachWith(@"");
             make.text(@"M416").font(20).nud_attachWith(@"");
             make.text(@"[1]").font(10).vertical(10).nud_attachWith(@"");
- 
+
 
         }];
         _textView3.backgroundColor = [UIColor greenColor];

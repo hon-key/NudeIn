@@ -116,7 +116,7 @@ NUD_LAZY_LOAD_ARRAY(components)
 }
 
 - (NSArray<NUDBase *> *)textComponents {
-    return [self.components copy];
+    return self.components;
 }
 
 - (void)storeTextComponent:(NUDBase *)component {

@@ -80,6 +80,26 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
     return attachment;
 }
 
+- (void)mergeComp:(NUDBase *)comp {
+    if ([comp isKindOfClass:[NUDAttachment class]]) {
+        NUDAttachment *attachment = (NUDAttachment *)comp;
+        self.father = attachment.father;
+        self.attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
+        self.attachment.bounds = attachment.attachment.bounds;
+        self.numOfLinefeed = attachment.numOfLinefeed;
+        self.actionTags = [attachment.actionTags mutableCopy];
+        self.update = attachment.update;
+        
+        NSData *imgData = nil;
+        if ((imgData = UIImagePNGRepresentation(attachment.attachment.image)) ||
+            (imgData = UIImageJPEGRepresentation(attachment.attachment.image,1.0))) {
+            self.attachment.image = [UIImage imageWithData:imgData scale:[UIScreen mainScreen].scale];
+        } else {
+            self.attachment.image = self.attachment.image;
+        }
+    }
+}
+
 - (id (^)(CGFloat, CGFloat))origin {
     return NUDABI(CGFloat x,CGFloat y) {
         CGRect bounds = self.attachment.bounds;
@@ -209,6 +229,16 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
     tpl.parasiticalObj.attachment.bounds = self.parasiticalObj.attachment.bounds;
     tpl.parasiticalObj.numOfLinefeed = self.parasiticalObj.numOfLinefeed;
     return tpl;
+}
+
+- (void)mergeComp:(NUDBase *)comp {
+    if ([comp isKindOfClass:[NUDAttachmentTemplate class]]) {
+        NUDAttachmentTemplate *tpl = (NUDAttachmentTemplate *)comp;
+        self.parasiticalObj.actionTags = [tpl.parasiticalObj.actionTags mutableCopy];
+        self.parasiticalObj.attachment.image = tpl.parasiticalObj.attachment.image;
+        self.parasiticalObj.attachment.bounds = tpl.parasiticalObj.attachment.bounds;
+        self.parasiticalObj.numOfLinefeed = tpl.parasiticalObj.numOfLinefeed;
+    }
 }
 
 - (id (^)(CGFloat, CGFloat))origin {return NUDABI(CGFloat x,CGFloat y) {NUDAT(origin,x,y);};}

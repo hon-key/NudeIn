@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		924B16B620D3AFF700D74A81 /* NUDTouchTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 924B16B520D3AFF700D74A81 /* NUDTouchTracking.m */; };
 		9601DF3820BA78E2004811F0 /* NUDText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601DF2F20BA78E2004811F0 /* NUDText.m */; };
 		9601DF3920BA78E2004811F0 /* NUDAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601DF3220BA78E2004811F0 /* NUDAttribute.m */; };
 		9601DF3A20BA78E2004811F0 /* NUDTextMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601DF3520BA78E2004811F0 /* NUDTextMaker.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		924B16B420D3AFF600D74A81 /* NUDTouchTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDTouchTracking.h; path = ../../NudeIn/NUDTouchTracking.h; sourceTree = "<group>"; };
+		924B16B520D3AFF700D74A81 /* NUDTouchTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NUDTouchTracking.m; path = ../../NudeIn/NUDTouchTracking.m; sourceTree = "<group>"; };
 		9601DF2E20BA78E2004811F0 /* NUDTextMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDTextMaker.h; path = ../../NudeIn/NUDTextMaker.h; sourceTree = "<group>"; };
 		9601DF2F20BA78E2004811F0 /* NUDText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NUDText.m; path = ../../NudeIn/NUDText.m; sourceTree = "<group>"; };
 		9601DF3020BA78E2004811F0 /* NUDAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDAttribute.h; path = ../../NudeIn/NUDAttribute.h; sourceTree = "<group>"; };
@@ -82,6 +85,8 @@
 				9601DF3520BA78E2004811F0 /* NUDTextMaker.m */,
 				969B313C20CC248C006D1609 /* NUDTextUpdate.h */,
 				969B313B20CC248C006D1609 /* NUDTextUpdate.m */,
+				924B16B420D3AFF600D74A81 /* NUDTouchTracking.h */,
+				924B16B520D3AFF700D74A81 /* NUDTouchTracking.m */,
 				9601DF3420BA78E2004811F0 /* NUDTextView.h */,
 				9601DF3620BA78E2004811F0 /* NUDTextView.m */,
 				9601DF4920BA8E43004811F0 /* NudeIn-Prefix.h */,
@@ -277,6 +282,7 @@
 				9601DF3B20BA78E2004811F0 /* NUDTextView.m in Sources */,
 				962F3F6F20A96B16009AC22A /* AppDelegate.m in Sources */,
 				9601DF3C20BA78E2004811F0 /* NUDAttachment.m in Sources */,
+				924B16B620D3AFF700D74A81 /* NUDTouchTracking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +418,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2H52J36639;
+				DEVELOPMENT_TEAM = A5J95G742E;
 				INFOPLIST_FILE = textExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.CAI.textExample;
@@ -427,7 +433,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2H52J36639;
+				DEVELOPMENT_TEAM = A5J95G742E;
 				INFOPLIST_FILE = textExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.CAI.textExample;

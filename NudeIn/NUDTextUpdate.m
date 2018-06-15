@@ -23,6 +23,7 @@
 #import "NUDAttribute.h"
 #import "NUDText.h"
 #import "NUDAttachment.h"
+#import "NUDTextMaker.h"
 #import <objc/runtime.h>
 #import "NUDAction.h"
 
@@ -41,8 +42,7 @@
             objc_setAssociatedObject(newObject, @"storedCompIndex", @(index), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             return newObject;
         }else {
-            @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"component not found" userInfo:nil];
+            return [NUDBase new];
         }
     };
 }
@@ -77,21 +77,31 @@
     if (comp) {
         NSNumber *index = objc_getAssociatedObject(comp, @"storedCompIndex");
         if (index.unsignedIntegerValue < self.components.count) {
-            [self.components replaceObjectAtIndex:index.unsignedIntegerValue withObject:comp];
+            NUDBase *originalBase = [self.components objectAtIndex:index.unsignedIntegerValue];
+            [originalBase mergeComp:comp];
         }
     }
 }
 
 - (NSAttributedString *)generateString {
-    
     if (!self.components) {
         return nil;
     }
+    return [[self class] generateWithComponents:self.components];
+}
+
++ (NSAttributedString *)nud_generateStringWith:(NUDBase *)comp maker:(NUDTextMaker *)maker {
+    
+    return [self generateWithComponents:maker.textComponents];
+}
+
++ (NSMutableAttributedString *)generateWithComponents:(NSArray *)components {
     
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
-    for (NUDBase *comp in self.components) {
+    
+    for (NUDBase *comp in components) {
         if ([comp isKindOfClass:[NUDText class]]) {
-        
+            
             [NUDSelector perFormSelectorWithString:@"clearLineFeed" target:comp];
             [NUDSelector perFormSelectorWithString:@"appendLineFeed" target:comp];
             
@@ -104,6 +114,7 @@
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
         object_setIvar(comp, ivar, NUD_VALUE_OF_RANGE(range));
     }
+    
     return string;
     
 }

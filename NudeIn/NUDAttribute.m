@@ -57,8 +57,15 @@
     NUDBase *newObject = [[[self class] alloc] init];
     Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
     object_setIvar(newObject, ivar, _range);
+    newObject.implementedEmpty = self.implementedEmpty;
     
     return newObject;
+}
+
+- (void)mergeComp:(NUDBase *)comp {
+    NSRange range = [comp range];
+    _range = NUD_VALUE_OF_RANGE(range);
+    _implementedEmpty = comp.implementedEmpty;
 }
 
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates {

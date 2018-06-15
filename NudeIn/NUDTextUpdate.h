@@ -21,7 +21,7 @@
 
 #import "NudeIn-Prefix.h"
 
-@class NUDText,NUDAttachment,NUDBase;
+@class NUDText,NUDAttachment,NUDBase,NUDTextMaker;
 
 @interface NUDTextUpdate : NSObject
 
@@ -41,5 +41,7 @@
 - (void)applyComp:(NUDBase *)comp;
 
 - (NSAttributedString *)generateString;
+
++ (NSAttributedString *)nud_generateStringWith:(NUDBase *)comp maker:(NUDTextMaker *)maker;
 
 @end

@@ -75,6 +75,18 @@
     return text;
 }
 
+- (void)mergeComp:(NUDBase *)comp {
+    if ([comp isKindOfClass:[NUDText class]]) {
+        NUDText *text = (NUDText *)comp;
+        [super mergeComp:comp];
+        self.father = text.father;
+        self.string = text.string;
+        self.attributes = [text.attributes mutableCopy];
+        self.countOfLinefeed = text.countOfLinefeed;
+        self.update = text.update;
+    }
+}
+
 - (id (^)(NSUInteger))font {
     return NUDABI(NSUInteger size) {
         
@@ -521,6 +533,16 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
     return tpl;
 }
 
+- (void)mergeComp:(NUDBase *)comp {
+    if ([comp isKindOfClass:[NUDTextTemplate class]]) {
+        NUDTextTemplate *tpl = (NUDTextTemplate *)comp;
+        [super mergeComp:tpl];
+        self.parasiticalObj = [[NUDText alloc] initWithFather:tpl.parasiticalObj.father string:nil];
+        self.identifier = tpl.identifier;
+        self.parasiticalObj = [tpl.parasiticalObj copy];
+    }
+}
+
 - (id (^)(NSUInteger))font {return NUDABI(NSUInteger size) {NUDAT(font,size);};}
 - (id (^)(NSString *, NSUInteger))fontName {return NUDABI(NSString *string,NSUInteger size) {NUDAT(fontName,string,size);};}
 - (id (^)(UIFont *))fontRes {return NUDABI(UIFont *font){NUDAT(fontRes,font);};}
@@ -566,6 +588,13 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         NSString *url = [[self.parasiticalObj.attributes objectForKey:NSLinkAttributeName] absoluteString];
         url = [[url substringToIndex:url.length-1] stringByAppendingString:@"-1"];
         [self.parasiticalObj.attributes setObject:[NSURL URLWithString:url] forKey:NSLinkAttributeName];
+        
+        return self;
+    };
+}
+
+- (id (^)(NSString *))Highlighted {
+    return NUDABI(NSString *tplName) {
         
         return self;
     };
