@@ -37,6 +37,7 @@
 
 // TODO: inText
 @property (nonatomic,strong) NSMutableArray<NUDText *> *innerTexts;
+@property (nonatomic,copy) NSString *highlightedTpl;
 
 @property (nonatomic,assign) NSUInteger countOfLinefeed;
 
@@ -72,6 +73,7 @@
     text.attributes = [self.attributes mutableCopy];
     text.countOfLinefeed = self.countOfLinefeed;
     text.update = self.update;
+    text.highlightedTpl = self.highlightedTpl;
     return text;
 }
 
@@ -84,6 +86,7 @@
         self.attributes = [text.attributes mutableCopy];
         self.countOfLinefeed = text.countOfLinefeed;
         self.update = text.update;
+        self.highlightedTpl = text.highlightedTpl;
     }
 }
 
@@ -432,7 +435,7 @@
 
 - (id (^)(NSString *))Highlighted {
     return NUDABI(NSString *tplName) {
-        
+        self.highlightedTpl = tplName;
         return self;
     };
 }
@@ -464,6 +467,9 @@
             }
             if (self.countOfLinefeed == NSUIntegerMax) {
                 self.countOfLinefeed = template.parasiticalObj.countOfLinefeed;
+            }
+            if (!self.highlightedTpl) {
+                self.highlightedTpl = template.parasiticalObj.highlightedTpl;
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
@@ -576,6 +582,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 - (id (^)(CGFloat))fl_headIndent {return NUDABI(CGFloat value){NUDAT(fl_headIndent,value);};}
 - (id (^)(NUDLineBreakMode))linebreak {return NUDABI(NUDLineBreakMode mode){NUDAT(linebreak,mode);};}
 - (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
+- (id (^)(NSString *))Highlighted {return NUDABI(NSString *tplName){NUDAT(Highlighted,tplName);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {
@@ -588,13 +595,6 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         NSString *url = [[self.parasiticalObj.attributes objectForKey:NSLinkAttributeName] absoluteString];
         url = [[url substringToIndex:url.length-1] stringByAppendingString:@"-1"];
         [self.parasiticalObj.attributes setObject:[NSURL URLWithString:url] forKey:NSLinkAttributeName];
-        
-        return self;
-    };
-}
-
-- (id (^)(NSString *))Highlighted {
-    return NUDABI(NSString *tplName) {
         
         return self;
     };

@@ -130,7 +130,13 @@ NUDTouchTrackingDelegate
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
                 
                 NUDText *textComp = (NUDText *)nTouch.comp;
-                textComp.color([UIColor redColor]);
+                nTouch.originComp = [nTouch.comp copy];
+                NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
+                NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
+                NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+                [textComp mergeComp:tplText];
+                [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
+
                 self.attributedText = [NUDTextUpdate nud_generateStringWith:textComp maker:self.maker];
                 
             }else if ([nTouch.comp isKindOfClass:[NUDAttachment class]]) {
@@ -145,41 +151,36 @@ NUDTouchTrackingDelegate
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     NUDTouch *nTouch = [self.touchTracking currentNUDTouch:touches.anyObject];
-
-    if (nTouch) {
-        NSLog(@"<moved> %@",nTouch);
-        NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
-        if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation)) {
+    if (!nTouch) {
+        return;
+    }
+    
+    NSLog(@"<moved> %@",nTouch);
+    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
+    if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
+        [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
+        
+        NSLog(@"in!!");
+        if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             
-            NUDBase *currentComp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
+            NUDText *textComp = (NUDText *)nTouch.comp;
+            NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
+            NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
+            NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+            [textComp mergeComp:tplText];
+            [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
             
-            if (currentComp == nTouch.comp) {
-                
-                NSLog(@"in!!");
-                if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-                    ((NUDText *)nTouch.comp).color([UIColor redColor]);
-                    self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-                }else {}
-                
-            }else {
-                
-                NSLog(@"out!!");
-                if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-                    ((NUDText *)nTouch.comp).color([UIColor blackColor]);
-                    self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-                }else {}
-                
-            }
-            
-        }else {
-            
-            NSLog(@"out!!");
-            if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-                ((NUDText *)nTouch.comp).color([UIColor blackColor]);
-                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-            }else {}
-            
-        }
+            self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+        }else {}
+        
+    }else {
+        
+        NSLog(@"out!!");
+        if ([nTouch.comp isKindOfClass:[NUDText class]]) {
+            [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
+            self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+        }else {}
+        
     }
     
     [super touchesMoved:touches withEvent:event];
@@ -199,7 +200,7 @@ NUDTouchTrackingDelegate
         NSLog(@"<end> %@",nTouch);
         NSLog(@"%ld",[touches allObjects].count);
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-            ((NUDText *)nTouch.comp).color([UIColor blackColor]);
+            [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
             self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
         }else {}
     }

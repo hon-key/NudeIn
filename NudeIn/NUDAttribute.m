@@ -160,7 +160,7 @@
 
 @synthesize fontStyles = _fontStyles;
 - (NSArray *)fontStyles {
-    if (_fontStyles) {
+    if (!_fontStyles) {
         _fontStyles = @[@"Bold",@"Regular",@"Medium",@"Light",
                             @"Thin",@"SemiBold",@"UltraLight",@"Italic"];
     }

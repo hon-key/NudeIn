@@ -83,10 +83,11 @@
 - (NudeIn *)textView2 {
     if (!_textView2) {
         _textView2 = [NudeIn make:^(NUDTextMaker *make) {
-            
+            make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
+            make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
             make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
-            make.text(@"大战").font(17).color([UIColor blackColor]).attach();
-            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).attach();
+            make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
+            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
         }];
     }
     return _textView2;
@@ -133,12 +134,13 @@
             make.text(@"There is a \"significant\" link between higher temperatures and lower school achievement, say economic researchers.\nAn analysis of test scores of 10 million US secondary school students over 13 years shows hot weather has a negative impact on results.\nThe study says a practical response could be to use more air conditioning.\nStudents taking exams in a summer heatwave might have always complained that they were ").fl_headIndent(20).font(17).linebreak(NUDWord).ln(1).nud_attachWith(@"");
             make.text(@"Hello World").font(30).color([UIColor greenColor]).shadowOffset(-3,3).shadowBlur(4).shadowColor([[UIColor blackColor] colorWithAlphaComponent:0.33]).aligment(NUDAliCenter).ln(1).nud_attachWith(@"");
             make.text(@"M416").font(20).nud_attachWith(@"");
-            make.text(@"[1]").font(10).vertical(10).nud_attachWith(@"");
+            make.text(@"[1]").font(10).vertical(10).ln(1).nud_attachWith(@"");
 
 
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
+        _textView3.delaysContentTouches = NO;
         [_textView3 p];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

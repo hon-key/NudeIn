@@ -76,7 +76,7 @@
 - (void)applyComp:(NUDBase *)comp {
     if (comp) {
         NSNumber *index = objc_getAssociatedObject(comp, @"storedCompIndex");
-        if (index.unsignedIntegerValue < self.components.count) {
+        if (index && index.unsignedIntegerValue < self.components.count) {
             NUDBase *originalBase = [self.components objectAtIndex:index.unsignedIntegerValue];
             [originalBase mergeComp:comp];
         }

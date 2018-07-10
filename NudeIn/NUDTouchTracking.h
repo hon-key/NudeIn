@@ -37,6 +37,7 @@
 @property (nonatomic,assign,readonly) CGPoint originalLocation;
 
 @property (nonatomic,strong) NUDBase *comp;
+@property (nonatomic,strong) NUDBase *originComp;
 
 - (instancetype)initWithTracking:(NUDTouchTracking *)tracking;
 
