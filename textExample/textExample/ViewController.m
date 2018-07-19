@@ -154,7 +154,7 @@
         [_textView3 p];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_textView3 update:^(NUDTextUpdate *update) {
+            [self.textView3 update:^(NUDTextUpdate *update) {
                 update.comp(0).asImage.size(300,300).apply();
                 update.comp(2).asText.font(16).apply();
             }];

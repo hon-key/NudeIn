@@ -129,8 +129,8 @@ NUDTouchTrackingDelegate
     NUDTouch *nTouch = [self.touchTracking track:touches.anyObject];
 
     if (nTouch) {
-        NSLog(@"<begin> %@",nTouch);
-        NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
+//        NSLog(@"<begin> %@",nTouch);
+//        NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
         if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation)) {
             nTouch.comp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
@@ -146,7 +146,7 @@ NUDTouchTrackingDelegate
                 self.attributedText = [NUDTextUpdate nud_generateStringWith:textComp maker:self.maker];
                 
             }else if ([nTouch.comp isKindOfClass:[NUDAttachment class]]) {
-                NSLog(@"image");
+//                NSLog(@"image");
             }
         }
     }
@@ -161,12 +161,12 @@ NUDTouchTrackingDelegate
         return;
     }
     
-    NSLog(@"<moved> %@",nTouch);
-    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
+//    NSLog(@"<moved> %@",nTouch);
+//    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
     if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
         [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
         
-        NSLog(@"in!!");
+//        NSLog(@"in!!");
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             
             NUDText *textComp = (NUDText *)nTouch.comp;
@@ -181,7 +181,7 @@ NUDTouchTrackingDelegate
         
     }else {
         
-        NSLog(@"out!!");
+//        NSLog(@"out!!");
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
             self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
@@ -203,14 +203,14 @@ NUDTouchTrackingDelegate
     
     NUDTouch *nTouch = [self.touchTracking currentNUDTouch:touches.anyObject];
     if (nTouch) {
-        NSLog(@"<end> %@",nTouch);
-        NSLog(@"%ld",[touches allObjects].count);
+//        NSLog(@"<end> %@",nTouch);
+//        NSLog(@"%ld",[touches allObjects].count);
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
             self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
         }else {}
     }
-    NSLog(@"ended");
+//    NSLog(@"ended");
     [self.touchTracking endTracking:touches.anyObject];
     
     [super touchesEnded:touches withEvent:event];
@@ -218,7 +218,7 @@ NUDTouchTrackingDelegate
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"cancelled");
+//    NSLog(@"cancelled");
     NSArray *touchesArray = [touches allObjects];
     for (UITouch *touch in touchesArray) {
         NSSet *set = [[NSSet alloc] initWithObjects:touch, nil];
