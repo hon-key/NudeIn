@@ -26,8 +26,10 @@
 @interface NUDTextUpdate : NSObject
 
 - (NUDBase * (^)(NSUInteger))comp;
-- (NUDText * (^)(NSString *))textTemplate;
-- (NUDAttachment * (^)(NSString *))imageTemplate;
+// TODO: 更新功能中的文字模板
+//- (NUDText * (^)(NSString *))textTemplate;
+// TODO: 更新功能中的图片模板
+//- (NUDAttachment * (^)(NSString *))imageTemplate;
 
 @end
 

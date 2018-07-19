@@ -128,7 +128,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 @property (nonatomic,readonly) NSArray *fontStyles;
 
 // TODO : 匹配字符串
-- (NUDAB(NSString *))inText;
+//- (NUDAB(NSString *))inText;
 
 // font
 - (NUDAB(NSUInteger))font;
@@ -170,8 +170,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(NUDLineBreakMode))linebreak;
 
 // TODO:重写link属性
-- (NUDAB(id,SEL))press;
-- (NUDAB(id,SEL))longPress;
+//- (NUDAB(id,SEL))press;
+//- (NUDAB(id,SEL))longPress;
 - (NUDAB(NSString *))Highlighted;
 
 - (void (^)(void))attach;

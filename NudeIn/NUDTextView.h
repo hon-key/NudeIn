@@ -32,6 +32,8 @@
 // TODO: 提供一个可以给现有实例继续添加组件的功能
 - (NUDTextView *)append:(void (^)(NUDTextMaker *make))make;
 
+- (void)remake:(void (^)(NUDTextMaker *make))make;
+
 // TODO: 能够更新 NUDTextView 对象
 - (void)update:(void (^)(NUDTextUpdate *update))update;
 

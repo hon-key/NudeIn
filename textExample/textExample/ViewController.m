@@ -83,12 +83,22 @@
 - (NudeIn *)textView2 {
     if (!_textView2) {
         _textView2 = [NudeIn make:^(NUDTextMaker *make) {
-            make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
-            make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
-            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
-            make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
-            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
+//            make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
+//            make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
+//            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
+//            make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
+//            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
+            make.allText().font(50).attach();
+            make.text(@"RNG").color([UIColor redColor]).attach();
+            make.text(@"KZ").color([UIColor blueColor]).attach();
         }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.textView2 remake:^(NUDTextMaker *make) {
+                make.allText().font(50).attach();
+                make.text(@"BBB").color([UIColor redColor]).attach();
+                make.text(@"DDD").color([UIColor blueColor]).attach();
+            }];
+        });
     }
     return _textView2;
 }

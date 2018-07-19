@@ -69,6 +69,12 @@ NUDTouchTrackingDelegate
     
 }
 
+- (void)remake:(void (^)(NUDTextMaker *))make {
+    self.maker = [[NUDTextMaker alloc] init];
+    make(self.maker);
+    self.attributedText = self.maker.string;
+}
+
 - (void)p {
     [self.maker p];
 }
