@@ -154,11 +154,11 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ## Installation
 
 ```
-pod 'NudeIn' '~> 1.2.1-beta'
+pod 'NudeIn'
 ```
-最新 pod 版本：`1.2.1-beta`
+最新 pod 版本：1.2.2
 
-目前该版本属于不稳定版本，有一些属性是在1.2.1-beta之后添加的，有可能不包含一部分功能
+已经集成最新的高亮功能，调用highlight方法可实现高亮，你需要将 userInteractionEnable 设置为 YES 才行
 
 最低 iOS 版本： `8.0`
 
