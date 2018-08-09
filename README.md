@@ -160,7 +160,7 @@ pod 'NudeIn'
 
 已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
 
-P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不要在同一个 make 里同时使用 link 方法和 highlight 方法。
+P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不要在同一个 make 里同时使用 link 方法和 highlight 方法，下一个版本将引入 **`press`** 和 **`longPress`** 来代替 link 方法。
 
 最低 iOS 版本： `8.0`
 
