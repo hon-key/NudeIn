@@ -53,8 +53,11 @@ NUDTouchTrackingDelegate
     label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
     label.delegate = label;
     label.layoutManager.delegate = label;
-    label.textDragInteraction.enabled = NO;
     label.selectable = NO;
+    if (@available(iOS 11.0, *)) {
+        label.textDragInteraction.enabled = NO;
+    }
+    
     label.maker = [[NUDTextMaker alloc] init];
     make(label.maker);
     

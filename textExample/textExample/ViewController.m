@@ -41,8 +41,14 @@
         make.centerY.equalTo(self.view).with.offset(-200);
         make.width.height.mas_equalTo(300);
     }];
+    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
 
 
+}
+
+- (void)bb {
+    NSLog(@"1");
 }
 
 - (void)linkHandler:(NUDAction *)action {
