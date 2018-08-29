@@ -156,7 +156,7 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.2
+最新 pod 版本：1.2.3
 
 已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
 
