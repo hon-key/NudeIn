@@ -127,8 +127,6 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     
     - [**paraSpacing**](#usage) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
     
-    - [**paraSpacing**](#usage) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
-    
     - [**aligment**](#usage) **`声明文字的对齐方式，参数为 NUDAlignment`**
     
     - [**indent**](#usage) **`声明文字的缩进，（前缩进，后缩进）`**
@@ -156,7 +154,7 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.2
+最新 pod 版本：1.2.3
 
 已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
 
