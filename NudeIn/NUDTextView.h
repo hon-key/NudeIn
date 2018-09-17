@@ -34,7 +34,6 @@
 
 - (void)remake:(void (^)(NUDTextMaker *make))make;
 
-// TODO: 能够更新 NUDTextView 对象
 - (void)update:(void (^)(NUDTextUpdate *update))update;
 
 - (void)p;
