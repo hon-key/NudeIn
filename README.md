@@ -184,7 +184,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").fontName(@"AmericanTypewriter-Bold",32).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontName.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontName.png" />
 
 ### **fontRes**
 
@@ -198,7 +198,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").fontRes(fontBold).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontRes.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontRes.png" />
 
 
 ### **fontStyle**
@@ -210,7 +210,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").fontName(@"AmericanTypewriter",32).fontStyle(NUDBold).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontStyle.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontStyle.png" />
 
 
 ### **bold**
@@ -222,7 +222,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").fontName(@"AmericanTypewriter",32).bold().attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/bold.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/bold.png" />
 
 ### **color**
 
@@ -239,7 +239,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"b").color([UIColor greenColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/color.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/color.png" />
 
 
 ### **mark**
@@ -257,7 +257,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"b").mark([UIColor greenColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/mark.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/mark.png" />
 
 ### **hollow**
 
@@ -274,7 +274,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"b").hollow(4,[UIColor greenColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/hollow.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/hollow.png" />
 
 
 ### **solid**
@@ -292,7 +292,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"b").solid(4,[UIColor greenColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/solid.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/solid.png" />
 
 
 ### **link**
@@ -304,7 +304,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").font(64).link(self,@selector(linkHandler:)).color([UIColor blueColor])._(NUD_,[UIColor blueColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/link.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/link.png" />
 
 ### **_**
 
@@ -324,7 +324,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github com")._(NUDDashDotDot|NUDByWord,[UIColor blueColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/_.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/_.png" />
 
 
 ### **deprecated**
@@ -336,7 +336,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").font(64).deprecated([UIColor blackColor]).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/deprecated.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/deprecated.png" />
 
 
 ### **skew**
@@ -354,7 +354,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").skew(1.2).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/skew.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/skew.png" />
 
 ### **kern**
 
@@ -371,7 +371,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").skew(1.2).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/kern.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/kern.png" />
 
 ## License
 
