@@ -61,13 +61,7 @@
 //    }];
     
     NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
-        make.allText().fontName(@"AmericanTypewriter",64).bold().color([UIColor cyanColor]).attach();
-        make.text(@"G").solid(4,[UIColor orangeColor]).attach();
-        make.text(@"i").solid(4,[UIColor redColor]).attach();
-        make.text(@"t").solid(4,[UIColor blueColor]).attach();
-        make.text(@"h").solid(4,[UIColor magentaColor]).attach();
-        make.text(@"u").solid(4,[UIColor brownColor]).attach();
-        make.text(@"b").solid(4,[UIColor greenColor]).attach();
+        make.text(@"Github.com").font(64).link(self,@selector(linkHandler:)).color([UIColor blueColor])._(NUD_,[UIColor blueColor]).attach();
     }];
     
     [self.view addSubview:nude];
