@@ -18,6 +18,7 @@
 @property (nonatomic,strong) NudeIn *textView2;
 @property (nonatomic,strong) NudeIn *textView3;
 
+
 @end
 
 @implementation ViewController
@@ -43,9 +44,10 @@
     }];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
-
-
+    
 }
+
+
 
 - (void)bb {
     NSLog(@"1");
@@ -81,6 +83,8 @@
             make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(NUD__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
 
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
+            
+            
         }];
         _textView.selectable = YES;
     }
@@ -153,7 +157,6 @@
             make.text(@"M416").font(20).nud_attachWith(@"");
             make.text(@"[1]").font(10).vertical(10).ln(1).nud_attachWith(@"");
 
-
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
@@ -162,13 +165,14 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.textView3 update:^(NUDTextUpdate *update) {
-                update.comp(0).asImage.size(300,300).apply();
-                update.comp(2).asText.font(16).apply();
+                update.comp(2).asImage.size(300,300).apply();
+                update.comp(0).asText.font(16).apply();
             }];
         });
     }
     return _textView3;
 }
+
 
 
 @end
