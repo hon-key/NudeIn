@@ -373,6 +373,31 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/kern.png" />
 
+### **ln**
+
+**ln** 设定该组件换行，使用该属性可以无需手动在text里添加\n，并且传入大于1的整数还可以多次换行，特别要注意的是，换行符的属性也和该组件的其他字符串等同
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").font(32).ln(2).attach();
+    make.text(@"Github.com").font(16).ln(2).attach();
+    make.text(@"Github.com").font(32).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/ln.png" />
+
+### **ligature**
+
+**ligature** 声明文字为连体，使用之后，字体将会带有连体书写的效果，特别要注意的是，该属性只对部分支持连体的字母组以及字体有效
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"This is a attributed string").fontName(@"zapfino",23).ligature(NO).ln(1).attach();
+    make.text(@"This is a attributed string").fontName(@"zapfino",23).ligature(YES).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/ligature.png" />
+
 ## License
 
 NudeIn is released under the MIT license. See [LICENSE](https://github.com/hon-key/HKAttributedTextView/raw/master/LICENSE) for details.
