@@ -65,11 +65,11 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/2.png" width = "50%" />
 
 
-## Documents
+## Indexes
 
-* ### [Text](#usage)
+* ### [Text / TextTemplate](#usage)
 
-    - [**font**](#usage) **`通过大小声明字体，统一使用系统字体`**
+    - [**font**](#font) **`通过大小声明字体，统一使用系统字体`**
 
     - [**fontName**](#usage) **`通过字体名以及大小声明字体`**
 
@@ -135,11 +135,9 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     
     - [**linebreak**](#usage) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
     
-   
-    
-* ### [textTemplate](#usage)
+    - [**highlight**](#usage) **`声明文字的触摸高亮，参数为一个模板的 id `**  
 
-* ### [Image](#usage)
+* ### [Image / ImageTemplate](#usage)
 
     - [**origin**](#usage) **`声明图像的偏移，锚点为左下角`**
     
@@ -147,7 +145,11 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     
     - [**ln**](#usage) **`声明图像换行`**
     
-* ### [imageTemplate](#usage)
+
+## Documents
+
+### font
+
 
 ## Installation
 
