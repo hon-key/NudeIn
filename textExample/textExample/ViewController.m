@@ -26,24 +26,55 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:self.textView];
-    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.centerX.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-    }];
-    [self.view addSubview:self.textView2];
-    [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView.mas_bottom);
-        make.centerX.equalTo(self.view);
-    }];
-    [self.view addSubview:self.textView3];
-    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(-200);
-        make.width.height.mas_equalTo(300);
+//    [self.view addSubview:self.textView];
+//    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.centerX.equalTo(self.view);
+//        make.left.right.equalTo(self.view);
+//    }];
+//    [self.view addSubview:self.textView2];
+//    [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.textView.mas_bottom);
+//        make.centerX.equalTo(self.view);
+//    }];
+//    [self.view addSubview:self.textView3];
+//    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(self.view);
+//        make.centerY.equalTo(self.view).with.offset(-200);
+//        make.width.height.mas_equalTo(300);
+//    }];
+    
+//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
+
+
+    
+//    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+//        make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).color([UIColor cyanColor]).attach();
+//        make.text(@"Github")._(NUD_,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUD__,[UIColor blackColor]).attach();
+//        make.text(@"Github")._(NUDThick_,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDotDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDash,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDashDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDashDotDot,[UIColor blueColor]).attach();
+//        make.text(@"Github com")._(NUDDashDotDot|NUDByWord,[UIColor blueColor]).attach();
+//    }];
+    
+    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+        make.allText().fontName(@"AmericanTypewriter",64).bold().color([UIColor cyanColor]).attach();
+        make.text(@"G").solid(4,[UIColor orangeColor]).attach();
+        make.text(@"i").solid(4,[UIColor redColor]).attach();
+        make.text(@"t").solid(4,[UIColor blueColor]).attach();
+        make.text(@"h").solid(4,[UIColor magentaColor]).attach();
+        make.text(@"u").solid(4,[UIColor brownColor]).attach();
+        make.text(@"b").solid(4,[UIColor greenColor]).attach();
     }];
     
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
+    [self.view addSubview:nude];
+    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.centerY.equalTo(self.view);
+        make.width.height.mas_equalTo(300);
+    }];
     
 }
 
