@@ -171,7 +171,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github.com").font(32).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/font.png" width = "50%" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/font.png" />
 
 
 ### **fontName**
