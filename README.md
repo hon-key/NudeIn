@@ -64,38 +64,50 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/2.png" width = "50%" />
 
+## Installation
 
-## Documents
+```
+pod 'NudeIn'
+```
+最新 pod 版本：1.2.3
+
+已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
+
+P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不要在同一个 make 里同时使用 link 方法和 highlight 方法，下一个版本将引入 **`press`** 和 **`longPress`** 来代替 link 方法。
+
+最低 iOS 版本： `8.0`
+
+## Indexes
 
 * ### [Text](#usage)
 
-    - [**font**](#usage) **`通过大小声明字体，统一使用系统字体`**
+    - [**font**](#font) **`通过大小声明字体，统一使用系统字体`**
 
-    - [**fontName**](#usage) **`通过字体名以及大小声明字体`**
+    - [**fontName**](#fontName) **`通过字体名以及大小声明字体`**
 
-    - [**fontRes**](#usage) **`通过 UIFont 声明字体`**
+    - [**fontRes**](#fontRes) **`通过 UIFont 声明字体`**
 
-    - [**fontStyle**](#usage) **`声明字体的风格，如 Bold、Light 等`**
+    - [**fontStyle**](#fontStyle) **`声明字体的风格，如 Bold、Light 等`**
 
-    - [**bold**](#usage) **`声明字体为 Bold 风格，如果有的话`**
+    - [**bold**](#bold) **`声明字体为 Bold 风格，如果有的话`**
 
-    - [**color**](#usage) **`声明文字的前景色`**
+    - [**color**](#color) **`声明文字的前景色`**
 
-    - [**mark**](#usage) **`声明文字的底色`**
+    - [**mark**](#mark) **`声明文字的底色`**
 
-    - [**hollow**](#usage) **`声明文字为镂空`**
+    - [**hollow**](#hollow) **`声明文字为镂空`**
     
-    - [**solid**](#usage) **`声明文字为实心`**
+    - [**solid**](#solid) **`声明文字为实心`**
 
-    - [**link**](#usage) **`声明文字为链接文字`**
+    - [**link**](#link) **`声明文字为链接文字`**
 
-    - [**_**](#usage) **`声明文字带下划线`**
+    - [**_**](#_) **`声明文字带下划线`**
 
-    - [**deprecated**](#usage) **`声明文字带删除线`**
+    - [**deprecated**](#deprecated) **`声明文字带删除线`**
 
-    - [**skew**](#usage) **`声明文字为斜体`**
+    - [**skew**](#skew) **`声明文字为斜体`**
 
-    - [**kern**](#usage) **`声明文字的紧凑程度`**
+    - [**kern**](#kern) **`声明文字的紧凑程度`**
 
     - [**ln**](#usage) **`声明文字换行`**
     
@@ -135,9 +147,7 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     
     - [**linebreak**](#usage) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
     
-   
-    
-* ### [textTemplate](#usage)
+    - [**highlight**](#usage) **`声明文字的触摸高亮，参数为一个模板的 id `**  
 
 * ### [Image](#usage)
 
@@ -147,20 +157,221 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
     
     - [**ln**](#usage) **`声明图像换行`**
     
-* ### [imageTemplate](#usage)
+* ### [Template](#usage)
+    
 
-## Installation
+## Documents
 
+### **font**
+
+**font** 默认使用系统字体，如果只使用系统字体，它会让你的代码更简洁一些
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").font(32).attach();
+}];
 ```
-pod 'NudeIn'
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/font.png" />
+
+
+### **fontName**
+
+**fontName** 使用字体名称来设定字体，字体的名称可以是默认的family名称，也可以是特定粗细的字体名称
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").fontName(@"AmericanTypewriter",32).ln(1).attach();
+    make.text(@"Github.com").fontName(@"AmericanTypewriter-Bold",32).attach();
+}];
 ```
-最新 pod 版本：1.2.3
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontName.png" />
 
-已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
+### **fontRes**
 
-P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不要在同一个 make 里同时使用 link 方法和 highlight 方法，下一个版本将引入 **`press`** 和 **`longPress`** 来代替 link 方法。
+**fontRes** 使用自定义的UIFont来设定字体，这里可以尽你所好
 
-最低 iOS 版本： `8.0`
+```objc
+UIFont *font = [UIFont fontWithName:@"AmericanTypewriter" size:32];
+UIFont *fontBold = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:32];
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").fontRes(font).ln(1).attach();
+    make.text(@"Github.com").fontRes(fontBold).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontRes.png" />
+
+
+### **fontStyle**
+
+**fontStyle** 可以更加可读地去设定某个字体的风格，不过有一点要注意的是，这些得和字体本身的名字适配，如NUDBold风格，这需要相应字体拥有-Bold后缀,否则该方法将无效。
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").fontName(@"AmericanTypewriter",32).fontStyle(NUDBold).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontStyle.png" />
+
+
+### **bold**
+
+**bold** 出于bold比较常用来考虑，将 bold 作为属性出现也许会更加易读一些，其使用效果等同于 fontStyle
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").fontName(@"AmericanTypewriter",32).bold().attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/bold.png" />
+
+### **color**
+
+**color** 用于设定文字颜色，传入 UIColor 即可。
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).bold().attach();
+    make.text(@"G").color([UIColor orangeColor]).attach();
+    make.text(@"i").color([UIColor redColor]).attach();
+    make.text(@"t").color([UIColor blueColor]).attach();
+    make.text(@"h").color([UIColor magentaColor]).attach();
+    make.text(@"u").color([UIColor brownColor]).attach();
+    make.text(@"b").color([UIColor greenColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/color.png" />
+
+
+### **mark**
+
+**mark** 用于设定文字的底色，就像在书本里为某一行文字涂抹马克笔一样，这样看起来比较形象
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).color([UIColor whiteColor]).bold().attach();
+    make.text(@"G").mark([UIColor orangeColor]).attach();
+    make.text(@"i").mark([UIColor redColor]).attach();
+    make.text(@"t").mark([UIColor blueColor]).attach();
+    make.text(@"h").mark([UIColor magentaColor]).attach();
+    make.text(@"u").mark([UIColor brownColor]).attach();
+    make.text(@"b").mark([UIColor greenColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/mark.png" />
+
+### **hollow**
+
+**hollow** 可以让文字成为镂空状态，类似于艺术字那样,第一个参数可以边线的粗细，而第二个参数则可以设定颜色
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).bold().attach();
+    make.text(@"G").hollow(4,[UIColor orangeColor]).attach();
+    make.text(@"i").hollow(4,[UIColor redColor]).attach();
+    make.text(@"t").hollow(4,[UIColor blueColor]).attach();
+    make.text(@"h").hollow(4,[UIColor magentaColor]).attach();
+    make.text(@"u").hollow(4,[UIColor brownColor]).attach();
+    make.text(@"b").hollow(4,[UIColor greenColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/hollow.png" />
+
+
+### **solid**
+
+**solid** 表示其为实心，这样的话，我们可以自定义夹心的颜色，让字体看起来更加艺术
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",64).bold().color([UIColor cyanColor]).attach();
+    make.text(@"G").solid(4,[UIColor orangeColor]).attach();
+    make.text(@"i").solid(4,[UIColor redColor]).attach();
+    make.text(@"t").solid(4,[UIColor blueColor]).attach();
+    make.text(@"h").solid(4,[UIColor magentaColor]).attach();
+    make.text(@"u").solid(4,[UIColor brownColor]).attach();
+    make.text(@"b").solid(4,[UIColor greenColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/solid.png" />
+
+
+### **link**
+
+**link** 可以让文字成为一条链接，点击该链接将回调给予的方法。而在点击链接时，链接的背景会被置灰
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").font(64).link(self,@selector(linkHandler:)).color([UIColor blueColor])._(NUD_,[UIColor blueColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/link.png" />
+
+### **_**
+
+**_** _ 顾名思义，即下划线，使用它可以为你的文字加入下划线
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).color([UIColor cyanColor]).attach();
+    make.text(@"Github")._(NUD_,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUD__,[UIColor blackColor]).attach();
+    make.text(@"Github")._(NUDThick_,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUDDot,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUDDotDot,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUDDash,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUDDashDot,[UIColor blueColor]).attach();
+    make.text(@"Github")._(NUDDashDotDot,[UIColor blueColor]).attach();
+    make.text(@"Github com")._(NUDDashDotDot|NUDByWord,[UIColor blueColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/_.png" />
+
+
+### **deprecated**
+
+**deprecated** 加入删除线，表示该文字已经被删除了或者是被废弃了，相对来说可读性高一些
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").font(64).deprecated([UIColor blackColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/deprecated.png" />
+
+
+### **skew**
+
+**skew** 给文字加斜度,斜度根据传入的 CGFloat 值的大小决定其斜度
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).aligment(NUDAliCenter).attach();
+    make.text(@"Github.com").skew(0.0).attach();
+    make.text(@"Github.com").skew(0.2).attach();
+    make.text(@"Github.com").skew(0.4).attach();
+    make.text(@"Github.com").skew(0.8).attach();
+    make.text(@"Github.com").skew(1).attach();
+    make.text(@"Github.com").skew(1.2).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/skew.png" />
+
+### **kern**
+
+**kern** 设定文字的紧凑程度,根据传入的 CGFloat 值的大小决定其紧凑度
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).aligment(NUDAliCenter).attach();
+    make.text(@"Github.com").skew(0.0).attach();
+    make.text(@"Github.com").skew(0.2).attach();
+    make.text(@"Github.com").skew(0.4).attach();
+    make.text(@"Github.com").skew(0.8).attach();
+    make.text(@"Github.com").skew(1).attach();
+    make.text(@"Github.com").skew(1.2).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/kern.png" />
 
 ## License
 

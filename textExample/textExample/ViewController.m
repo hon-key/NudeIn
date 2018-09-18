@@ -18,6 +18,7 @@
 @property (nonatomic,strong) NudeIn *textView2;
 @property (nonatomic,strong) NudeIn *textView3;
 
+
 @end
 
 @implementation ViewController
@@ -25,27 +26,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:self.textView];
-    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.centerX.equalTo(self.view);
-        make.left.right.equalTo(self.view);
+//    [self.view addSubview:self.textView];
+//    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.centerX.equalTo(self.view);
+//        make.left.right.equalTo(self.view);
+//    }];
+//    [self.view addSubview:self.textView2];
+//    [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.textView.mas_bottom);
+//        make.centerX.equalTo(self.view);
+//    }];
+//    [self.view addSubview:self.textView3];
+//    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(self.view);
+//        make.centerY.equalTo(self.view).with.offset(-200);
+//        make.width.height.mas_equalTo(300);
+//    }];
+    
+//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
+
+
+    
+//    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+//        make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).color([UIColor cyanColor]).attach();
+//        make.text(@"Github")._(NUD_,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUD__,[UIColor blackColor]).attach();
+//        make.text(@"Github")._(NUDThick_,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDotDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDash,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDashDot,[UIColor blueColor]).attach();
+//        make.text(@"Github")._(NUDDashDotDot,[UIColor blueColor]).attach();
+//        make.text(@"Github com")._(NUDDashDotDot|NUDByWord,[UIColor blueColor]).attach();
+//    }];
+    
+    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+        make.text(@"Github.com").font(64).link(self,@selector(linkHandler:)).color([UIColor blueColor])._(NUD_,[UIColor blueColor]).attach();
     }];
-    [self.view addSubview:self.textView2];
-    [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView.mas_bottom);
-        make.centerX.equalTo(self.view);
-    }];
-    [self.view addSubview:self.textView3];
-    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(-200);
+    
+    [self.view addSubview:nude];
+    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.centerY.equalTo(self.view);
         make.width.height.mas_equalTo(300);
     }];
     
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
-
-
 }
+
+
 
 - (void)bb {
     NSLog(@"1");
@@ -81,6 +108,8 @@
             make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(NUD__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
 
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
+            
+            
         }];
         _textView.selectable = YES;
     }
@@ -153,7 +182,6 @@
             make.text(@"M416").font(20).nud_attachWith(@"");
             make.text(@"[1]").font(10).vertical(10).ln(1).nud_attachWith(@"");
 
-
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
@@ -162,13 +190,14 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.textView3 update:^(NUDTextUpdate *update) {
-                update.comp(0).asImage.size(300,300).apply();
-                update.comp(2).asText.font(16).apply();
+                update.comp(2).asImage.size(300,300).apply();
+                update.comp(0).asText.font(16).apply();
             }];
         });
     }
     return _textView3;
 }
+
 
 
 @end
