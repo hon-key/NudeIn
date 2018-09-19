@@ -68,12 +68,12 @@
 //        make.text(@"Github").shadowDirection(NUDTop,10).attach();
 //    }];
 
-    [self.view addSubview:nude];
-    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.centerY.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-
-    }];
+//    [self.view addSubview:nude];
+//    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.centerY.equalTo(self.view);
+//        make.left.right.equalTo(self.view);
+//
+//    }];
     
 }
 
