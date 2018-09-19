@@ -113,21 +113,21 @@ P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不�
     
     - [**ligature**](#ligature) **`声明文字为连体字`**
     
-    - [**letterpress**](#usage) **`声明文字为印刷风格（凸起效果），该属性占用内存较高，谨慎使用`**
+    - [**letterpress**](#letterpress) **`声明文字为印刷风格（凸起效果），该属性占用内存较高，谨慎使用`**
     
-    - [**veritical**](#usage) **`声明文字的垂直偏移`**
+    - [**veritical**](#veritical) **`声明文字的垂直偏移`**
     
-    - [**stretch**](#usage) **`声明文字的水平拉伸程度（产生变形）`**
+    - [**stretch**](#stretch) **`声明文字的水平拉伸程度（产生变形）`**
     
-    - [**reverse**](#usage) **`声明文字逆序书写`**
+    - [**reverse**](#reverse) **`声明文字逆序书写`**
     
-    - [**shadow**](#usage) **`声明文字带默认阴影`**
+    - [**shadow**](#shadow) **`声明文字带默认阴影`**
     
-    - [**shadowDirection**](#usage) **`声明文字带阴影，并且设定阴影为八个基本方向`**
+    - [**shadowDirection**](#shadowDirection) **`声明文字带阴影，并且设定阴影为八个基本方向`**
     
-    - [**shadowOffset**](#usage) **`声明文字带阴影，并且完全自定义阴影的方向`**
+    - [**shadowOffset**](#shadowOffset) **`声明文字带阴影，并且完全自定义阴影的方向`**
     
-    - [**shadowBlur**](#usage) **`声明文字带阴影，并自定义阴影的模糊程度`**
+    - [**shadowBlur**](#shadowBlur) **`声明文字带阴影，并自定义阴影的模糊程度`**
     
     - [**shadowColor**](#usage) **`声明文字带阴影，并自定义阴影颜色`**
     
@@ -397,6 +397,114 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 }];
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/ligature.png" />
+
+### **letterpress**
+
+**letterpress** 声明文字带有印刷效果，
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github.com").font(64).letterpress().ln(1).attach();
+    make.text(@"Github.com").font(64).ln(1).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/letterpress.png" />
+
+### **veritical**
+
+**veritical** 会让文字在垂直方向有一个偏移，传入一个CGFloat，如果大于0，则往上偏移，如果小于0，则往下偏移
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github").font(64).attach();
+    make.text(@"[1]").font(15).color([UIColor blueColor]).vertical(35).ln(1).attach();
+    make.text(@"Github").font(64).attach();
+    make.text(@".com").font(32).color([UIColor orangeColor]).vertical(-20).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/veritical.png" />
+
+### **stretch**
+
+**stretch** 让文字在水平上有拉伸，其拉伸程度根据传入的CGFloat值而有所不同，换句话说，值越小越扁，越大越长
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github").font(64).ln(1).attach();
+    make.text(@"Github").font(64).stretch(0.5).ln(1).attach();
+    make.text(@"Github").font(64).stretch(-0.5).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/stretch.png" />
+
+
+### **reverse**
+
+**reverse** 让文字逆序书写
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github").font(64).ln(1).attach();
+    make.text(@"Github").font(64).reverse().attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/reverse.png" />
+
+### **shadow**
+
+**shadow** 让文字带有默认的阴影效果，该效果让文字看起来会微小的凸起
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"Github").font(64).color([UIColor whiteColor]).shadow().attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadow.png" />
+
+### **shadowDirection**
+
+**shadowDirection** 让文字带有默认的阴影效果，并且可以定义阴影的四个最基本的方向：上下左右，至于第二个参数，则用于定义阴影的突出程度，需要注意的是，如果你用autolayout布局控件，它并不会因为阴影而自动扩大自己的frame，这时候你只能手动进行调整。
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(64).color([UIColor orangeColor]).aligment(NUDAliCenter).ln(1).attach();
+    make.text(@"Github").shadowDirection(NUDLeft,10).attach();
+    make.text(@"Github").shadowDirection(NUDRight,10).attach();
+    make.text(@"Github").shadowDirection(NUDBottom,10).attach();
+    make.text(@"Github").shadowDirection(NUDTop,10).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowDirection.png" />
+
+### **shadowOffset**
+
+**shadowOffset** 让文字带有默认的阴影效果，并且可以完全自定义阴影的延伸方向
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(64).color([UIColor orangeColor]).aligment(NUDAliCenter).ln(1).attach();
+    make.text(@"Github").shadowOffset(-5,-5).attach();
+    make.text(@"Github").shadowOffset(5,5).attach();
+    make.text(@"Github").shadowOffset(-5,5).attach();
+    make.text(@"Github").shadowOffset(5,-5).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowOffset.png" />
+
+### **shadowBlur**
+
+**shadowBlur** 让文字带有默认的阴影效果，并且可以完全自定义阴影的延伸方向
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(64).color([UIColor orangeColor]).shadowOffset(20,0).aligment(NUDAliCenter).ln(1).attach();
+    make.text(@"Github").shadowBlur(0).attach();
+    make.text(@"Github").shadowBlur(2).attach();
+    make.text(@"Github").shadowBlur(4).attach();
+    make.text(@"Github").shadowBlur(8).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowBlur.png" />
 
 ## License
 
