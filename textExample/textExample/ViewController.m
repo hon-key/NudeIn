@@ -61,19 +61,19 @@
 //    }];
     
 //    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
-//        make.allText().font(64).color([UIColor orangeColor]).shadowOffset(20,0).aligment(NUDAliCenter).ln(1).attach();
-//        make.text(@"Github").shadowBlur(0).attach();
-//        make.text(@"Github").shadowBlur(2).attach();
-//        make.text(@"Github").shadowBlur(4).attach();
-//        make.text(@"Github").shadowBlur(8).attach();
+//        make.allText().font(64).color([UIColor orangeColor]).aligment(NUDAliCenter).ln(1).attach();
+//        make.text(@"Github").shadowDirection(NUDLeft,10).attach();
+//        make.text(@"Github").shadowDirection(NUDRight,10).attach();
+//        make.text(@"Github").shadowDirection(NUDBottom,10).attach();
+//        make.text(@"Github").shadowDirection(NUDTop,10).attach();
 //    }];
-//
-//    [self.view addSubview:nude];
-//    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.centerY.equalTo(self.view);
-//        make.left.right.equalTo(self.view);
-//
-//    }];
+
+    [self.view addSubview:nude];
+    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.centerY.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+
+    }];
     
 }
 

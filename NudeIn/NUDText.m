@@ -286,10 +286,10 @@
 - (id (^)(NUDShadowDirection,CGFloat))shadowDirection {
     return NUDABI(NUDShadowDirection direction,CGFloat value) {
         CGSize offset = CGSizeZero;
-        offset.width  = direction & NUDLeft   ? value :
-                        direction & NUDRight  ? value : 0;
-        offset.height = direction & NUDTop    ? value :
-                        direction & NUDBottom ? value : 0;
+        offset.width  = direction & NUDLeft   ? -value :
+                        direction & NUDRight  ?  value : 0;
+        offset.height = direction & NUDTop    ? -value :
+                        direction & NUDBottom ?  value : 0;
         self.shadowTag.shadowOffset = offset;
         return self;
     };
