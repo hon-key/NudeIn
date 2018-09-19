@@ -132,7 +132,7 @@
 - (id (^)(BOOL))ligature {NUDMethodNotImplemented(BOOL b);}
 // shadow
 - (id (^)(void))shadow {NUDMethodNotImplemented(void);}
-- (id (^)(NUDShadowDirection))shadowDirection {NUDMethodNotImplemented(NUDShadowDirection d);}
+- (id (^)(NUDShadowDirection,CGFloat))shadowDirection {NUDMethodNotImplemented(NUDShadowDirection d,CGFloat f);}
 - (id (^)(CGFloat, CGFloat))shadowOffset {NUDMethodNotImplemented(CGFloat f1,CGFloat f2);}
 - (id (^)(CGFloat))shadowBlur {NUDMethodNotImplemented(CGFloat f);}
 - (id (^)(UIColor *))shadowColor {NUDMethodNotImplemented(UIColor *c);}

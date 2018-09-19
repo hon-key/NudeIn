@@ -50,7 +50,7 @@ return _##array; \
 { objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
 
 #define NUD_MAKE_TEMPLATE_ARRAY_FROM(firstArg,maker) [NSMutableArray new]; \
-id<NUDTemplate> tpl = [maker templateWithId:identifier]; \
+id<NUDTemplate> tpl = [maker templateWithId:firstArg]; \
 if (tpl) { \
     [tpls addObject:tpl]; \
 } \
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, NUDUnderlineStyle) {
                                          NUDDashDotDot = NSUnderlinePatternDashDotDot
 };
 
-typedef NS_OPTIONS(NSInteger, NUDShadowDirection) {
+typedef NS_OPTIONS(NSUInteger, NUDShadowDirection) {
     NUDLeft   =  1 << 0,
     NUDTop    =  1 << 1,
     NUDRight  =  1 << 2,
@@ -154,7 +154,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(void))reverse;
 // shadow
 - (NUDAB(void))shadow;
-- (NUDAB(NUDShadowDirection))shadowDirection;
+- (NUDAB(NUDShadowDirection,CGFloat))shadowDirection;
 - (NUDAB(CGFloat,CGFloat))shadowOffset;
 - (NUDAB(CGFloat))shadowBlur;
 - (NUDAB(UIColor *))shadowColor;

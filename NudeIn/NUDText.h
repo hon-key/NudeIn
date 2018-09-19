@@ -40,3 +40,13 @@
 - (NSDictionary *)tplAttributes;
 
 @end
+
+
+@interface NUDShadowTag : NSObject <NSCopying>
+@property (nonatomic,assign) CGSize shadowOffset;
+@property (nonatomic,assign) CGFloat shadowBlur;
+@property (nonatomic,assign) UIColor *shadowColor;
+
+- (void)mergeShadowTag:(NUDShadowTag *)shadowTag;
+- (NSShadow *)makeShadow;
+@end

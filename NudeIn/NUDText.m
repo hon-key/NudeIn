@@ -40,6 +40,7 @@
 @property (nonatomic,copy) NSString *highlightedTpl;
 
 @property (nonatomic,assign) NSUInteger countOfLinefeed;
+@property (nonatomic,strong) NUDShadowTag *shadowTag;
 
 @end
 
@@ -74,6 +75,7 @@
     text.countOfLinefeed = self.countOfLinefeed;
     text.update = self.update;
     text.highlightedTpl = self.highlightedTpl;
+    text.shadowTag = [self.shadowTag copy];
     return text;
 }
 
@@ -87,6 +89,7 @@
         self.countOfLinefeed = text.countOfLinefeed;
         self.update = text.update;
         self.highlightedTpl = text.highlightedTpl;
+        self.shadowTag = [text.shadowTag copy];
     }
 }
 
@@ -273,38 +276,28 @@
 
 - (id (^)(void))shadow {
     return NUDABI(void) {
-        NSShadow *shadow = [[NSShadow alloc] init];
-        shadow.shadowOffset = CGSizeMake(1, 1);
-        shadow.shadowBlurRadius = 1.0;
-        [self.attributes setObject:shadow forKey:NSShadowAttributeName];
+        self.shadowTag.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.33];
+        self.shadowTag.shadowOffset = CGSizeMake(1, 1);
+        self.shadowTag.shadowBlur = 1.0;
         return self;
     };
 }
 
-- (NSShadow *)currentShadow {
-    NSShadow *shadow = [self.attributes objectForKey:NSShadowAttributeName];
-    if (!shadow) {
-        self.shadow();
-        shadow = [self.attributes objectForKey:NSShadowAttributeName];
-    }
-    return shadow;
-}
-
-- (id (^)(NUDShadowDirection))shadowDirection {
-    return NUDABI(NUDShadowDirection direction) {
+- (id (^)(NUDShadowDirection,CGFloat))shadowDirection {
+    return NUDABI(NUDShadowDirection direction,CGFloat value) {
         CGSize offset = CGSizeZero;
-        offset.width  = direction & NUDLeft   ? -1 : 0;
-        offset.width  = direction & NUDRight  ?  1 : 0;
-        offset.height = direction & NUDTop    ? -1 : 0;
-        offset.height = direction & NUDBottom ?  1 : 0;
-        [self currentShadow].shadowOffset = offset;
+        offset.width  = direction & NUDLeft   ? value :
+                        direction & NUDRight  ? value : 0;
+        offset.height = direction & NUDTop    ? value :
+                        direction & NUDBottom ? value : 0;
+        self.shadowTag.shadowOffset = offset;
         return self;
     };
 }
 
 - (id (^)(CGFloat, CGFloat))shadowOffset {
     return NUDABI(CGFloat x,CGFloat y) {
-        [self currentShadow].shadowOffset = CGSizeMake(x, y);
+        self.shadowTag.shadowOffset = CGSizeMake(x, y);
         return self;
     };
 }
@@ -312,7 +305,7 @@
 - (id (^)(CGFloat))shadowBlur {
     return NUDABI(CGFloat value) {
         if (value >= 0) {
-            [self currentShadow].shadowBlurRadius = value;
+            self.shadowTag.shadowBlur = value;
         }
         return self;
     };
@@ -320,14 +313,16 @@
 
 - (id (^)(UIColor *))shadowColor {
     return NUDABI(UIColor *color) {
-        [self currentShadow].shadowColor = color;
+        self.shadowTag.shadowColor = color;
         return self;
     };
 }
 
 - (id (^)(NSShadow *))shadowRes {
     return NUDABI(NSShadow *shadow) {
-        [self.attributes setObject:shadow forKey:NSShadowAttributeName];
+        self.shadowTag.shadowColor = shadow.shadowColor;
+        self.shadowTag.shadowOffset = shadow.shadowOffset;
+        self.shadowTag.shadowBlur = shadow.shadowBlurRadius;
         return self;
     };
 }
@@ -473,6 +468,15 @@
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
+            
+            if (template.parasiticalObj.shadowTag) {
+                [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
+            }
+            NSShadow *shadow = [self.shadowTag makeShadow];
+            if (shadow) {
+                [self.attributes setObject:shadow forKey:NSShadowAttributeName];
+            }
+            
         }
         
         [self appendLineFeed];
@@ -513,6 +517,13 @@
             self.string = [self.string stringByAppendingString:@"\n"];
         }
     }
+}
+
+- (NUDShadowTag *)shadowTag {
+    if (!_shadowTag) {
+        _shadowTag = [[NUDShadowTag alloc] init];
+    }
+    return _shadowTag;
 }
 
 
@@ -565,7 +576,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 - (id (^)(BOOL))ligature {return NUDABI(BOOL value) {NUDAT(ligature,value);};}
 
 - (id (^)(void))shadow {return NUDABI(void) {NUDAT(shadow);};}
-- (id (^)(NUDShadowDirection))shadowDirection {return NUDABI(NUDShadowDirection direction) {NUDAT(shadowDirection,direction);};}
+- (id (^)(NUDShadowDirection,CGFloat))shadowDirection {return NUDABI(NUDShadowDirection direction,CGFloat value) {NUDAT(shadowDirection,direction,value);};}
 - (id (^)(CGFloat, CGFloat))shadowOffset {return NUDABI(CGFloat x,CGFloat y) {NUDAT(shadowOffset,x,y);};}
 - (id (^)(CGFloat))shadowBlur {return NUDABI(CGFloat value) {NUDAT(shadowBlur,value);};}
 - (id (^)(UIColor *))shadowColor {return NUDABI(UIColor *color) {NUDAT(shadowColor,color);};}
@@ -614,12 +625,59 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
     if ([tpl isKindOfClass:[NUDTextTemplate class]]) {
         NUDTextTemplate *template = tpl;
         [self.parasiticalObj.attributes addEntriesFromDictionary:template.parasiticalObj.attributes];
+        NUDShadowTag *newTag = [template.parasiticalObj.shadowTag copy];
+        [newTag mergeShadowTag:self.parasiticalObj.shadowTag];
+        self.parasiticalObj.shadowTag = newTag;
         if (template.tplLinkSelector) {
             self.tplLinkSelector = template.tplLinkSelector;
         }
-        self.parasiticalObj.countOfLinefeed += template.parasiticalObj.countOfLinefeed;
+        if (template.parasiticalObj.countOfLinefeed != NSUIntegerMax) {
+            self.parasiticalObj.countOfLinefeed += template.parasiticalObj.countOfLinefeed;
+        }
     }
 }
 
+@end
 
+@implementation NUDShadowTag
+- (instancetype)init {
+    if (self = [super init]) {
+        self.shadowBlur = CGFLOAT_MIN;
+        self.shadowOffset = CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN);
+        self.shadowColor = nil;
+    }
+    return self;
+}
+- (id)copyWithZone:(NSZone *)zone {
+    NUDShadowTag *tag = [[[self class] alloc] init];
+    tag.shadowOffset = self.shadowOffset;
+    tag.shadowColor = self.shadowColor;
+    tag.shadowBlur = self.shadowBlur;
+    return tag;
+}
+- (void)mergeShadowTag:(NUDShadowTag *)shadowTag {
+    if (self.shadowBlur == CGFLOAT_MIN) {
+        self.shadowBlur = shadowTag.shadowBlur;
+    }
+    if (CGSizeEqualToSize(self.shadowOffset, CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN))) {
+        self.shadowOffset = shadowTag.shadowOffset;
+    }
+    if (self.shadowColor == nil) {
+        self.shadowColor = shadowTag.shadowColor;
+    }
+}
+- (NSShadow *)makeShadow {
+    if (self.shadowBlur != CGFLOAT_MIN ||
+        !CGSizeEqualToSize(self.shadowOffset, CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN)) ||
+        self.shadowColor != nil) {
+        NSShadow *shadow = [[NSShadow alloc] init];
+        shadow.shadowBlurRadius = self.shadowBlur != CGFLOAT_MIN ? self.shadowBlur : 1.0;
+        if (self.shadowColor) {
+            shadow.shadowColor = self.shadowColor;
+        }
+        shadow.shadowOffset = !CGSizeEqualToSize(self.shadowOffset, CGSizeMake(CGFLOAT_MIN, CGFLOAT_MIN)) ?self.shadowOffset : CGSizeMake(1, 1);
+        return shadow;
+    }
+    return nil;
+}
 @end

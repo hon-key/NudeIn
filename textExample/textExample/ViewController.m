@@ -61,16 +61,22 @@
 //    }];
     
 //    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
-//        make.text(@"This is a attributed string").fontName(@"zapfino",23).ligature(NO).ln(1).attach();
-//        make.text(@"This is a attributed string").fontName(@"zapfino",23).ligature(YES).attach();
+//        make.allText().font(64).color([UIColor orangeColor]).shadowOffset(20,0).aligment(NUDAliCenter).ln(1).attach();
+//        make.text(@"Github").shadowBlur(0).attach();
+//        make.text(@"Github").shadowBlur(2).attach();
+//        make.text(@"Github").shadowBlur(4).attach();
+//        make.text(@"Github").shadowBlur(8).attach();
 //    }];
 //
 //    [self.view addSubview:nude];
 //    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.centerX.centerY.equalTo(self.view);
+//        make.left.right.equalTo(self.view);
+//
 //    }];
     
 }
+
 
 - (void)bb {
     NSLog(@"1");
