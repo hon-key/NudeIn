@@ -115,7 +115,7 @@ P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不�
     
     - [**letterpress**](#letterpress) **`声明文字为印刷风格（凸起效果），该属性占用内存较高，谨慎使用`**
     
-    - [**veritical**](#veritical) **`声明文字的垂直偏移`**
+    - [**vertical**](#vertical) **`声明文字的垂直偏移`**
     
     - [**stretch**](#stretch) **`声明文字的水平拉伸程度（产生变形）`**
     
@@ -410,9 +410,9 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/letterpress.png" />
 
-### **veritical**
+### **vertical**
 
-**veritical** 会让文字在垂直方向有一个偏移，传入一个CGFloat，如果大于0，则往上偏移，如果小于0，则往下偏移
+**vertical** 会让文字在垂直方向有一个偏移，传入一个CGFloat，如果大于0，则往上偏移，如果小于0，则往下偏移
 
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
@@ -422,7 +422,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@".com").font(32).color([UIColor orangeColor]).vertical(-20).attach();
 }];
 ```
-<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/veritical.png" />
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/vertical.png" />
 
 ### **stretch**
 
