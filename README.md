@@ -493,7 +493,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 
 ### **shadowBlur**
 
-**shadowBlur** 让文字带有默认的阴影效果，并且可以完全自定义阴影的延伸方向
+**shadowBlur** 让文字带有默认的阴影效果，并且可以完全自定义阴影的模糊程度，该值越高，则阴影越模糊，有种文字距离阴影越远的感觉
 
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
