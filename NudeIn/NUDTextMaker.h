@@ -77,4 +77,6 @@ extern NSString * const kNUDAttachmentAllImageKey;
 - (NSArray <id<NUDTemplate>> *)sharedTemplates;
 - (NSArray<NUDTextTemplate *> *)sharedTextTemplates;
 - (NSArray<NUDAttachmentTemplate *> *)sharedImageTemplates;
+- (NUDTextTemplate *)textTemplateWithId:(NSString *)identifier;
+- (NUDAttachmentTemplate *)imageTemplateWithId:(NSString *)identifier;
 @end

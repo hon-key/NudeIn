@@ -449,20 +449,30 @@
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
         
-        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+//        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
         
         NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
-        NSArray *sharedTextTemplate = [sharedTemplateMaker sharedTextTemplates];
-        if (sharedTextTemplate) {
-            NSMutableArray *result = [NSMutableArray new];
-            for (NUDTextTemplate *template in sharedTextTemplate) {
-                if (![tpls containsObject:template.identifier]) {
-                    [result addObject:template];
-                }
-            }
-            sharedTextTemplate = result;
+        NSMutableArray *sharedTpls = [NSMutableArray new];
+        NSMutableArray *tpls = [NSMutableArray new];
+        id<NUDTemplate> tpl = [self.father templateWithId:identifier];
+        if (tpl) {
+            [tpls addObject:tpl];
         }
-        // merge
+        id<NUDTemplate> sharedTpl = [sharedTemplateMaker textTemplateWithId:identifier];
+        if (sharedTpl) {
+            [sharedTpls addObject:sharedTpl];
+        }
+        va_list idList ;
+        va_start(idList,identifier);
+        NSString *nextId;
+        while ((nextId = va_arg(idList, NSString *))) {
+            if ((tpl = [self.father templateWithId:nextId])) {
+                [tpls addObject:tpl];
+            }else if ((tpl = [sharedTemplateMaker textTemplateWithId:nextId])) {
+                [tpls addObject:tpl];
+            }
+        }
+        va_end(idList);
         
         NUDTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (template) {

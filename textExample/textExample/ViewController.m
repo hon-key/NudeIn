@@ -17,7 +17,7 @@
 @property (nonatomic,strong) NudeIn *textView;
 @property (nonatomic,strong) NudeIn *textView2;
 @property (nonatomic,strong) NudeIn *textView3;
-
+@property (nonatomic,strong) NudeIn *textView4;
 
 @end
 
@@ -25,10 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
-        make.textTemplate(@"1").attach();
-    }];
     
     [self.view addSubview:self.textView];
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -45,6 +41,12 @@
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).with.offset(-200);
         make.width.height.mas_equalTo(300);
+    }];
+    [self.view addSubview:self.textView4];
+    [self.textView4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(100);
+//        make.width.height.mas_equalTo(100);
     }];
 
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
@@ -129,7 +131,7 @@
         _textView2 = [NudeIn make:^(NUDTextMaker *make) {
             make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
             make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
-            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
+            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"markRed",@"share1",nil);
             make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
             make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
             make.allText().font(50).attach();
@@ -204,6 +206,21 @@
         });
     }
     return _textView3;
+}
+
+- (NudeIn *)textView4 {
+    if (!_textView4) {
+        [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
+            make.textTemplate(@"share1").font(24).attach();
+            make.textTemplate(@"share2").color([UIColor redColor]).attach();
+        }];
+        _textView4 = [NudeIn make:^(NUDTextMaker *make) {
+            make.textTemplate(@"tp1").font(45).attach();
+            make.textTemplate(@"share2").color([UIColor blueColor]).attach();
+            make.text(@"textTemplate").nud_attachWith(@"share1",@"tp1",@"share2");
+        }];
+    }
+    return _textView4;
 }
 
 
