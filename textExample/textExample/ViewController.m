@@ -26,6 +26,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
+        make.textTemplate(@"1").attach();
+    }];
+    
     [self.view addSubview:self.textView];
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.centerX.equalTo(self.view);

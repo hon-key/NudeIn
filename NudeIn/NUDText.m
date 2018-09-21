@@ -450,6 +450,20 @@
     return ^void (NSString *identifier,...) {
         
         NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        
+        NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
+        NSArray *sharedTextTemplate = [sharedTemplateMaker sharedTextTemplates];
+        if (sharedTextTemplate) {
+            NSMutableArray *result = [NSMutableArray new];
+            for (NUDTextTemplate *template in sharedTextTemplate) {
+                if (![tpls containsObject:template.identifier]) {
+                    [result addObject:template];
+                }
+            }
+            sharedTextTemplate = result;
+        }
+        // merge
+        
         NUDTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (template) {
             
@@ -532,7 +546,7 @@
 
 @implementation NUDTextTemplate
 
-NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
+NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {

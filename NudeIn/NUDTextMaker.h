@@ -67,3 +67,14 @@ extern NSString * const kNUDAttachmentAllImageKey;
 - (void)p;
 
 @end
+
+@interface NUDTemplateMaker : NSObject
+- (NUDTextTemplate * (^)(NSString *))textTemplate;
+- (NUDAttachmentTemplate * (^)(NSString *))imageTemplate;
+@end
+
+@interface NUDTemplateMaker (ToolsExtension)
+- (NSArray <id<NUDTemplate>> *)sharedTemplates;
+- (NSArray<NUDTextTemplate *> *)sharedTextTemplates;
+- (NSArray<NUDAttachmentTemplate *> *)sharedImageTemplates;
+@end

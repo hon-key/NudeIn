@@ -19,7 +19,6 @@
     // Override point for customization after application launch.
     
     NSArray *familyNames = [UIFont familyNames];
-    
     for (NSString *familyName in familyNames) {
         printf("familyNames = %s\n",[familyName UTF8String]);
         

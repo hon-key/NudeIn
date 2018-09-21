@@ -21,11 +21,13 @@
 
 #import "NudeIn-Prefix.h"
 
-@class NUDText,NUDTextMaker,NUDTextUpdate;
+@class NUDText,NUDTextMaker,NUDTemplateMaker,NUDTextUpdate;
 //TODO:增加可自定义方法的功能
 //TODO:增加update功能
 
 @interface NUDTextView : UITextView
+
++ (void)makeTemplate:(void (^)(NUDTemplateMaker *make))make;
 
 + (NUDTextView *)make:(void (^)(NUDTextMaker *make))make;
 

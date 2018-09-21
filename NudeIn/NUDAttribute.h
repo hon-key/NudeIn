@@ -44,9 +44,9 @@ return _##array; \
 #define NUDAT_COPY OBJC_ASSOCIATION_COPY
 #define NUDAT_COPY_NONATOMIC OBJC_ASSOCIATION_COPY_NONATOMIC
 
-#define NUDAT_SYNTHESIZE(tag,type,prop,upperCaseProp) \
-- (type)prop {return objc_getAssociatedObject(self, _cmd);} \
-- (void)set##upperCaseProp:(type)_prop \
+#define NUDAT_SYNTHESIZE(methodType,type,prop,upperCaseProp,tag) \
+methodType (type)prop {return objc_getAssociatedObject(self, _cmd);} \
+methodType (void)set##upperCaseProp:(type)_prop \
 { objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
 
 #define NUD_MAKE_TEMPLATE_ARRAY_FROM(firstArg,maker) [NSMutableArray new]; \

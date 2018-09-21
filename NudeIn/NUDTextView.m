@@ -44,6 +44,11 @@ NUDTouchTrackingDelegate
 
 @implementation NUDTextView
 
+NSLock *templateMakerBlock;
++ (void)load {
+    templateMakerBlock = [[NSLock alloc] init];
+}
+
 + (NUDTextView *)make:(void (^)(NUDTextMaker *))make {
     
     NUDTextView *label = [[NUDTextView alloc] init];
@@ -75,6 +80,21 @@ NUDTouchTrackingDelegate
     self.maker = [[NUDTextMaker alloc] init];
     make(self.maker);
     self.attributedText = self.maker.string;
+}
+
+NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
++ (void)makeTemplate:(void (^)(NUDTemplateMaker *))make {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self setTemplateMaker:[[NUDTemplateMaker alloc] init]];
+    });
+    [templateMakerBlock lock];
+    make([self templateMaker]);
+    [templateMakerBlock unlock];
+}
+
++ (NUDTemplateMaker *)sharedTemplateMaker {
+    return [self templateMaker];
 }
 
 - (void)p {
