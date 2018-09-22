@@ -17,7 +17,7 @@
 @property (nonatomic,strong) NudeIn *textView;
 @property (nonatomic,strong) NudeIn *textView2;
 @property (nonatomic,strong) NudeIn *textView3;
-
+@property (nonatomic,strong) NudeIn *textView4;
 
 @end
 
@@ -41,6 +41,12 @@
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).with.offset(-200);
         make.width.height.mas_equalTo(300);
+    }];
+    [self.view addSubview:self.textView4];
+    [self.textView4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(200);
+//        make.width.height.mas_equalTo(100);
     }];
 
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
@@ -95,6 +101,16 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
         
+    }else if ([action isKindOfClass:[NUDTapAction class]]) {
+        
+        NUDTapAction *tapAction = (NUDTapAction *)action;
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:tapAction.string message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     
 }
@@ -125,9 +141,9 @@
         _textView2 = [NudeIn make:^(NUDTextMaker *make) {
             make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
             make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
-            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"tpl1",nil);
-            make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
-            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
+            make.text(@"RNG").color([UIColor greenColor]).attachWith(@"markRed",@"share1",nil);
+            make.text(@"大战").font(17).color([UIColor blackColor]).highlighted(@"markRed").attach();
+            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).highlighted(@"markYellow").attach();
             make.allText().font(50).attach();
             make.text(@"RNG").color([UIColor redColor]).attach();
             make.text(@"KZ").color([UIColor blueColor]).attach();
@@ -200,6 +216,25 @@
         });
     }
     return _textView3;
+}
+
+- (NudeIn *)textView4 {
+    if (!_textView4) {
+        [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
+            make.imageTemplate(@"imageTpl1").ln(1).aligment(NUDAliCenter).size(100,100).attach();
+            make.textTemplate(@"normal").fontName(@"AmericanTypewriter",25).bold().aligment(NUDAliCenter).attach();
+            make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).attach();
+            make.textTemplate(@"highlight").fontName(@"AmericanTypewriter",30).bold().solid(5,[UIColor redColor]).color([UIColor orangeColor]).aligment(NUDAliCenter).attach();
+            
+        }];
+        _textView4 = [NudeIn make:^(NUDTextMaker *make) {
+             make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).attach();
+            make.image(@"githubIcon").nud_attachWith(@"imageTpl1");
+            make.text(@"Github").highlighted(@"highlight").nud_attachWith(@"normal",@"tap");
+        }];
+        _textView4.selectable = NO;
+    }
+    return _textView4;
 }
 
 

@@ -34,6 +34,10 @@
 
 @end
 
+@interface NUDTapAction : NUDAction
+@property (nonatomic,copy) NSString *string;
+@end
+
 @interface NUDAttachmentAction : NUDAction
 
 @property (nonatomic,strong) UIImage *image;
@@ -41,7 +45,7 @@
 @end
 
 
-@interface NUDSelector : NSObject
+@interface NUDSelector : NSObject <NSCopying>
 
 @property (nonatomic,weak) id target;
 @property (nonatomic) SEL action;

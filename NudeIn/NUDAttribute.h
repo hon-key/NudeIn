@@ -44,26 +44,10 @@ return _##array; \
 #define NUDAT_COPY OBJC_ASSOCIATION_COPY
 #define NUDAT_COPY_NONATOMIC OBJC_ASSOCIATION_COPY_NONATOMIC
 
-#define NUDAT_SYNTHESIZE(tag,type,prop,upperCaseProp) \
-- (type)prop {return objc_getAssociatedObject(self, _cmd);} \
-- (void)set##upperCaseProp:(type)_prop \
+#define NUDAT_SYNTHESIZE(methodType,type,prop,upperCaseProp,tag) \
+methodType (type)prop {return objc_getAssociatedObject(self, _cmd);} \
+methodType (void)set##upperCaseProp:(type)_prop \
 { objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
-
-#define NUD_MAKE_TEMPLATE_ARRAY_FROM(firstArg,maker) [NSMutableArray new]; \
-id<NUDTemplate> tpl = [maker templateWithId:firstArg]; \
-if (tpl) { \
-    [tpls addObject:tpl]; \
-} \
-va_list idList ; \
-va_start(idList,firstArg); \
-NSString *nextId; \
-while ((nextId = va_arg(idList, NSString *))) { \
-    tpl = [maker templateWithId:nextId]; \
-    if (tpl) { \
-        [tpls addObject:tpl]; \
-    } \
-} \
-va_end(idList);
 
 typedef NS_ENUM(NSUInteger, NUDFontStyle) {
     NUDBold, NUDRegular, NUDMedium, NUDLight,
@@ -131,8 +115,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 //- (NUDAB(NSString *))inText;
 
 // font
-- (NUDAB(NSUInteger))font;
-- (NUDAB(NSString *,NSUInteger))fontName;
+- (NUDAB(CGFloat))font;
+- (NUDAB(NSString *,CGFloat))fontName;
 - (NUDAB(UIFont *))fontRes;
 - (NUDAB(NUDFontStyle))fontStyle;
 - (NUDAB(void))bold;
@@ -170,9 +154,9 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(NUDLineBreakMode))linebreak;
 
 // TODO:重写link属性
-//- (NUDAB(id,SEL))press;
+- (NUDAB(id,SEL))tap;
 //- (NUDAB(id,SEL))longPress;
-- (NUDAB(NSString *))Highlighted;
+- (NUDAB(NSString *))highlighted;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;
@@ -191,6 +175,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(CGFloat))vertical;
 - (NUDAB(CGFloat,CGFloat))size;
 - (NUDAB(NSUInteger))ln;
+
+- (NUDAB(NUDAlignment))aligment;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;

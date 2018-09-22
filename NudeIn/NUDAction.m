@@ -29,11 +29,24 @@
 
 @end
 
+@implementation NUDTapAction
+
+@end
+
 @implementation NUDAttachmentAction
 
 @end
 
 @implementation NUDSelector
+
+- (id)copyWithZone:(NSZone *)zone {
+    NUDSelector *selector = [[[self class] alloc] init];
+    selector.target = self.target;
+    selector.action = self.action;
+    selector.obj = self.obj;
+    return selector;
+}
+
 - (NSString *)name {
     return NSStringFromSelector(self.action);
 }

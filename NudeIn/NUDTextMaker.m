@@ -106,6 +106,31 @@ NUD_LAZY_LOAD_ARRAY(components)
 
 @end
 
+@interface NUDTemplateMaker ()
+@property (nonatomic,strong) NUDTextMaker *textMaker;
+@end
+
+@implementation NUDTemplateMaker
+- (instancetype)init {
+    if (self = [super init]) {
+        self.textMaker = [[NUDTextMaker alloc] init];
+    }
+    return self;
+}
+
+- (NUDTextTemplate *(^)(NSString *))textTemplate {
+    return ^NUDTextTemplate *(NSString *tplName) {
+        return self.textMaker.textTemplate(tplName);
+    };
+}
+
+- (NUDAttachmentTemplate *(^)(NSString *))imageTemplate {
+    return ^NUDAttachmentTemplate *(NSString *tplName) {
+        return self.textMaker.imageTemplate(tplName);
+    };
+}
+@end
+
 @implementation NUDTextMaker (ToolsExtension)
 
 - (NSRange)appendString:(NSAttributedString *)string {
@@ -204,4 +229,46 @@ NUD_LAZY_LOAD_ARRAY(components)
     }
 }
 
+@end
+
+@implementation NUDTemplateMaker (ToolsExtension)
+- (NSArray<id<NUDTemplate>> *)sharedTemplates {
+    return self.textMaker.templates;
+}
+- (NSArray<NUDTextTemplate *> *)sharedTextTemplates {
+    NSMutableArray *textTemplates = [NSMutableArray new];
+    for (id<NUDTemplate> template in [self sharedTemplates]) {
+        if ([template isKindOfClass:[NUDTextTemplate class]]) {
+            [textTemplates addObject:template];
+        }
+    }
+    return [textTemplates copy];
+}
+- (NSArray<NUDAttachmentTemplate *> *)sharedImageTemplates {
+    NSMutableArray *textTemplates = [NSMutableArray new];
+    for (id<NUDTemplate> template in [self sharedTemplates]) {
+        if ([template isKindOfClass:[NUDAttachmentTemplate class]]) {
+            [textTemplates addObject:template];
+        }
+    }
+    return [textTemplates copy];
+}
+- (NUDTextTemplate *)textTemplateWithId:(NSString *)identifier {
+    NSArray *textTemplates = [self sharedTemplates];
+    for (id<NUDTemplate> template in textTemplates) {
+        if ([template.identifier isEqualToString:identifier]) {
+            return template;
+        }
+    }
+    return nil;
+}
+- (NUDAttachmentTemplate *)imageTemplateWithId:(NSString *)identifier {
+    NSArray *textTemplates = [self sharedTemplates];
+    for (id<NUDTemplate> template in textTemplates) {
+        if ([template.identifier isEqualToString:identifier]) {
+            return template;
+        }
+    }
+    return nil;
+}
 @end

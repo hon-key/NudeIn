@@ -23,6 +23,7 @@
 #import "NUDTextMaker.h"
 #import "NUDText.h"
 #import "NUDTextUpdate.h"
+#import "NUDTextView.h"
 #import <objc/runtime.h>
 
 
@@ -32,6 +33,7 @@
 @interface NUDAttachment ()
 
 @property (nonatomic,strong) NSTextAttachment *attachment;
+@property (nonatomic,assign) NUDAlignment ali;
 @property (nonatomic,weak) NUDTextMaker *father;
 
 @property (nonatomic,assign) NSUInteger numOfLinefeed;
@@ -54,6 +56,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
         _father = maker;
         _attachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
         _numOfLinefeed = NSUIntegerMax;
+        _ali = NUDAliLeft;
         
     }
     return self;
@@ -68,6 +71,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
     attachment.numOfLinefeed = self.numOfLinefeed;
     attachment.actionTags = [self.actionTags mutableCopy];
     attachment.update = self.update;
+    attachment.ali = self.ali;
     
     NSData *imgData = nil;
     if ((imgData = UIImagePNGRepresentation(self.attachment.image)) ||
@@ -89,6 +93,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
         self.numOfLinefeed = attachment.numOfLinefeed;
         self.actionTags = [attachment.actionTags mutableCopy];
         self.update = attachment.update;
+        self.ali = attachment.ali;
         
         NSData *imgData = nil;
         if ((imgData = UIImagePNGRepresentation(attachment.attachment.image)) ||
@@ -137,6 +142,13 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
         return self;
     };
 }
+- (id (^)(NUDAlignment))aligment {
+    return NUDABI(NUDAlignment aligment) {
+        self.ali = aligment;
+        HK_STORE_TAG_TO(self.actionTags);
+        return self;
+    };
+}
 
 - (void (^)(void))attach {
     return ^void (void) {
@@ -146,8 +158,30 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
-
-        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
+        
+        NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
+        NSMutableArray *tpls = [NSMutableArray new];
+        id<NUDTemplate> tpl;
+        if ((tpl = [self.father templateWithId:identifier]) &&
+            [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
+            [tpls addObject:tpl];
+        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
+                  [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
+            [tpls addObject:tpl];
+        }
+        va_list idList ;
+        va_start(idList,identifier);
+        NSString *nextId;
+        while ((nextId = va_arg(idList, NSString *))) {
+            if ((tpl = [self.father templateWithId:nextId])) {
+                [tpls addObject:tpl];
+            }else if ((tpl = [sharedTemplateMaker textTemplateWithId:nextId])) {
+                [tpls addObject:tpl];
+            }
+        }
+        va_end(idList);
+        
+        
         NUDAttachmentTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
         if (template) {
             NSMutableArray *actionTags = [template.parasiticalObj.actionTags mutableCopy];
@@ -155,7 +189,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
             
             NSTextAttachment *tplAttachment = template.parasiticalObj.attachment;
             if (HK_FIND_TAG(actionTags, origin)) {
-                self.origin(tplAttachment.bounds.origin.x,tplAttachment.bounds.origin.x);
+                self.origin(tplAttachment.bounds.origin.x,tplAttachment.bounds.origin.y);
             }
             if (HK_FIND_TAG(actionTags, size)) {
                 self.size(tplAttachment.bounds.size.width,tplAttachment.bounds.size.height);
@@ -163,10 +197,18 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
             if (HK_FIND_TAG(actionTags, vertical)) {
                 self.vertical(tplAttachment.bounds.origin.y);
             }
+            if (HK_FIND_TAG(actionTags, aligment)) {
+                self.aligment(template.parasiticalObj.ali);
+            }
             if (self.numOfLinefeed == NSUIntegerMax) {
                 self.numOfLinefeed = template.parasiticalObj.numOfLinefeed;
             }
         }
+        
+        if (HK_FIND_TAG(self.actionTags, aligment)) {
+            self.father.text(@" ").font(1).aligment(self.ali).attach();
+        }
+        
         NSAttributedString *string = [self attributedString];
         NSRange strRange = [self.father appendString:string];
         
@@ -212,7 +254,7 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 @implementation NUDAttachmentTemplate
 
-NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
+NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier {
     if (self = [super init]) {
@@ -224,10 +266,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 
 - (id)copyWithZone:(NSZone *)zone {
     NUDAttachmentTemplate *tpl = [[[self class] alloc] initWithFather:self.parasiticalObj.father identifier:self.identifier];
-    tpl.parasiticalObj.actionTags = [self.parasiticalObj.actionTags mutableCopy];
-    tpl.parasiticalObj.attachment.image = self.parasiticalObj.attachment.image;
-    tpl.parasiticalObj.attachment.bounds = self.parasiticalObj.attachment.bounds;
-    tpl.parasiticalObj.numOfLinefeed = self.parasiticalObj.numOfLinefeed;
+    tpl.parasiticalObj = [self.parasiticalObj copy];
     return tpl;
 }
 
@@ -238,6 +277,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         self.parasiticalObj.attachment.image = tpl.parasiticalObj.attachment.image;
         self.parasiticalObj.attachment.bounds = tpl.parasiticalObj.attachment.bounds;
         self.parasiticalObj.numOfLinefeed = tpl.parasiticalObj.numOfLinefeed;
+        self.parasiticalObj.ali = tpl.parasiticalObj.ali;
     }
 }
 
@@ -245,6 +285,7 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
 - (id (^)(CGFloat, CGFloat))size {return NUDABI(CGFloat width,CGFloat height){NUDAT(size,width,height);};}
 - (id (^)(CGFloat))vertical {return NUDABI(CGFloat offset){NUDAT(vertical,offset);};}
 - (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
+- (id (^)(NUDAlignment))aligment {return NUDABI(NUDAlignment ali){NUDAT(aligment,ali);};}
 
 - (void (^)(void))attach {
     return ^void (void) {
@@ -268,6 +309,9 @@ NUDAT_SYNTHESIZE(NUDAT_COPY_NONATOMIC,NSString *,identifier,Identifier)
         }
         if (HK_FIND_TAG(actionTags, ln)) {
             self.parasiticalObj.numOfLinefeed += template.parasiticalObj.numOfLinefeed;
+        }
+        if (HK_FIND_TAG(actionTags, ali)) {
+            self.parasiticalObj.ali = template.parasiticalObj.ali;
         }
 
     }

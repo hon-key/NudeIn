@@ -115,8 +115,8 @@
 @implementation NUDAttribute
 
 - (id (^)(UIColor *))color {NUDMethodNotImplemented(UIColor *c);}
-- (id (^)(NSUInteger))font {NUDMethodNotImplemented(NSUInteger i);}
-- (id (^)(NSString *, NSUInteger))fontName {NUDMethodNotImplemented(NSString *s,NSUInteger i);}
+- (id (^)(CGFloat))font {NUDMethodNotImplemented(CGFloat f);}
+- (id (^)(NSString *, CGFloat))fontName {NUDMethodNotImplemented(NSString *s,CGFloat f);}
 - (id (^)(UIColor *))mark {NUDMethodNotImplemented(UIColor *c);}
 - (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
 - (id (^)(NSUInteger, UIColor *))solid {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
@@ -150,8 +150,8 @@
 - (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented(CGFloat f);}
 - (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented(NUDLineBreakMode m);}
 
-- (id (^)(NSString *))Highlighted {NUDMethodNotImplemented(NSString *s);}
-
+- (id (^)(NSString *))highlighted {NUDMethodNotImplemented(NSString *s);}
+- (id (^)(id, SEL))tap {NUDMethodNotImplemented(id t,SEL s);}
 
 - (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}
 - (void (^)(void))attach {NUDMethodNotImplementedReturnVoid(void);}
@@ -177,6 +177,7 @@
 
 - (id (^)(CGFloat))vertical {NUDMethodNotImplemented(CGFloat f);}
 - (id (^)(NSUInteger))ln {NUDMethodNotImplemented(NSUInteger i);}
+- (id (^)(NUDAlignment))aligment {NUDMethodNotImplemented(NUDAlignment a);}
 
 - (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}
 - (void (^)(void))apply {NUDMethodNotImplementedReturnVoid(void);}
