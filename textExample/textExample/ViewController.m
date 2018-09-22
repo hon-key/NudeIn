@@ -132,8 +132,8 @@
             make.textTemplate(@"markRed").font(17).bold().color([UIColor redColor]).attach();
             make.textTemplate(@"markYellow").font(14).bold().color([UIColor yellowColor]).attach();
             make.text(@"RNG").color([UIColor greenColor]).attachWith(@"markRed",@"share1",nil);
-            make.text(@"大战").font(17).color([UIColor blackColor]).Highlighted(@"markRed").attach();
-            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).Highlighted(@"markYellow").attach();
+            make.text(@"大战").font(17).color([UIColor blackColor]).highlighted(@"markRed").attach();
+            make.text(@"KZ").font(14).bold().color([UIColor blueColor]).highlighted(@"markYellow").attach();
             make.allText().font(50).attach();
             make.text(@"RNG").color([UIColor redColor]).attach();
             make.text(@"KZ").color([UIColor blueColor]).attach();
@@ -213,12 +213,14 @@
         [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
             make.textTemplate(@"share1").font(24).attach();
             make.textTemplate(@"share2").color([UIColor redColor]).attach();
+            make.textTemplate(@"highlight").font(40).attach();
         }];
         _textView4 = [NudeIn make:^(NUDTextMaker *make) {
             make.textTemplate(@"tp1").font(45).attach();
             make.textTemplate(@"share2").color([UIColor blueColor]).attach();
-            make.text(@"textTemplate").nud_attachWith(@"share1",@"tp1",@"share2");
+            make.text(@"textTemplate").highlighted(@"highlight").nud_attachWith(@"share1",@"tp1",@"share2");
         }];
+        _textView4.selectable = NO;
     }
     return _textView4;
 }

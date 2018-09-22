@@ -428,7 +428,7 @@
     };
 }
 
-- (id (^)(NSString *))Highlighted {
+- (id (^)(NSString *))highlighted {
     return NUDABI(NSString *tplName) {
         self.highlightedTpl = tplName;
         return self;
@@ -449,18 +449,13 @@
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
         
-//        NSMutableArray *tpls = NUD_MAKE_TEMPLATE_ARRAY_FROM(identifier, self.father);
-        
         NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
-        NSMutableArray *sharedTpls = [NSMutableArray new];
         NSMutableArray *tpls = [NSMutableArray new];
-        id<NUDTemplate> tpl = [self.father templateWithId:identifier];
-        if (tpl) {
+        id<NUDTemplate> tpl;
+        if ((tpl = [self.father templateWithId:identifier])) {
             [tpls addObject:tpl];
-        }
-        id<NUDTemplate> sharedTpl = [sharedTemplateMaker textTemplateWithId:identifier];
-        if (sharedTpl) {
-            [sharedTpls addObject:sharedTpl];
+        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier])) {
+            [tpls addObject:tpl];
         }
         va_list idList ;
         va_start(idList,identifier);
@@ -617,7 +612,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 - (id (^)(CGFloat))fl_headIndent {return NUDABI(CGFloat value){NUDAT(fl_headIndent,value);};}
 - (id (^)(NUDLineBreakMode))linebreak {return NUDABI(NUDLineBreakMode mode){NUDAT(linebreak,mode);};}
 - (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
-- (id (^)(NSString *))Highlighted {return NUDABI(NSString *tplName){NUDAT(Highlighted,tplName);};}
+- (id (^)(NSString *))highlighted {return NUDABI(NSString *tplName){NUDAT(highlighted,tplName);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {

@@ -150,7 +150,7 @@
 - (id (^)(CGFloat))fl_headIndent {NUDMethodNotImplemented(CGFloat f);}
 - (id (^)(NUDLineBreakMode))linebreak {NUDMethodNotImplemented(NUDLineBreakMode m);}
 
-- (id (^)(NSString *))Highlighted {NUDMethodNotImplemented(NSString *s);}
+- (id (^)(NSString *))highlighted {NUDMethodNotImplemented(NSString *s);}
 
 
 - (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}

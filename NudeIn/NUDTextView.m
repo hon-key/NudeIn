@@ -161,6 +161,9 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
                 nTouch.originComp = [nTouch.comp copy];
                 NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
                 NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
+                if (!template) {
+                    template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
+                }
                 NUDText *tplText = [template valueForKey:@"parasiticalObj"];
                 [textComp mergeComp:tplText];
                 [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
@@ -179,36 +182,37 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 
     NUDTouch *nTouch = [self.touchTracking currentNUDTouch:touches.anyObject];
-    if (!nTouch) {
-        return;
-    }
-
-//    NSLog(@"<moved> %@",nTouch);
-//    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
-    if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
-        [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
-
-//        NSLog(@"in!!");
-        if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-
-            NUDText *textComp = (NUDText *)nTouch.comp;
-            NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
-            NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
-            NUDText *tplText = [template valueForKey:@"parasiticalObj"];
-            [textComp mergeComp:tplText];
-            [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
+    if (nTouch) {
+        //    NSLog(@"<moved> %@",nTouch);
+        //    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
+        if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
+            [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
             
-            self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-        }else {}
-
-    }else {
-
-//        NSLog(@"out!!");
-        if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-            [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
-            self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-        }else {}
-
+            //        NSLog(@"in!!");
+            if ([nTouch.comp isKindOfClass:[NUDText class]]) {
+                
+                NUDText *textComp = (NUDText *)nTouch.comp;
+                NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
+                NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
+                if (!template) {
+                    template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
+                }
+                NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+                [textComp mergeComp:tplText];
+                [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
+                
+                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+            }else {}
+            
+        }else {
+            
+            //        NSLog(@"out!!");
+            if ([nTouch.comp isKindOfClass:[NUDText class]]) {
+                [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
+                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+            }else {}
+            
+        }
     }
 
     [super touchesMoved:touches withEvent:event];
@@ -220,6 +224,7 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
         for (UITouch *touch in [touches allObjects]) {
             [self touchesEnded:[[NSSet alloc] initWithObjects:touch, nil] withEvent:event];
         }
+        [super touchesEnded:touches withEvent:event];
         return;
     }
 

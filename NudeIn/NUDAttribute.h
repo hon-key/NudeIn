@@ -172,7 +172,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 // TODO:重写link属性
 //- (NUDAB(id,SEL))press;
 //- (NUDAB(id,SEL))longPress;
-- (NUDAB(NSString *))Highlighted;
+- (NUDAB(NSString *))highlighted;
 
 - (void (^)(void))attach;
 - (void (^)(NSString *,...))attachWith;

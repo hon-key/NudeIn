@@ -254,8 +254,8 @@ NUD_LAZY_LOAD_ARRAY(components)
     return [textTemplates copy];
 }
 - (NUDTextTemplate *)textTemplateWithId:(NSString *)identifier {
-    NSArray *textTemplates = [self sharedTextTemplates];
-    for (NUDTextTemplate *template in textTemplates) {
+    NSArray *textTemplates = [self sharedTemplates];
+    for (id<NUDTemplate> template in textTemplates) {
         if ([template.identifier isEqualToString:identifier]) {
             return template;
         }
@@ -263,8 +263,8 @@ NUD_LAZY_LOAD_ARRAY(components)
     return nil;
 }
 - (NUDAttachmentTemplate *)imageTemplateWithId:(NSString *)identifier {
-    NSArray *textTemplates = [self sharedImageTemplates];
-    for (NUDAttachmentTemplate *template in textTemplates) {
+    NSArray *textTemplates = [self sharedTemplates];
+    for (id<NUDTemplate> template in textTemplates) {
         if ([template.identifier isEqualToString:identifier]) {
             return template;
         }
