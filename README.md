@@ -69,11 +69,13 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.3
+最新 pod 版本：1.2.4
 
-已经集成最新的高亮功能，调用highlight方法传入模板即可实现高亮。
-
-P.S. 你需要将 userInteractionEnable 设置为 YES 才行。注意，请不要在同一个 make 里同时使用 link 方法和 highlight 方法，下一个版本将引入 **`press`** 和 **`longPress`** 来代替 link 方法。
+1、makeTemplate 功能，现在可以声明全局template了。
+2、shadow 属性优化
+3、新增 tap 属性，现在 text 可以声明 tap，引入回调，此属性可代替 link 属性
+4、修复了一部分错误和 bug
+5、image 组件添加 aligment 功能，可以在一行里为 image 声明 aligment 类型
 
 最低 iOS 版本： `8.0`
 
