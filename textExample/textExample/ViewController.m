@@ -45,7 +45,7 @@
     [self.view addSubview:self.textView4];
     [self.textView4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(100);
+        make.centerY.equalTo(self.view).with.offset(200);
 //        make.width.height.mas_equalTo(100);
     }];
 
@@ -101,6 +101,16 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
         
+    }else if ([action isKindOfClass:[NUDTapAction class]]) {
+        
+        NUDTapAction *tapAction = (NUDTapAction *)action;
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:tapAction.string message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     
 }
@@ -211,14 +221,16 @@
 - (NudeIn *)textView4 {
     if (!_textView4) {
         [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
-            make.textTemplate(@"share1").font(24).attach();
-            make.textTemplate(@"share2").color([UIColor redColor]).attach();
-            make.textTemplate(@"highlight").font(40).attach();
+            make.imageTemplate(@"imageTpl1").ln(1).aligment(NUDAliCenter).size(100,100).attach();
+            make.textTemplate(@"normal").fontName(@"AmericanTypewriter",25).bold().aligment(NUDAliCenter).attach();
+            make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).attach();
+            make.textTemplate(@"highlight").fontName(@"AmericanTypewriter",30).bold().solid(5,[UIColor redColor]).color([UIColor orangeColor]).aligment(NUDAliCenter).attach();
+            
         }];
         _textView4 = [NudeIn make:^(NUDTextMaker *make) {
-            make.textTemplate(@"tp1").font(45).attach();
-            make.textTemplate(@"share2").color([UIColor blueColor]).attach();
-            make.text(@"textTemplate").highlighted(@"highlight").nud_attachWith(@"share1",@"tp1",@"share2");
+             make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).attach();
+            make.image(@"githubIcon").nud_attachWith(@"imageTpl1");
+            make.text(@"Github").highlighted(@"highlight").nud_attachWith(@"normal",@"tap");
         }];
         _textView4.selectable = NO;
     }

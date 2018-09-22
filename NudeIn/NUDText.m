@@ -38,6 +38,7 @@
 // TODO: inText
 @property (nonatomic,strong) NSMutableArray<NUDText *> *innerTexts;
 @property (nonatomic,copy) NSString *highlightedTpl;
+@property (nonatomic,strong) NUDSelector *selector;
 
 @property (nonatomic,assign) NSUInteger countOfLinefeed;
 @property (nonatomic,strong) NUDShadowTag *shadowTag;
@@ -76,6 +77,7 @@
     text.update = self.update;
     text.highlightedTpl = self.highlightedTpl;
     text.shadowTag = [self.shadowTag copy];
+    text.selector = [self.selector copy];
     return text;
 }
 
@@ -90,11 +92,12 @@
         self.update = text.update;
         self.highlightedTpl = text.highlightedTpl;
         self.shadowTag = [text.shadowTag copy];
+        self.selector = [text.selector copy];
     }
 }
 
-- (id (^)(NSUInteger))font {
-    return NUDABI(NSUInteger size) {
+- (id (^)(CGFloat))font {
+    return NUDABI(CGFloat size) {
         
         [self.attributes setObject:[UIFont systemFontOfSize:size] forKey:NSFontAttributeName];
         return self;
@@ -142,8 +145,8 @@
     };
 }
 
-- (id (^)(NSString *, NSUInteger))fontName {
-    return NUDABI(NSString *name,NSUInteger size) {
+- (id (^)(NSString *, CGFloat))fontName {
+    return NUDABI(NSString *name,CGFloat size) {
         
         [self.attributes setObject:[UIFont fontWithName:name size:size] forKey:NSFontAttributeName];
         return self;
@@ -435,6 +438,15 @@
     };
 }
 
+- (id (^)(id, SEL))tap {
+    return NUDABI(id target,SEL selector) {
+        self.selector = [NUDSelector new];
+        self.selector.target = target;
+        self.selector.action = selector;
+        return self;
+    };
+}
+
 
 - (void (^)(void))attach {
     return ^void (void) {
@@ -452,9 +464,11 @@
         NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
         NSMutableArray *tpls = [NSMutableArray new];
         id<NUDTemplate> tpl;
-        if ((tpl = [self.father templateWithId:identifier])) {
+        if ((tpl = [self.father templateWithId:identifier]) &&
+            [tpl isKindOfClass:[NUDTextTemplate class]]) {
             [tpls addObject:tpl];
-        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier])) {
+        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
+                  [tpl isKindOfClass:[NUDTextTemplate class]]) {
             [tpls addObject:tpl];
         }
         va_list idList ;
@@ -484,6 +498,9 @@
             }
             if (!self.highlightedTpl) {
                 self.highlightedTpl = template.parasiticalObj.highlightedTpl;
+            }
+            if (!self.selector) {
+                self.selector = template.parasiticalObj.selector;
             }
             
             [self.attributes addEntriesFromDictionary:tplAttrs];
@@ -563,7 +580,6 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 
 - (id)copyWithZone:(NSZone *)zone {
     NUDTextTemplate *tpl = [super copyWithZone:zone];
-    tpl.parasiticalObj = [[NUDText alloc] initWithFather:self.parasiticalObj.father string:nil];
     tpl.identifier = self.identifier;
     tpl.parasiticalObj = [self.parasiticalObj copy];
     return tpl;
@@ -573,14 +589,13 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
     if ([comp isKindOfClass:[NUDTextTemplate class]]) {
         NUDTextTemplate *tpl = (NUDTextTemplate *)comp;
         [super mergeComp:tpl];
-        self.parasiticalObj = [[NUDText alloc] initWithFather:tpl.parasiticalObj.father string:nil];
         self.identifier = tpl.identifier;
         self.parasiticalObj = [tpl.parasiticalObj copy];
     }
 }
 
-- (id (^)(NSUInteger))font {return NUDABI(NSUInteger size) {NUDAT(font,size);};}
-- (id (^)(NSString *, NSUInteger))fontName {return NUDABI(NSString *string,NSUInteger size) {NUDAT(fontName,string,size);};}
+- (id (^)(CGFloat))font {return NUDABI(CGFloat size) {NUDAT(font,size);};}
+- (id (^)(NSString *, CGFloat))fontName {return NUDABI(NSString *string,CGFloat size) {NUDAT(fontName,string,size);};}
 - (id (^)(UIFont *))fontRes {return NUDABI(UIFont *font){NUDAT(fontRes,font);};}
 - (id (^)(NUDFontStyle))fontStyle {return NUDABI(NUDFontStyle style){NUDAT(fontStyle,style);};}
 - (id (^)(void))bold {return NUDABI(void){NUDAT(bold);};}
@@ -613,6 +628,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 - (id (^)(NUDLineBreakMode))linebreak {return NUDABI(NUDLineBreakMode mode){NUDAT(linebreak,mode);};}
 - (id (^)(NSUInteger))ln {return NUDABI(NSUInteger num){NUDAT(ln,num);};}
 - (id (^)(NSString *))highlighted {return NUDABI(NSString *tplName){NUDAT(highlighted,tplName);};}
+- (id (^)(id, SEL))tap {return NUDABI(id t,SEL s){NUDAT(tap,t,s);};}
 
 - (id (^)(id, SEL))link {
     return NUDABI(id target,SEL action) {
@@ -647,6 +663,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
         NUDShadowTag *newTag = [template.parasiticalObj.shadowTag copy];
         [newTag mergeShadowTag:self.parasiticalObj.shadowTag];
         self.parasiticalObj.shadowTag = newTag;
+        self.parasiticalObj.selector = template.parasiticalObj.selector;
         if (template.tplLinkSelector) {
             self.tplLinkSelector = template.tplLinkSelector;
         }

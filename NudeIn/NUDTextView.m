@@ -151,7 +151,7 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
     NUDTouch *nTouch = [self.touchTracking track:touches.anyObject];
 
     if (nTouch) {
-//        NSLog(@"<begin> %@",nTouch);
+        NSLog(@"<begin> %@",nTouch);
 //        NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
         if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation)) {
             nTouch.comp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
@@ -183,12 +183,12 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 
     NUDTouch *nTouch = [self.touchTracking currentNUDTouch:touches.anyObject];
     if (nTouch) {
-        //    NSLog(@"<moved> %@",nTouch);
+            NSLog(@"<moved> %@",nTouch);
         //    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
         if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
             [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
             
-            //        NSLog(@"in!!");
+                    NSLog(@"in!!");
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
                 
                 NUDText *textComp = (NUDText *)nTouch.comp;
@@ -206,7 +206,7 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
             
         }else {
             
-            //        NSLog(@"out!!");
+                    NSLog(@"out!!");
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
                 [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
                 self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
@@ -230,11 +230,20 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 
     NUDTouch *nTouch = [self.touchTracking currentNUDTouch:touches.anyObject];
     if (nTouch) {
-//        NSLog(@"<end> %@",nTouch);
+        NSLog(@"<end> %@",nTouch);
 //        NSLog(@"%ld",[touches allObjects].count);
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
             self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+            if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
+                [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
+                NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
+                if (selector) {
+                    NUDTapAction *action = [[NUDTapAction alloc] init];
+                    action.string = ((NUDText *)nTouch.comp).string;
+                    [selector performAction:action];
+                }
+            }
         }else {}
     }
 //    NSLog(@"ended");
@@ -245,7 +254,7 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 
-//    NSLog(@"cancelled");
+    NSLog(@"cancelled");
     NSArray *touchesArray = [touches allObjects];
     for (UITouch *touch in touchesArray) {
         NSSet *set = [[NSSet alloc] initWithObjects:touch, nil];
