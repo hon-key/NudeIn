@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/hon-key/Nudeln.svg?branch=master)](https://travis-ci.org/hon-key/Nudeln)
 [![Cocoapods](https://img.shields.io/badge/pod-1.2.4-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
+[![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)](https://img.shields.io/badge/language-Objective--C-blue.svg)
 
 NudeIn 是一个基于 UITextView ，书写风格类似于 masonry 的 iOS 端富文本控件，它采用优雅的声明式(链式)方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
 
