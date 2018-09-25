@@ -1,9 +1,3 @@
 /textExample/Pods/
 .DS_Store
-*.xcuserstate  
-project.xcworkspace  
-xcuserdata  
-UserInterfaceState.xcuserstate  
-project.xcworkspace/  
-xcuserdata/  
-UserInterface.xcuserstate
+textExample/textExample.xcworkspace/xcuserdata/
