@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import <Masonry.h>
 #import "NudeIn.h"
 
 
@@ -27,45 +26,19 @@
     [super viewDidLoad];
     
     [self.view addSubview:self.textView];
-    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.centerX.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-    }];
+    self.textView.frame = CGRectMake(20, 50, 0, 0);
+    [self.textView sizeToFit];
+
     [self.view addSubview:self.textView2];
-    [self.textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView.mas_bottom);
-        make.centerX.equalTo(self.view);
-    }];
+    self.textView2.frame = CGRectMake(20, 100, 0, 0);
+    [self.textView2 sizeToFit];
+    
     [self.view addSubview:self.textView3];
-    [self.textView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(-200);
-        make.width.height.mas_equalTo(300);
-    }];
+    self.textView3.frame = CGRectMake(20, 150, [UIScreen mainScreen].bounds.size.width, 300);
+    
     [self.view addSubview:self.textView4];
-    [self.textView4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(200);
-//        make.width.height.mas_equalTo(100);
-    }];
-
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bb)]];
-
-
+    self.textView4.frame = CGRectMake(20, 500, 200, 150);
     
-
-//    [self.view addSubview:nude];
-//    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.centerY.equalTo(self.view);
-//        make.left.right.equalTo(self.view);
-//
-//    }];
-    
-}
-
-
-- (void)bb {
-    NSLog(@"1");
 }
 
 - (void)linkHandler:(NUDAction *)action {
