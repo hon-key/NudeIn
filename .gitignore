@@ -1,4 +1,5 @@
 /textExample/Pods/
+/textExample/Podfile.lock
 .DS_Store
 */.DS_Store
 textExample/textExample.xcworkspace/xcuserdata/
