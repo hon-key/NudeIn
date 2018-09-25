@@ -1,3 +1,4 @@
 /textExample/Pods/
 .DS_Store
+*/.DS_Store
 textExample/textExample.xcworkspace/xcuserdata/
