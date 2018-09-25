@@ -1,4 +1,6 @@
 language: objective-c
-xcode_project: ./textExample/textExample.xcworkspace
+xcode_workspace: ./textExample/textExample.xcworkspace
 xcode_scheme: textExample
-osx_image: xcode8.0
+osx_image: xcode9
+xcode_destination: platform=iOS Simulator,OS=8.0,name=iPhone X
+podfile: ./textExample/Podfile
