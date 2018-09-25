@@ -1,7 +1,4 @@
 language: objective-c
-os: osx
-xcode_workspace: ./textExample/textExample.xcworkspace
-xcode_scheme: textExample
-osx_image: xcode9
-xcode_destination: platform=iOS Simulator,OS=8.0,name=iPhone 5s
-podfile: ./textExample/Podfile
+
+
+script: xcodebuild -workspace textExample.xcworkspace -scheme textExample -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
