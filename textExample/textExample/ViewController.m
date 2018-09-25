@@ -53,26 +53,6 @@
 
 
     
-//    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
-//        make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).color([UIColor cyanColor]).attach();
-//        make.text(@"Github")._(NUD_,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUD__,[UIColor blackColor]).attach();
-//        make.text(@"Github")._(NUDThick_,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUDDot,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUDDotDot,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUDDash,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUDDashDot,[UIColor blueColor]).attach();
-//        make.text(@"Github")._(NUDDashDotDot,[UIColor blueColor]).attach();
-//        make.text(@"Github com")._(NUDDashDotDot|NUDByWord,[UIColor blueColor]).attach();
-//    }];
-    
-//    NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
-//        make.allText().font(64).color([UIColor orangeColor]).aligment(NUDAliCenter).ln(1).attach();
-//        make.text(@"Github").shadowDirection(NUDLeft,10).attach();
-//        make.text(@"Github").shadowDirection(NUDRight,10).attach();
-//        make.text(@"Github").shadowDirection(NUDBottom,10).attach();
-//        make.text(@"Github").shadowDirection(NUDTop,10).attach();
-//    }];
 
 //    [self.view addSubview:nude];
 //    [nude mas_makeConstraints:^(MASConstraintMaker *make) {
