@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: ./textExample/textExample.xcworkspace
+xcode_scheme: textExample
+osx_image: xcode8.0
