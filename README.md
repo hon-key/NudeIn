@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/hon-key/Nudeln.svg?branch=master)](https://travis-ci.org/hon-key/Nudeln)
 [![Cocoapods](https://img.shields.io/badge/pod-1.2.4-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
+
 NudeIn 是一个基于 UITextView ，书写风格类似于 masonry 的 iOS 端富文本控件，它采用优雅的声明式(链式)方法定义富文本控件，和编程式的不同，它所需的代码量相当短，且非常直观易用。
 
 与此同时，NudeIn 不止于此，它会是一款非常灵性的富文本控件，它会将减少代码冗余提高到极致。比如考虑到一点，富文本里可能会有多于 2 个的风格一致的富文本，也有可能仅仅只是风格部分一致的富文本，比如字体大小不一样，比如颜色不一样。这样的代码如果按照常规去写，可能会出现大量相同的代码段。为了解决这个问题，NudeIn 引入了 **`模板`** ，你可以轻松声明一个模板，应用到任何需要它的组件上，而每个组件甚至可以声明属于自己的属性来覆盖模板上的属性，以达到部分一致的效果。这就是 NudeIn 非常灵活的地方。
