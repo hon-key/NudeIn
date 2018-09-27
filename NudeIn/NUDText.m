@@ -25,6 +25,7 @@
 #import "NUDTextMaker.h"
 #import "NUDAction.h"
 #import "NUDTextUpdate.h"
+#import "UIImage+NUDPainter.h"
 #import <objc/runtime.h>
 
 @interface NUDText ()
@@ -177,6 +178,13 @@
         [self.attributes setObject:color forKey:NSBackgroundColorAttributeName];
         return self;
         
+    };
+}
+
+- (id (^)(UIColor *, CGFloat))roundedMark {
+    return NUDABI(UIColor *color,CGFloat cornerRadius) {
+        
+        return self;
     };
 }
 

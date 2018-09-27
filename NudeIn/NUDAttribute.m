@@ -118,6 +118,7 @@
 - (id (^)(CGFloat))font {NUDMethodNotImplemented(CGFloat f);}
 - (id (^)(NSString *, CGFloat))fontName {NUDMethodNotImplemented(NSString *s,CGFloat f);}
 - (id (^)(UIColor *))mark {NUDMethodNotImplemented(UIColor *c);}
+- (id (^)(UIColor *, CGFloat))roundedMark {NUDMethodNotImplemented(UIColor *c,CGFloat f);}
 - (id (^)(NSUInteger, UIColor *))hollow {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
 - (id (^)(NSUInteger, UIColor *))solid {NUDMethodNotImplemented(NSUInteger i,UIColor *c);}
 - (id (^)(NUDUnderlineStyle, UIColor *))_ {NUDMethodNotImplemented(NUDUnderlineStyle s,UIColor *c);}

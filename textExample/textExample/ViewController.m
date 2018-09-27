@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 #import "NudeIn.h"
-
-
+#import "UIImage+NUDPainter.h"
 
 @interface ViewController ()
 
@@ -26,18 +25,26 @@
     [super viewDidLoad];
     
     [self.view addSubview:self.textView];
-    self.textView.frame = CGRectMake(20, 50, 0, 0);
-    [self.textView sizeToFit];
+    self.textView.frame = CGRectMake(20, 50, 50, 20);
+//    [self.textView sizeToFit];
 
     [self.view addSubview:self.textView2];
     self.textView2.frame = CGRectMake(20, 100, 0, 0);
     [self.textView2 sizeToFit];
-    
+
     [self.view addSubview:self.textView3];
-    self.textView3.frame = CGRectMake(20, 150, [UIScreen mainScreen].bounds.size.width, 300);
-    
+    self.textView3.frame = CGRectMake(0, 150, [UIScreen mainScreen].bounds.size.width, 300);
+
     [self.view addSubview:self.textView4];
     self.textView4.frame = CGRectMake(20, 500, 200, 150);
+    
+//    UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake(80, 80) radius:40 quality:1];
+//    UIColor *color = [UIColor colorWithPatternImage:image];
+//    UIView *v = [UIView new];
+//    v.backgroundColor = color;
+//    v.frame = CGRectMake(50, 50, 80, 80);
+//    [self.view addSubview:v];
+    
     
 }
 
@@ -72,8 +79,11 @@
     if (!_textView) {
         _textView = [NudeIn make:^(NUDTextMaker *make) {
             
-            make.text(@"this is a").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
-            
+            UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake(57, 19) radius:9.5 quality:10];
+            UIColor *color = [UIColor colorWithPatternImage:image];
+
+            make.text(@" this is a ").font(14).color([UIColor blackColor]).mark(color).skew(0.3).attach();
+
             make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:))._(NUDDashDotDot,[UIColor redColor]).attach();
 
             make.text(@", and this is a ").font(14).color([UIColor blackColor]).kern(4).attach();
@@ -81,7 +91,6 @@
             make.text(@"RedLink dd").font(17).color([UIColor redColor]).link(self,@selector(linkHandler:))._(NUD__,[UIColor redColor]).deprecated([UIColor purpleColor]).attach();
 
             make.text(@"。").font(14).color([UIColor blackColor]).attach();
-            
             
         }];
         _textView.selectable = YES;
@@ -116,6 +125,9 @@
     if (!_textView3) {
         _textView3 = [NudeIn make:^(NUDTextMaker *make) {
             
+            UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake([UIScreen mainScreen].bounds.size.width, 70) radius:35 quality:NUDImageQualityHigh];
+            UIColor *color = [UIColor colorWithPatternImage:image];
+            
             make.allImage().size(120,120).ln(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).ln(3).attach();
@@ -128,7 +140,7 @@
             make.textTemplate(@"tp1").font(20).color([UIColor purpleColor]).ln(1).attach();
             make.textTemplate(@"tp2").font(10).color([UIColor redColor]).ln(1).attach();
 
-            make.text(@"RNG").color([UIColor blueColor]).attach();
+            make.text(@"RNG").color([UIColor blueColor]).mark(color).attach();
             make.text(@"\ue056大战").attach();
             make.image(@"replayIcon").ln(10).nud_attachWith(@"");
             make.text(@"KZ").solid(3,[UIColor redColor]).nud_attachWith(@"tp1",@"tp2");
@@ -158,15 +170,16 @@
         }];
         _textView3.backgroundColor = [UIColor greenColor];
         _textView3.scrollEnabled = YES;
-        _textView3.delaysContentTouches = NO;
+        _textView3.delaysContentTouches = YES;
         [_textView3 p];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.textView3 update:^(NUDTextUpdate *update) {
-                update.comp(2).asImage.size(300,300).apply();
-                update.comp(0).asText.font(16).apply();
+                update.comp(2).asImage.size(150,150).apply();
+//                update.comp(0).asText.font(16).apply();
             }];
         });
+
     }
     return _textView3;
 }

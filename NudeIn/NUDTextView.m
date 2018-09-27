@@ -55,7 +55,7 @@ NSLock *templateMakerBlock;
     label.scrollEnabled = NO;
     label.editable = NO;
     label.textContainer.lineFragmentPadding = 0;
-    label.textContainerInset = UIEdgeInsetsMake(-1, 0, 0, 0);
+    label.textContainerInset = UIEdgeInsetsMake(-2, 0, 0, 0);
     label.delegate = label;
     label.layoutManager.delegate = label;
     if (@available(iOS 11.0, *)) {
@@ -154,21 +154,22 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 //        NSLog(@"<begin> %@",nTouch);
 //        NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
         if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation)) {
-            nTouch.comp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
+            nTouch.originComp = nTouch.comp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
 
-                NUDText *textComp = (NUDText *)nTouch.comp;
-                nTouch.originComp = [nTouch.comp copy];
-                NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
+                NSString *highlightedTpl = [(NUDText *)nTouch.originComp valueForKey:@"highlightedTpl"];
                 NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
                 if (!template) {
                     template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
                 }
                 NUDText *tplText = [template valueForKey:@"parasiticalObj"];
-                [textComp mergeComp:tplText];
-                [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
-                
-                self.attributedText = [NUDTextUpdate nud_generateStringWith:textComp maker:self.maker];
+                if (tplText) {
+                    nTouch.originComp = [nTouch.originComp copy];
+                    NUDText *highlightedComp = (NUDText *)nTouch.comp;
+                    [highlightedComp mergeComp:tplText];
+                    [highlightedComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
+                    self.attributedText = [NUDTextUpdate nud_generateStringWith:highlightedComp maker:self.maker];
+                }
 
             }else if ([nTouch.comp isKindOfClass:[NUDAttachment class]]) {
 //                NSLog(@"image");
@@ -187,29 +188,32 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
         //    NSLog(@"%@",NSStringFromCGRect(nTouch.glyphRect));
         if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
             [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
-            
 //                    NSLog(@"in!!");
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-                
-                NUDText *textComp = (NUDText *)nTouch.comp;
-                NSString *highlightedTpl = [textComp valueForKey:@"highlightedTpl"];
-                NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
-                if (!template) {
-                    template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
+                if (nTouch.comp != nTouch.originComp) {
+                    NSString *highlightedTpl = [(NUDText *)nTouch.originComp valueForKey:@"highlightedTpl"];
+                    NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
+                    if (!template) {
+                        template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
+                    }
+                    NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+                    if (tplText) {
+                        NUDText *hightlightedComp = (NUDText *)nTouch.comp;
+                        [hightlightedComp mergeComp:tplText];
+                        [hightlightedComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
+                        self.attributedText = [NUDTextUpdate nud_generateStringWith:hightlightedComp maker:self.maker];
+                    }
                 }
-                NUDText *tplText = [template valueForKey:@"parasiticalObj"];
-                [textComp mergeComp:tplText];
-                [textComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
-                
-                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
             }else {}
             
         }else {
             
 //                    NSLog(@"out!!");
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-                [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
-                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+                if (nTouch.comp != nTouch.originComp) {
+                    [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
+                    self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+                }
             }else {}
             
         }
@@ -233,15 +237,17 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 //        NSLog(@"<end> %@",nTouch);
 //        NSLog(@"%ld",[touches allObjects].count);
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
-            [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
-            self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-            if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
-                [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
-                NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
-                if (selector) {
-                    NUDTapAction *action = [[NUDTapAction alloc] init];
-                    action.string = ((NUDText *)nTouch.comp).string;
-                    [selector performAction:action];
+            if (nTouch.comp != nTouch.originComp) {
+                [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
+                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+                if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
+                    [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
+                    NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
+                    if (selector) {
+                        NUDTapAction *action = [[NUDTapAction alloc] init];
+                        action.string = ((NUDText *)nTouch.comp).string;
+                        [selector performAction:action];
+                    }
                 }
             }
         }else {}

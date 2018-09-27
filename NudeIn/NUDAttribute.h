@@ -123,6 +123,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 
 - (NUDAB(UIColor *))color;
 - (NUDAB(UIColor *))mark;
+- (NUDAB(UIColor *,CGFloat))roundedMark;
 - (NUDAB(NSUInteger,UIColor *))hollow;
 - (NUDAB(NSUInteger,UIColor *))solid;
 - (NUDAB(id target,SEL action))link;
@@ -153,8 +154,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (NUDAB(CGFloat))fl_headIndent;
 - (NUDAB(NUDLineBreakMode))linebreak;
 
-// TODO:重写link属性
 - (NUDAB(id,SEL))tap;
+// TODO:长按属性
 //- (NUDAB(id,SEL))longPress;
 - (NUDAB(NSString *))highlighted;
 
