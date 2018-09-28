@@ -25,9 +25,9 @@
     [super viewDidLoad];
     
     [self.view addSubview:self.textView];
-    self.textView.frame = CGRectMake(20, 50, 50, 20);
-//    [self.textView sizeToFit];
-
+    self.textView.center = CGPointMake(10, 50);
+    [self.textView sizeToFit];
+    
     [self.view addSubview:self.textView2];
     self.textView2.frame = CGRectMake(20, 100, 0, 0);
     [self.textView2 sizeToFit];
@@ -37,13 +37,6 @@
 
     [self.view addSubview:self.textView4];
     self.textView4.frame = CGRectMake(20, 500, 200, 150);
-    
-//    UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake(80, 80) radius:40 quality:1];
-//    UIColor *color = [UIColor colorWithPatternImage:image];
-//    UIView *v = [UIView new];
-//    v.backgroundColor = color;
-//    v.frame = CGRectMake(50, 50, 80, 80);
-//    [self.view addSubview:v];
     
     
 }
@@ -78,11 +71,8 @@
 - (NudeIn *)textView {
     if (!_textView) {
         _textView = [NudeIn make:^(NUDTextMaker *make) {
-            
-            UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake(57, 19) radius:9.5 quality:10];
-            UIColor *color = [UIColor colorWithPatternImage:image];
 
-            make.text(@" this is a ").font(14).color([UIColor blackColor]).mark(color).skew(0.3).attach();
+            make.text(@" this is a ").font(14).color([UIColor blackColor]).mark([UIColor redColor]).skew(0.3).attach();
 
             make.text(@"BlueLink").fontName(@"GillSans",17).color([UIColor blueColor]).link(self,@selector(linkHandler:))._(NUDDashDotDot,[UIColor redColor]).attach();
 
@@ -125,9 +115,6 @@
     if (!_textView3) {
         _textView3 = [NudeIn make:^(NUDTextMaker *make) {
             
-            UIImage *image = [UIImage nud_imageWithColor:[UIColor redColor] size:CGSizeMake([UIScreen mainScreen].bounds.size.width, 70) radius:35 quality:NUDImageQualityHigh];
-            UIColor *color = [UIColor colorWithPatternImage:image];
-            
             make.allImage().size(120,120).ln(3).attach();
             make.imageTemplate(@"im1").size(100,100).attach();
             make.allText().font(20).color([UIColor redColor]).skew(0).kern(6).ln(3).attach();
@@ -140,7 +127,7 @@
             make.textTemplate(@"tp1").font(20).color([UIColor purpleColor]).ln(1).attach();
             make.textTemplate(@"tp2").font(10).color([UIColor redColor]).ln(1).attach();
 
-            make.text(@"RNG").color([UIColor blueColor]).mark(color).attach();
+            make.text(@"RNG").color([UIColor blueColor]).mark([UIColor redColor]).attach();
             make.text(@"\ue056大战").attach();
             make.image(@"replayIcon").ln(10).nud_attachWith(@"");
             make.text(@"KZ").solid(3,[UIColor redColor]).nud_attachWith(@"tp1",@"tp2");
