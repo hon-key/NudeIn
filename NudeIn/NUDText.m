@@ -181,13 +181,6 @@
     };
 }
 
-- (id (^)(UIColor *, CGFloat))roundedMark {
-    return NUDABI(UIColor *color,CGFloat cornerRadius) {
-        
-        return self;
-    };
-}
-
 - (id (^)(NUDUnderlineStyle, UIColor *))_ {
     return NUDABI(NUDUnderlineStyle style,UIColor *color) {
         

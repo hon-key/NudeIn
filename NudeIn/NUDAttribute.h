@@ -123,7 +123,6 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 
 - (NUDAB(UIColor *))color;
 - (NUDAB(UIColor *))mark;
-- (NUDAB(UIColor *,CGFloat))roundedMark;
 - (NUDAB(NSUInteger,UIColor *))hollow;
 - (NUDAB(NSUInteger,UIColor *))solid;
 - (NUDAB(id target,SEL action))link;
