@@ -10,16 +10,30 @@
 #import "NudeIn.h"
 #import "UIImage+NUDPainter.h"
 
+NUDAnounceTextAttributeSet(superBig)
+NUDMakeTextAttributeSet(superBig, font(64))
+
+NUDAnounceTextAttributeSetWithArg(greenAlpha, CGFloat)
+NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor greenColor] colorWithAlphaComponent:alpha]))
+
+
 @interface ViewController ()
 
 @property (nonatomic,strong) NudeIn *textView;
 @property (nonatomic,strong) NudeIn *textView2;
 @property (nonatomic,strong) NudeIn *textView3;
 @property (nonatomic,strong) NudeIn *textView4;
+@property (nonatomic,strong) NudeIn *textView5;
 
 @end
 
 @implementation ViewController
+
+- (void)loadView {
+    self.view = [UIScrollView new];
+    self.view.backgroundColor = [UIColor whiteColor];
+    ((UIScrollView *)self.view).contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 1000);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +51,10 @@
 
     [self.view addSubview:self.textView4];
     self.textView4.frame = CGRectMake(20, 500, 200, 150);
+    
+    [self.view addSubview:self.textView5];
+    self.textView5.frame = CGRectMake(20, 700, 0, 0);
+    [self.textView5 sizeToFit];
     
     
 }
@@ -188,6 +206,17 @@
         _textView4.selectable = NO;
     }
     return _textView4;
+}
+
+- (NudeIn *)textView5 {
+    if (!_textView5) {
+        _textView5 = [NudeIn make:^(NUDTextMaker *make) {
+            make.text(@"superBig").superBig().ln(1).attach();
+            make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
+            make.text(@"greenWithAlpha").font(20).greenAlpha(0.25).mark([UIColor blackColor]).attach();
+        }];
+    }
+    return _textView5;
 }
 
 

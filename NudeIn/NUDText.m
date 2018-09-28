@@ -509,11 +509,12 @@
             if (template.parasiticalObj.shadowTag) {
                 [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
             }
-            NSShadow *shadow = [self.shadowTag makeShadow];
-            if (shadow) {
-                [self.attributes setObject:shadow forKey:NSShadowAttributeName];
-            }
             
+        }
+        
+        NSShadow *shadow = [self.shadowTag makeShadow];
+        if (shadow) {
+            [self.attributes setObject:shadow forKey:NSShadowAttributeName];
         }
         
         [self appendLineFeed];
