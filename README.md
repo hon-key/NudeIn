@@ -140,25 +140,25 @@ pod 'NudeIn'
     
     - [**shadowBlur**](#shadowBlur) **`声明文字带阴影，并自定义阴影的模糊程度`**
     
-    - [**shadowColor**](#usage) **`声明文字带阴影，并自定义阴影颜色`**
+    - [**shadowColor**](#shadowColor) **`声明文字带阴影，并自定义阴影颜色`**
     
-    - [**shadowRes**](#usage) **`通过 NSShadow 声明并自定义阴影`**
+    - [**shadowRes**](#shadowRes) **`通过 NSShadow 声明并自定义阴影`**
     
-    - [**lineSpacing**](#usage) **`声明文字的行距`**
+    - [**lineSpacing**](#lineSpacing) **`声明文字的行距`**
     
-    - [**lineHeight**](#usage) **`声明文字的行高，（最小行高，最大行高，行高倍数）`**
+    - [**lineHeight**](#lineHeight) **`声明文字的行高，（最小行高，最大行高，行高倍数）`**
     
-    - [**paraSpacing**](#usage) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
+    - [**paraSpacing**](#paraSpacing) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
     
-    - [**aligment**](#usage) **`声明文字的对齐方式，参数为 NUDAlignment`**
+    - [**aligment**](#aligment) **`声明文字的对齐方式，参数为 NUDAlignment`**
     
-    - [**indent**](#usage) **`声明文字的缩进，（前缩进，后缩进）`**
+    - [**indent**](#indent) **`声明文字的缩进，（前缩进，后缩进）`**
     
-    - [**fl_headIndent**](#usage) **`声明文字的首行前缩进，该属性会在首行覆盖 indent 的前缩进属性`**
+    - [**fl_headIndent**](#fl_headIndent) **`声明文字的首行前缩进，该属性会在首行覆盖 indent 的前缩进属性`**
     
-    - [**linebreak**](#usage) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
+    - [**linebreak**](#linebreak) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
     
-    - [**highlight**](#usage) **`声明文字的触摸高亮，参数为一个模板的 id `**  
+    - [**highlight**](#highlight) **`声明文字的触摸高亮，参数为一个模板的 id `**  
 
 * ### [Image](#usage)
 
@@ -319,7 +319,7 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 
 ### **_**
 
-**_** _ 顾名思义，即下划线，使用它可以为你的文字加入下划线
+**_** 顾名思义，即下划线，使用它可以为你的文字加入下划线
 
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
@@ -374,12 +374,12 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.allText().fontName(@"AmericanTypewriter",32).bold().ln(1).aligment(NUDAliCenter).attach();
-    make.text(@"Github.com").skew(0.0).attach();
-    make.text(@"Github.com").skew(0.2).attach();
-    make.text(@"Github.com").skew(0.4).attach();
-    make.text(@"Github.com").skew(0.8).attach();
-    make.text(@"Github.com").skew(1).attach();
-    make.text(@"Github.com").skew(1.2).attach();
+    make.text(@"Github.com").kern(0.0).attach();
+    make.text(@"Github.com").kern(0.2).attach();
+    make.text(@"Github.com").kern(0.4).attach();
+    make.text(@"Github.com").kern(0.8).attach();
+    make.text(@"Github.com").kern(1).attach();
+    make.text(@"Github.com").kern(1.2).attach();
 }];
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/kern.png" />
@@ -516,6 +516,163 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 }];
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowBlur.png" />
+
+### **shadowColor**
+
+**shadowColor** 让文字带有默认的阴影效果，并且可以完全自定义阴影的颜色
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().shadowDirection(NUDRight,15).font(64).shadowBlur(3).color([UIColor orangeColor]).ln(1).attach();
+    make.text(@"Github").shadowColor([UIColor redColor]).attach();
+    make.text(@"Github").shadowColor([UIColor blueColor]).attach();
+    make.text(@"Github").shadowColor([UIColor greenColor]).attach();
+    make.text(@"Github").shadowColor([UIColor orangeColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowColor.png" />
+
+### **shadowRes**
+
+**shadowRes** 让文字带有自定义的阴影效果，你可以传入 NSShadow，自定义阴影。
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = CGSizeMake(8, 0);
+    shadow.shadowColor = [UIColor redColor];
+    shadow.shadowBlurRadius = 3;
+    make.text(@"Github").shadowRes(shadow).font(64).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/shadowRes.png" />
+
+### **lineSpacing**
+
+**lineSpacing** 让文字可以声明文字换行时产生的行距
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(32).color([UIColor orangeColor]).ln(1).attach();
+    make.text(@"Github").lineSpacing(0).attach();
+    make.text(@"Github").lineSpacing(8).attach();
+    make.text(@"Github").lineSpacing(16).attach();
+    make.text(@"Github").lineSpacing(32).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/lineSpacing.png" />
+
+### **lineHeight**
+
+**lineHeight** 声明文字的行高，它会往上延伸,需要注意这里有三个参数：
+
+**`minimumLineHeight`** 为第一个参数，它定义一行的小高度，换句话说，只要该值不为 0，则行高最少为 **`minimumLineHeight`**
+
+**`maximumLineHeight`** 为第二个参数，它定义一行的大高度，换句话说，只要该值不为 0，则行高最大为 **`maximumLineHeight`**
+
+**`lineHeightMultiple`** 为第三个参数，它定义一行行高的倍数，换句话说，如果该值不为 0，则会基于原始的行高乘以 **`lineHeightMultiple`**。
+
+一行的高并不只决定于 **`lineHeightMultiple`** ，如果你限制了 **`minimumLineHeight`** 和 **`maximumLineHeight`** ，就算设定过大的 **`lineHeightMultiple`** ，也不会超出你所限制的范围。
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(32).color([UIColor orangeColor]).ln(1).attach();
+    make.text(@"Github").lineHeight(0,0,4).mark([UIColor redColor]).attach();
+    make.text(@"Github").lineHeight(0,100,4).mark([UIColor blueColor]).attach();
+    make.text(@"Github").lineHeight(100,0,0).mark([UIColor greenColor]).attach();
+    make.text(@"Github").lineHeight(100,0,1).mark([UIColor blueColor]).attach();
+    make.text(@"Github").lineHeight(100,0,4).mark([UIColor redColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/lineHeight.png" />
+
+### **paraSpacing**
+
+**paraSpacing** 让文字换行时产生额外的间距，分为两个参数：第一个参数为上间距，第二个参数为下间距
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(32).color([UIColor orangeColor]).ln(1).attach();
+    make.text(@"Github").paraSpacing(20,20).mark([UIColor redColor]).attach();
+    make.text(@"Github").paraSpacing(20,30).mark([UIColor blueColor]).attach();
+    make.text(@"Github").paraSpacing(30,40).mark([UIColor greenColor]).attach();
+    make.text(@"Github").paraSpacing(40,50).mark([UIColor blueColor]).attach();
+    make.text(@"Github").paraSpacing(50,60).mark([UIColor redColor]).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/paraSpacing.png" />
+
+### **aligment**
+
+**aligment** 定义文字的对齐情况
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(32).color([UIColor orangeColor]).mark([UIColor greenColor]).ln(1).attach();
+    make.text(@"Github").aligment(NUDAliLeft).attach();
+    make.text(@"Github").aligment(NUDAliCenter).attach();
+    make.text(@"Github").aligment(NUDAliRight).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/aligment.png" />
+
+### **indent**
+
+**indent** 定义文字的缩进，第一个参数为前缩进，第二个参数为后缩进
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(17).color([UIColor orangeColor]).mark([UIColor blueColor]).ln(2).indent(30,20).attach();
+    make.text(@"GitHub Inc. is a web-based hosting service for version control using Git.").attach();
+    make.text(@"It is mostly used for computer code.").indent(60,0).attach();
+    make.text(@"It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding its own features.").indent(0,60).attach();
+    make.text(@"It provides access control and several collaboration features such as bug tracking, feature requests, task management, and wikis for every project.").attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/indent.png" />
+
+### **fl_headIndent**
+
+**fl_headIndent** 定义文字的首行缩进，如果你定义过 indent 属性，它会在首行覆盖 indent 属性的前缩进属性
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(17).color([UIColor orangeColor]).mark([UIColor blueColor]).ln(1).fl_headIndent(40).attach();
+    make.text(@"GitHub Inc. is a web-based hosting service for version control using Git. ").attach();
+    make.text(@"It is mostly used for computer code. ").attach();
+    make.text(@"It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding its own features.").attach();
+    make.text(@"It provides access control and several collaboration features such as bug tracking, feature requests, task management, and wikis for every project.").attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fl_headIndent.png" />
+
+### **linebreak**
+
+**linebreak** 定义文字的换行方式
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(17).color([UIColor orangeColor]).mark([UIColor blueColor]).ln(2).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDWord).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDChar).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDClip).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDTr_head).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDTr_tail).attach();
+    make.text(@"It is mostly used for computer code.").linebreak(NUDTr_middle).attach();
+}];
+```
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/linebreak.png" />
+
+### **highlight**
+
+**highlight** 定义文字高亮，通过传入模板，可以定义高亮时文字的属性
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.textTemplate(@"Highlight").color([UIColor greenColor]).font(64).attach();
+    make.text(@"Github").font(64).color([UIColor blackColor]).highlighted(@"Highlight").attach();
+}];
+```
 
 ## License
 
