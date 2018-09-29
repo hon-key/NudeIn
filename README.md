@@ -2,7 +2,7 @@
 
 # NudeIn
 
-[![Build Status](https://travis-ci.org/hon-key/Nudeln.svg?branch=master)](https://travis-ci.org/hon-key/Nudeln)
+[![Build Status](https://travis-ci.org/hon-key/NudeIn.svg?branch=master)](https://travis-ci.org/hon-key/NudeIn)
 [![Cocoapods](https://img.shields.io/badge/pod-1.2.4-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 [![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)](https://img.shields.io/badge/language-Objective--C-blue.svg)
