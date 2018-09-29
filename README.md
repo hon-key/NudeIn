@@ -160,7 +160,7 @@ pod 'NudeIn'
     
     - [**highlight**](#highlight) **`声明文字的触摸高亮，参数为一个模板的 id `** 
     
-    - [**tap**](#usage) **`声明文字的触摸回调，参数为回调的 target 以及回调方法 `**  
+    - [**tap**](#tap) **`声明文字的触摸回调，参数为回调的 target 以及回调方法 `**  
 
 * ### [Image](#usage)
 
