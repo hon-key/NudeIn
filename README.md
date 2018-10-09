@@ -170,8 +170,19 @@ pod 'NudeIn'
     
     - [**ln**](#usage) **`声明图像换行`**
     
+    - [**aligment**](#usage) **`声明图像对齐属性，参数为 NUDAligment`**
+
 * ### [Template](#usage)
+    - [**textTemplate**](#usage) **`声明一个 `text` 模板，以参数 `identifier` 为参数来标识这个模板以重复使用，其使用方法和 `text` 一样`**
+    - [**imageTemplate**](#usage) **`声明一个 `image` 模板，以参数 `identifier` 为参数来标识这个模板以重复使用，其使用方法和 `image` 一样`**
+    - [**allText**](#usage) **`声明所有使用 `.attach()` 的 `text` 都会被附加的属性，使用 `.attachWith(@"")` 不受影响`**
+    - [**allImage**](#usage) **`声明所有使用 `.attach()` 的 `image` 都会被附加的属性，使用 `.attachWith(@"")` 不受影响`**
     
+* ### [makeTemplate](#usage)
+    - [**textTemplate**](#usage) **`声明一个 text 模板，以参数 identifier 为参数来标识这个模板以重复使用，其使用方法和 text 一样`**
+    - [**imageTemplate**](#usage) **`声明一个 image 模板，以参数 identifier 为参数来标识这个模板以重复使用，其使用方法和 image 一样`**
+    - [**allText**](#usage) **`全局声明所有使用 `.attach()` 的 `text` 都会被附加的属性，使用 `.attachWith(@"")` 不受影响`**
+    - [**allImage**](#usage) **`全局声明所有使用 `.attach()` 的 `image` 都会被附加的属性，使用 `.attachWith(@"")` 不受影响`**
 
 ## Documents
 
