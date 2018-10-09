@@ -84,11 +84,10 @@ NSLock *templateMakerBlock;
 
 NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 + (void)makeTemplate:(void (^)(NUDTemplateMaker *))make {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self setTemplateMaker:[[NUDTemplateMaker alloc] init]];
-    });
     [templateMakerBlock lock];
+    if (![self templateMaker]) {
+        [self setTemplateMaker:[[NUDTemplateMaker alloc] init]];
+    }
     make([self templateMaker]);
     [templateMakerBlock unlock];
 }
