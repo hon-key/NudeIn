@@ -94,11 +94,11 @@ pod 'NudeIn'
 
     - [**font**](#font) **`通过大小声明字体，统一使用系统字体`**
 
-    - [**fontName**](#fontName) **`通过字体名以及大小声明字体`**
+    - [**fontName**](#fontname) **`通过字体名以及大小声明字体`**
 
-    - [**fontRes**](#fontRes) **`通过 UIFont 声明字体`**
+    - [**fontRes**](#fontres) **`通过 UIFont 声明字体`**
 
-    - [**fontStyle**](#fontStyle) **`声明字体的风格，如 Bold、Light 等`**
+    - [**fontStyle**](#fontstyle) **`声明字体的风格，如 Bold、Light 等`**
 
     - [**bold**](#bold) **`声明字体为 Bold 风格，如果有的话`**
 
@@ -134,27 +134,27 @@ pod 'NudeIn'
     
     - [**shadow**](#shadow) **`声明文字带默认阴影`**
     
-    - [**shadowDirection**](#shadowDirection) **`声明文字带阴影，并且设定阴影为八个基本方向`**
+    - [**shadowDirection**](#shadowdirection) **`声明文字带阴影，并且设定阴影为八个基本方向`**
     
-    - [**shadowOffset**](#shadowOffset) **`声明文字带阴影，并且完全自定义阴影的方向`**
+    - [**shadowOffset**](#shadowoffset) **`声明文字带阴影，并且完全自定义阴影的方向`**
     
-    - [**shadowBlur**](#shadowBlur) **`声明文字带阴影，并自定义阴影的模糊程度`**
+    - [**shadowBlur**](#shadowblur) **`声明文字带阴影，并自定义阴影的模糊程度`**
     
-    - [**shadowColor**](#shadowColor) **`声明文字带阴影，并自定义阴影颜色`**
+    - [**shadowColor**](#shadowcolor) **`声明文字带阴影，并自定义阴影颜色`**
     
-    - [**shadowRes**](#shadowRes) **`通过 NSShadow 声明并自定义阴影`**
+    - [**shadowRes**](#shadowres) **`通过 NSShadow 声明并自定义阴影`**
     
-    - [**lineSpacing**](#lineSpacing) **`声明文字的行距`**
+    - [**lineSpacing**](#linespacing) **`声明文字的行距`**
     
-    - [**lineHeight**](#lineHeight) **`声明文字的行高，（最小行高，最大行高，行高倍数）`**
+    - [**lineHeight**](#lineheight) **`声明文字的行高，（最小行高，最大行高，行高倍数）`**
     
-    - [**paraSpacing**](#paraSpacing) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
+    - [**paraSpacing**](#paraspacing) **`声明文字每个自然段对其他自然段拉开的点距，（与前自然段拉开的点距，与后自然段拉开的点距）`**
     
     - [**aligment**](#aligment) **`声明文字的对齐方式，参数为 NUDAlignment`**
     
     - [**indent**](#indent) **`声明文字的缩进，（前缩进，后缩进）`**
     
-    - [**fl_headIndent**](#fl_headIndent) **`声明文字的首行前缩进，该属性会在首行覆盖 indent 的前缩进属性`**
+    - [**fl_headIndent**](#fl_headindent) **`声明文字的首行前缩进，该属性会在首行覆盖 indent 的前缩进属性`**
     
     - [**linebreak**](#linebreak) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
     
@@ -173,6 +173,7 @@ pod 'NudeIn'
     - [**aligment**](#usage) **`声明图像对齐属性，参数为 NUDAligment`**
 
 * ### [Template](#usage)
+
     - [**textTemplate**](#usage) **`声明一个 text 模板，以参数 identifier 来标识这个模板以重复使用，其使用方法和 text 一样`**
     
     - [**imageTemplate**](#usage) **`声明一个 image 模板，以参数 identifier 来标识这个模板以重复使用，其使用方法和 image 一样`**
@@ -182,6 +183,7 @@ pod 'NudeIn'
     - [**allImage**](#usage) **`声明所有使用 .attach() 的 image 都会被附加的属性，使用 .attachWith(@"") 不受影响`**
     
 * ### [makeTemplate](#usage)
+
     - [**textTemplate**](#usage) **`全局声明一个 text 模板，以参数 identifier 来标识这个模板以重复使用，其使用方法和 text 一样`**
     
     - [**imageTemplate**](#usage) **`全局声明一个 image 模板，以参数 identifier 来标识这个模板以重复使用，其使用方法和 image 一样`**
@@ -202,7 +204,6 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 }];
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/font.png" />
-
 
 ### **fontName**
 
@@ -230,7 +231,6 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontRes.png" />
 
-
 ### **fontStyle**
 
 **fontStyle** 可以更加可读地去设定某个字体的风格，不过有一点要注意的是，这些得和字体本身的名字适配，如NUDBold风格，这需要相应字体拥有-Bold后缀,否则该方法将无效。
@@ -241,7 +241,6 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 }];
 ```
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/fontStyle.png" />
-
 
 ### **bold**
 
