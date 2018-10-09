@@ -2,7 +2,7 @@
 
 # NudeIn
 
-[![Build Status](https://travis-ci.org/hon-key/Nudeln.svg?branch=master)](https://travis-ci.org/hon-key/Nudeln)
+[![Build Status](https://travis-ci.org/hon-key/NudeIn.svg?branch=master)](https://travis-ci.org/hon-key/NudeIn)
 [![Cocoapods](https://img.shields.io/badge/pod-1.2.4-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 [![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)](https://img.shields.io/badge/language-Objective--C-blue.svg)
@@ -158,7 +158,9 @@ pod 'NudeIn'
     
     - [**linebreak**](#linebreak) **`声明文字的断行方式，参数为 NUDLineBreakMode`**
     
-    - [**highlight**](#highlight) **`声明文字的触摸高亮，参数为一个模板的 id `**  
+    - [**highlight**](#highlight) **`声明文字的触摸高亮，参数为一个模板的 id `** 
+    
+    - [**tap**](#tap) **`声明文字的触摸回调，参数为回调的 target 以及回调方法 `**  
 
 * ### [Image](#usage)
 
@@ -671,6 +673,17 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.textTemplate(@"Highlight").color([UIColor greenColor]).font(64).attach();
     make.text(@"Github").font(64).color([UIColor blackColor]).highlighted(@"Highlight").attach();
+}];
+```
+
+### **tap**
+
+**tap** 定义文字单击所产生的回调，该属性和 link 属性的效果是一致的，不过相比link属性，它的单击区域紧紧限制在文字之内，并且配合highlight方法，你可以做到完全自定义单击风格
+
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.textTemplate(@"Highlight").color([UIColor greenColor]).font(64).attach();
+    make.text(@"Github").font(64).color([UIColor blackColor]).highlighted(@"Highlight").tap(self,@selector(linkHandler:)).attach();
 }];
 ```
 
