@@ -33,6 +33,9 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
     self.view = [UIScrollView new];
     self.view.backgroundColor = [UIColor whiteColor];
     ((UIScrollView *)self.view).contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 1000);
+    [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
+        make.allText().color([UIColor orangeColor]).shadowDirection(NUDLeft,10).attach();
+    }];
 }
 
 - (void)viewDidLoad {

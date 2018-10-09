@@ -129,6 +129,19 @@ NUD_LAZY_LOAD_ARRAY(components)
         return self.textMaker.imageTemplate(tplName);
     };
 }
+
+- (NUDTextTemplate *(^)(void))allText {
+    return ^NUDTextTemplate *(void) {
+        return self.textMaker.textTemplate(kNUDTextAllText);
+    };
+}
+
+- (NUDAttachmentTemplate *(^)(void))allImage {
+    return ^NUDAttachmentTemplate *(void) {
+        return self.textMaker.imageTemplate(kNUDAttachmentAllImageKey);
+    };
+}
+
 @end
 
 @implementation NUDTextMaker (ToolsExtension)
