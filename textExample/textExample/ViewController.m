@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "NudeIn.h"
 #import "UIImage+NUDPainter.h"
+#import "NUDInnerText.h"
 
 NUDAnounceTextAttributeSet(superBig)
 NUDMakeTextAttributeSet(superBig, font(64))
@@ -32,7 +33,7 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 - (void)loadView {
     self.view = [UIScrollView new];
     self.view.backgroundColor = [UIColor whiteColor];
-    ((UIScrollView *)self.view).contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 1000);
+    ((UIScrollView *)self.view).contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 1300);
     [NudeIn makeTemplate:^(NUDTemplateMaker *make) {
         make.allText().color([UIColor orangeColor]).shadowDirection(NUDLeft,10).attach();
     }];
@@ -58,6 +59,7 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
     [self.view addSubview:self.textView5];
     self.textView5.frame = CGRectMake(20, 700, 0, 0);
     [self.textView5 sizeToFit];
+    
     
     
 }
@@ -202,9 +204,9 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
             
         }];
         _textView4 = [NudeIn make:^(NUDTextMaker *make) {
-             make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).attach();
+            make.textTemplate(@"tap").tap(self,@selector(linkHandler:)).highlighted(@"highlight").attach();
             make.image(@"githubIcon").nud_attachWith(@"imageTpl1");
-            make.text(@"Github").highlighted(@"highlight").nud_attachWith(@"normal",@"tap");
+            make.text(@"Github").nud_attachWith(@"normal",@"tap");
         }];
         _textView4.selectable = NO;
     }
@@ -214,7 +216,7 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 - (NudeIn *)textView5 {
     if (!_textView5) {
         _textView5 = [NudeIn make:^(NUDTextMaker *make) {
-            make.text(@"superBig").superBig().ln(1).attach();
+            make.text(@"superBig").superBig().ln(1).shadowDirection(NUDRight,0).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.25).mark([UIColor blackColor]).attach();
         }];

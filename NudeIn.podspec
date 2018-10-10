@@ -66,7 +66,6 @@ Pod::Spec.new do |s|
 
   # s.platform     = :ios
   s.platform     = :ios, "8.0"
-
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
   # s.osx.deployment_target = "10.7"
@@ -117,7 +116,7 @@ Pod::Spec.new do |s|
   #  the lib prefix of their name.
   #
 
-  s.framework  = "UIKit", "Foundation"
+  s.frameworks  = "UIKit", "Foundation"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"
@@ -134,5 +133,7 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
+
+  s.requires_arc = true
 
 end

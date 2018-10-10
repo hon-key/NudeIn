@@ -113,7 +113,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 @property (nonatomic,readonly) NSArray *fontStyles;
 
 // TODO : 匹配字符串
-//- (NUDAB(NSString *))inText;
+- (NUDAB(NSString *,NSString *))innerText;
 
 // font
 - (NUDAB(CGFloat))font;

@@ -25,7 +25,7 @@
 #import "NUDTextMaker.h"
 #import "NUDAction.h"
 #import "NUDTextUpdate.h"
-#import "UIImage+NUDPainter.h"
+#import "NUDInnerText.h"
 #import <objc/runtime.h>
 
 @interface NUDText ()
@@ -37,7 +37,7 @@
 @property (nonatomic,weak) NUDTextMaker *father;
 
 // TODO: inText
-@property (nonatomic,strong) NSMutableArray<NUDText *> *innerTexts;
+@property (nonatomic,strong) NSMutableArray<NUDInnerText *> *innerTexts;
 @property (nonatomic,copy) NSString *highlightedTpl;
 @property (nonatomic,strong) NUDSelector *selector;
 
@@ -672,6 +672,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
         if (template.parasiticalObj.countOfLinefeed != NSUIntegerMax) {
             self.parasiticalObj.countOfLinefeed += template.parasiticalObj.countOfLinefeed;
         }
+        self.parasiticalObj.highlightedTpl = template.parasiticalObj.highlightedTpl;
     }
 }
 
