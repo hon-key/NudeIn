@@ -19,7 +19,7 @@
 
 @interface NUDTextMaker (ToolsExtension)
 
-@property (nonatomic,strong,readonly) NSArray<NUDBase *> *textComponents;
+
 
 - (NSRange)appendString:(NSAttributedString *)string;
 - (void)storeTextComponent:(NUDBase *)component;

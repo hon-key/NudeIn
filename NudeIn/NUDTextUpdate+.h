@@ -26,7 +26,7 @@
 
 - (NSAttributedString *)generateString;
 
-+ (NSAttributedString *)nud_generateStringWith:(NUDBase *)comp maker:(NUDTextMaker *)maker;
++ (NSMutableAttributedString *)generateStringWithComponents:(NSArray *)components;
 
 @end
 

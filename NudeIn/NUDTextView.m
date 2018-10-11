@@ -159,18 +159,18 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
             nTouch.originComp = nTouch.comp = [self.maker componentInCharacterLocation:nTouch.glyphIndex];
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
 
-                NSString *highlightedTpl = [(NUDText *)nTouch.originComp valueForKey:@"highlightedTpl"];
+                NSString *highlightedTpl = ((NUDText *)nTouch.originComp).highlightedTpl;
                 NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
                 if (!template) {
                     template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
                 }
-                NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+                NUDText *tplText = template.parasiticalObj;
                 if (tplText) {
                     nTouch.originComp = [nTouch.originComp copy];
                     NUDText *highlightedComp = (NUDText *)nTouch.comp;
                     [highlightedComp mergeComp:tplText];
-                    [highlightedComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
-                    self.attributedText = [NUDTextUpdate nud_generateStringWith:highlightedComp maker:self.maker];
+                    highlightedComp.string = ((NUDText *)nTouch.originComp).string;
+                    self.attributedText = [NUDTextUpdate generateStringWithComponents:self.maker.components];
                 }
 
             }else if ([nTouch.comp isKindOfClass:[NUDAttachment class]]) {
@@ -193,17 +193,17 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 //                    NSLog(@"in!!");
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
                 if (nTouch.comp != nTouch.originComp) {
-                    NSString *highlightedTpl = [(NUDText *)nTouch.originComp valueForKey:@"highlightedTpl"];
+                    NSString *highlightedTpl = ((NUDText *)nTouch.originComp).highlightedTpl;
                     NUDTextTemplate *template = [self.maker templateWithId:highlightedTpl];
                     if (!template) {
                         template = [[NUDTextView templateMaker] textTemplateWithId:highlightedTpl];
                     }
-                    NUDText *tplText = [template valueForKey:@"parasiticalObj"];
+                    NUDText *tplText = template.parasiticalObj;
                     if (tplText) {
                         NUDText *hightlightedComp = (NUDText *)nTouch.comp;
                         [hightlightedComp mergeComp:tplText];
-                        [hightlightedComp setValue:((NUDText *)nTouch.originComp).string forKey:@"string"];
-                        self.attributedText = [NUDTextUpdate nud_generateStringWith:hightlightedComp maker:self.maker];
+                        hightlightedComp.string = ((NUDText *)nTouch.originComp).string;
+                        self.attributedText = [NUDTextUpdate generateStringWithComponents:self.maker.components];
                     }
                 }
             }else {}
@@ -214,7 +214,7 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
             if ([nTouch.comp isKindOfClass:[NUDText class]]) {
                 if (nTouch.comp != nTouch.originComp) {
                     [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
-                    self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+                    self.attributedText = [NUDTextUpdate generateStringWithComponents:self.maker.components];
                 }
             }else {}
             
@@ -241,10 +241,10 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
         if ([nTouch.comp isKindOfClass:[NUDText class]]) {
             if (nTouch.comp != nTouch.originComp) {
                 [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
-                self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
+                self.attributedText = [NUDTextUpdate generateStringWithComponents:self.maker.components];
                 if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
                     [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
-                    NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
+                    NUDSelector *selector = ((NUDText *)nTouch.comp).selector;
                     if (selector) {
                         NUDTapAction *action = [[NUDTapAction alloc] init];
                         action.string = ((NUDText *)nTouch.comp).string;

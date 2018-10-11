@@ -92,15 +92,10 @@
     if (!self.components) {
         return nil;
     }
-    return [[self class] generateWithComponents:self.components];
+    return [[self class] generateStringWithComponents:self.components];
 }
 
-+ (NSAttributedString *)nud_generateStringWith:(NUDBase *)comp maker:(NUDTextMaker *)maker {
-    
-    return [self generateWithComponents:maker.textComponents];
-}
-
-+ (NSMutableAttributedString *)generateWithComponents:(NSArray *)components {
++ (NSMutableAttributedString *)generateStringWithComponents:(NSArray *)components {
     
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
     
