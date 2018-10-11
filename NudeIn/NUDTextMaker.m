@@ -24,19 +24,10 @@
 #import "NUDText.h"
 #import "NUDAttachment.h"
 #import "NUDAction.h"
+#import "NUDTextMaker+.h"
 
 NSString * const kNUDTextAllText = @"NUDTextMaker.alltext";
 NSString * const kNUDAttachmentAllImageKey = @"NUDTextMaker.allImage";
-
-
-@interface NUDTextMaker ()
-
-@property (nonatomic,strong,readwrite) NSMutableAttributedString *string;
-@property (nonatomic,strong) NSMutableArray<NUDSelector *> *selectors;
-@property (nonatomic,strong) NSMutableArray<id<NUDTemplate>> *templates;
-@property (nonatomic,strong) NSMutableArray<NUDBase *> *components;
-
-@end
 
 @implementation NUDTextMaker
 
@@ -106,10 +97,6 @@ NUD_LAZY_LOAD_ARRAY(components)
 
 @end
 
-@interface NUDTemplateMaker ()
-@property (nonatomic,strong) NUDTextMaker *textMaker;
-@end
-
 @implementation NUDTemplateMaker
 - (instancetype)init {
     if (self = [super init]) {
@@ -151,10 +138,6 @@ NUD_LAZY_LOAD_ARRAY(components)
     NSUInteger start = self.string.length;
     [self.string appendAttributedString:string];
     return NSMakeRange(start, string.length);
-}
-
-- (NSArray<NUDBase *> *)textComponents {
-    return self.components;
 }
 
 - (void)storeTextComponent:(NUDBase *)component {

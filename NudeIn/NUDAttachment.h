@@ -21,7 +21,7 @@
 
 #import "NUDAttribute.h"
 
-@class NUDTextMaker,NUDAttachment,NUDTextUpdate;
+@class NUDTextMaker,NUDAttachment,NUDTextUpdate,NUDAttachmentTemplate;
 
 @interface NUDAttachment : NUDAttributedAtachment<NUDAttachment *>
 
@@ -30,6 +30,8 @@
 @property (nonatomic,weak) NUDTextUpdate *update;
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker;
+
+- (NUDAttachmentTemplate *)templateWithIdentifiers:(NSArray<NSString *> *)identifiers;
 
 @end
 

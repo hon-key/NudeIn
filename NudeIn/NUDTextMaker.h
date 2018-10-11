@@ -32,8 +32,6 @@ extern NSString * const kNUDAttachmentAllImageKey;
 
 @interface NUDTextMaker : NSObject
 
-@property (nonatomic,strong,readonly) NSMutableAttributedString *string;
-
 - (NUDText * (^)(NSString *))text;
 
 - (NUDAttachment * (^)(NSString *))image;
@@ -48,26 +46,6 @@ extern NSString * const kNUDAttachmentAllImageKey;
 
 @end
 
-@interface NUDTextMaker (ToolsExtension)
-
-@property (nonatomic,strong,readonly) NSArray<NUDBase *> *textComponents;
-
-- (NSRange)appendString:(NSAttributedString *)string;
-- (void)storeTextComponent:(NUDBase *)component;
-- (BOOL)containsComponent:(NUDBase *)component;
-- (NUDBase *)componentInCharacterLocation:(NSUInteger)location;
-- (void)applyComponentUpdate:(NSArray<NUDBase *> *)components;
-- (void)addSelector:(NUDSelector *)selector;
-- (NSUInteger)indexOfSelector:(NUDSelector *)selector;
-- (void)emurateSelector:(void(^)(NUDSelector *selector,BOOL *stop))handler;
-- (void)addTemplate:(id<NUDTemplate>)tpl;
-- (id<NUDTemplate>)templateWithId:(NSString *)identifier;
-- (NSArray *)linkSelectors;
-- (void)removeLinkSelector:(NUDSelector *)sel;
-- (void)p;
-
-@end
-
 @interface NUDTemplateMaker : NSObject
 - (NUDTextTemplate * (^)(NSString *))textTemplate;
 - (NUDAttachmentTemplate * (^)(NSString *))imageTemplate;
@@ -75,10 +53,3 @@ extern NSString * const kNUDAttachmentAllImageKey;
 - (NUDAttachmentTemplate * (^)(void))allImage;
 @end
 
-@interface NUDTemplateMaker (ToolsExtension)
-- (NSArray <id<NUDTemplate>> *)sharedTemplates;
-- (NSArray<NUDTextTemplate *> *)sharedTextTemplates;
-- (NSArray<NUDAttachmentTemplate *> *)sharedImageTemplates;
-- (NUDTextTemplate *)textTemplateWithId:(NSString *)identifier;
-- (NUDAttachmentTemplate *)imageTemplateWithId:(NSString *)identifier;
-@end

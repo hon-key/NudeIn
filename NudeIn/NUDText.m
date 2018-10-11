@@ -20,43 +20,19 @@
 //  SOFTWARE.
 
 
-#import "NUDText.h"
+#import "NUDText+.h"
 #import "NUDTextView.h"
 #import "NUDTextMaker.h"
+#import "NUDTextMaker+.h"
 #import "NUDAction.h"
 #import "NUDTextUpdate.h"
+#import "NUDTextUpdate+.h"
 #import "NUDInnerText.h"
+#import "NUDInnerText+.h"
 #import <objc/runtime.h>
-
-@interface NUDText ()
-
-@property (nonatomic,strong) NSMutableDictionary<NSAttributedStringKey, id> *attributes;
-
-@property (nonatomic,copy,readwrite) NSString *string;
-
-@property (nonatomic,weak) NUDTextMaker *father;
-
-// TODO: inText
-@property (nonatomic,strong) NSMutableArray<NUDInnerText *> *innerTexts;
-@property (nonatomic,copy) NSString *highlightedTpl;
-@property (nonatomic,strong) NUDSelector *selector;
-
-@property (nonatomic,assign) NSUInteger countOfLinefeed;
-@property (nonatomic,strong) NUDShadowTag *shadowTag;
-
-@end
-
-@interface NUDTextTemplate ()
-
-@property (nonatomic,strong) NUDText *parasiticalObj;
-
-@property (nonatomic,strong) NUDSelector *tplLinkSelector;
-
-@end
 
 
 @implementation NUDText
-
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str {
     if (self = [super init]) {
@@ -448,68 +424,24 @@
     };
 }
 
-
-- (void (^)(void))attach {
-    return ^void (void) {
+- (NUDTextExtension * (^)(void))attach {
+    return ^NUDTextExtension * (void) {
         if ([self.father containsComponent:self]) {
-            self.apply();
+            return self.apply();
         } else {
-            self.attachWith(kNUDTextAllText,nil);
+            return self.attachWith(kNUDTextAllText,nil);
         }
     };
 }
 
-- (void (^)(NSString *, ...))attachWith {
-    return ^void (NSString *identifier,...) {
+- (NUDTextExtension * (^)(NSString *, ...))attachWith {
+    return ^NUDTextExtension * (NSString *identifier,...) {
+        NUD_STRING_VA_LIST_TO_ARRAY(identifier, identifiers);
+        NUDTextTemplate *template = [self templateWithIdentifiers:identifiers];
+        [self applyTemplate:template];
         
-        NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
-        NSMutableArray *tpls = [NSMutableArray new];
-        id<NUDTemplate> tpl;
-        if ((tpl = [self.father templateWithId:identifier]) &&
-            [tpl isKindOfClass:[NUDTextTemplate class]]) {
-            [tpls addObject:tpl];
-        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
-                  [tpl isKindOfClass:[NUDTextTemplate class]]) {
-            [tpls addObject:tpl];
-        }
-        va_list idList ;
-        va_start(idList,identifier);
-        NSString *nextId;
-        while ((nextId = va_arg(idList, NSString *))) {
-            if ((tpl = [self.father templateWithId:nextId])) {
-                [tpls addObject:tpl];
-            }else if ((tpl = [sharedTemplateMaker textTemplateWithId:nextId])) {
-                [tpls addObject:tpl];
-            }
-        }
-        va_end(idList);
-        
-        NUDTextTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
-        if (template) {
-            
-            NSMutableDictionary *tplAttrs = [template.tplAttributes mutableCopy];
-            [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];
-            
-            if ([tplAttrs objectForKey:NSLinkAttributeName]) {
-                self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
-                [tplAttrs removeObjectForKey:NSLinkAttributeName];
-            }
-            if (self.countOfLinefeed == NSUIntegerMax) {
-                self.countOfLinefeed = template.parasiticalObj.countOfLinefeed;
-            }
-            if (!self.highlightedTpl) {
-                self.highlightedTpl = template.parasiticalObj.highlightedTpl;
-            }
-            if (!self.selector) {
-                self.selector = template.parasiticalObj.selector;
-            }
-            
-            [self.attributes addEntriesFromDictionary:tplAttrs];
-            
-            if (template.parasiticalObj.shadowTag) {
-                [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
-            }
-            
+        if ([self.father containsComponent:self]) {
+            return self.apply();
         }
         
         NSShadow *shadow = [self.shadowTag makeShadow];
@@ -528,13 +460,24 @@
         
         [self.father storeTextComponent:self];
         
+        NUDTextExtension *extention = [[NUDTextExtension alloc] init];
+        extention.text = self;
+        return extention;
     };
 }
 
-- (void (^)(void))apply {
-    return ^void (void) {
+- (NUDTextExtension * (^)(void))apply {
+    return ^NUDTextExtension * (void) {
         if (self.update) {
             [self.update applyComp:self];
+        }
+        NUDBase *base = [self.update originalBaseWithComp:self];
+        if ([base isKindOfClass:[NUDAttribute class]]) {
+            NUDTextExtension *extention = [[NUDTextExtension alloc] init];
+            extention.text = (NUDAttribute *)base;
+            return extention;
+        }else {
+            return nil;
         }
     };
 }
@@ -562,6 +505,56 @@
         _shadowTag = [[NUDShadowTag alloc] init];
     }
     return _shadowTag;
+}
+
+- (NSMutableArray<NUDInnerText *> *)innerTexts {
+    if (!_innerTexts) {
+        _innerTexts = [[NSMutableArray alloc] init];
+    }
+    return _innerTexts;
+}
+
+- (NUDTextTemplate *)templateWithIdentifiers:(NSArray<NSString *> *)identifiers {
+    NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
+    NSMutableArray *tpls = [NSMutableArray new];
+    id<NUDTemplate> tpl;
+    
+    for (NSString *identifier in identifiers) {
+        if ((tpl = [self.father templateWithId:identifier]) && [tpl isKindOfClass:[NUDTextTemplate class]]) {
+            [tpls addObject:tpl];
+        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
+                  [tpl isKindOfClass:[NUDTextTemplate class]]) {
+            [tpls addObject:tpl];
+        }
+    }
+    return tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
+}
+
+- (void)applyTemplate:(NUDTextTemplate *)template {
+    if (template) {
+        NSMutableDictionary *tplAttrs = [template.parasiticalObj.attributes mutableCopy];
+        [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];
+        
+        if ([tplAttrs objectForKey:NSLinkAttributeName]) {
+            self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
+            [tplAttrs removeObjectForKey:NSLinkAttributeName];
+        }
+        if (self.countOfLinefeed == NSUIntegerMax) {
+            self.countOfLinefeed = template.parasiticalObj.countOfLinefeed;
+        }
+        if (!self.highlightedTpl) {
+            self.highlightedTpl = template.parasiticalObj.highlightedTpl;
+        }
+        if (!self.selector) {
+            self.selector = template.parasiticalObj.selector;
+        }
+        
+        [self.attributes addEntriesFromDictionary:tplAttrs];
+        
+        if (template.parasiticalObj.shadowTag) {
+            [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
+        }
+    }
 }
 
 
@@ -648,9 +641,12 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
     };
 }
 
-- (void (^)(void))attach {
-    return ^void (void) {
+- (NUDTextExtension * (^)(void))attach {
+    return ^NUDTextExtension * (void) {
         [self.parasiticalObj.father addTemplate:self];
+        NUDTextExtension *extention = [[NUDTextExtension alloc] init];
+        extention.text = self.parasiticalObj;
+        return extention;
     };
 }
 
@@ -719,4 +715,15 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
     }
     return nil;
 }
+@end
+
+@implementation NUDTextExtension
+
+- (NUDInnerText *(^)(NSString *))innerText {
+    return NUDABI(NSString *str) {
+        NUDInnerText *innerText = [[NUDInnerStrictMatchingText alloc] initWithKeyString:str searchingText:self.text];
+        return innerText;
+    };
+}
+
 @end

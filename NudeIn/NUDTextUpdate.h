@@ -26,24 +26,10 @@
 @interface NUDTextUpdate : NSObject
 
 - (NUDBase * (^)(NSUInteger))comp;
+
 // TODO: 更新功能中的文字模板
 //- (NUDText * (^)(NSString *))textTemplate;
 // TODO: 更新功能中的图片模板
 //- (NUDAttachment * (^)(NSString *))imageTemplate;
-
-@end
-
-
-@interface NUDTextUpdate (UpdateHanlder)
-
-@property (nonatomic,strong,readonly) NSMutableArray *textComponent;
-
-- (instancetype)initWithComponents:(NSMutableArray *)components;
-
-- (void)applyComp:(NUDBase *)comp;
-
-- (NSAttributedString *)generateString;
-
-+ (NSAttributedString *)nud_generateStringWith:(NUDBase *)comp maker:(NUDTextMaker *)maker;
 
 @end

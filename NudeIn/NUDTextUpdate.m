@@ -20,18 +20,17 @@
 //  SOFTWARE.
 
 #import "NUDTextUpdate.h"
+#import "NUDTextUpdate+.h"
 #import "NUDAttribute.h"
 #import "NUDText.h"
+#import "NUDText+.h"
 #import "NUDAttachment.h"
 #import "NUDTextMaker.h"
+#import "NUDTextMaker+.h"
+#import "NUDInnerText.h"
+#import "NUDInnerText+.h"
 #import <objc/runtime.h>
 #import "NUDAction.h"
-
-@interface NUDTextUpdate ()
-
-@property (nonatomic,strong) NSMutableArray *components;
-
-@end
 
 @implementation NUDTextUpdate
 
@@ -75,11 +74,17 @@
 
 - (void)applyComp:(NUDBase *)comp {
     if (comp) {
-        NSNumber *index = objc_getAssociatedObject(comp, @"storedCompIndex");
-        if (index && index.unsignedIntegerValue < self.components.count) {
-            NUDBase *originalBase = [self.components objectAtIndex:index.unsignedIntegerValue];
-            [originalBase mergeComp:comp];
-        }
+        NUDBase *originalBase = [self originalBaseWithComp:comp];
+        [originalBase mergeComp:comp];
+    }
+}
+
+- (NUDBase *)originalBaseWithComp:(NUDBase *)comp {
+    NSNumber *index = objc_getAssociatedObject(comp, @"storedCompIndex");
+    if (index && index.unsignedIntegerValue < self.components.count) {
+        return [self.components objectAtIndex:index.unsignedIntegerValue];
+    }else {
+        return nil;
     }
 }
 
@@ -113,6 +118,13 @@
         NSRange range = NSMakeRange(start, compString.length);
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
         object_setIvar(comp, ivar, NUD_VALUE_OF_RANGE(range));
+        
+        if ([comp isKindOfClass:[NUDText class]]) {
+            for (NUDInnerText *innerText in ((NUDText *)comp).innerTexts) {
+                [innerText addAttributesTo:string];
+            }
+        }
+        
     }
     
     return string;

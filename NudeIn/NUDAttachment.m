@@ -21,8 +21,10 @@
 
 #import "NUDAttachment.h"
 #import "NUDTextMaker.h"
+#import "NUDTextMaker+.h"
 #import "NUDText.h"
 #import "NUDTextUpdate.h"
+#import "NUDTextUpdate+.h"
 #import "NUDTextView.h"
 #import <objc/runtime.h>
 
@@ -159,30 +161,8 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 - (void (^)(NSString *, ...))attachWith {
     return ^void (NSString *identifier,...) {
         
-        NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
-        NSMutableArray *tpls = [NSMutableArray new];
-        id<NUDTemplate> tpl;
-        if ((tpl = [self.father templateWithId:identifier]) &&
-            [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
-            [tpls addObject:tpl];
-        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
-                  [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
-            [tpls addObject:tpl];
-        }
-        va_list idList ;
-        va_start(idList,identifier);
-        NSString *nextId;
-        while ((nextId = va_arg(idList, NSString *))) {
-            if ((tpl = [self.father templateWithId:nextId])) {
-                [tpls addObject:tpl];
-            }else if ((tpl = [sharedTemplateMaker textTemplateWithId:nextId])) {
-                [tpls addObject:tpl];
-            }
-        }
-        va_end(idList);
-        
-        
-        NUDAttachmentTemplate *template = tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
+        NUD_STRING_VA_LIST_TO_ARRAY(identifier, identifiers);
+        NUDAttachmentTemplate *template = [self templateWithIdentifiers:identifiers];
         if (template) {
             NSMutableArray *actionTags = [template.parasiticalObj.actionTags mutableCopy];
             [actionTags removeObjectsInArray:self.actionTags];
@@ -248,6 +228,22 @@ NUD_LAZY_LOAD_ARRAY(actionTags)
 
 - (void)setImage:(UIImage *)image {
     self.attachment.image = image;
+}
+
+- (NUDAttachmentTemplate *)templateWithIdentifiers:(NSArray<NSString *> *)identifiers {
+    NUDTemplateMaker *sharedTemplateMaker = [NUDTextView valueForKey:@"templateMaker"];
+    NSMutableArray *tpls = [NSMutableArray new];
+    id<NUDTemplate> tpl;
+    
+    for (NSString *identifier in identifiers) {
+        if ((tpl = [self.father templateWithId:identifier]) && [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
+            [tpls addObject:tpl];
+        }else if ((tpl = [sharedTemplateMaker textTemplateWithId:identifier]) &&
+                  [tpl isKindOfClass:[NUDAttachmentTemplate class]]) {
+            [tpls addObject:tpl];
+        }
+    }
+    return tpls.count > 0 ? [self mergeTemplates:tpls] : nil;
 }
 
 @end

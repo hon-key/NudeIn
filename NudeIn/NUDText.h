@@ -22,31 +22,20 @@
 
 #import "NUDAttribute.h"
 
-@class NUDTextMaker,NUDText,NUDTextUpdate;
+@class NUDTextMaker,NUDText,NUDInnerText,NUDTextTemplate,NUDTextTemplate;
 
 @interface NUDText : NUDAttribute<NUDText *> <NSCopying>
-
-@property (nonatomic,copy,readonly) NSString *string;
-
-@property (nonatomic,weak) NUDTextUpdate *update;
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str;
 
 @end
 
-@class NUDTextTemplate;
 @interface NUDTextTemplate : NUDAttribute<NUDTextTemplate *> <NUDTemplate>
-
-- (NSDictionary *)tplAttributes;
 
 @end
 
+@interface NUDTextExtension : NSObject
 
-@interface NUDShadowTag : NSObject <NSCopying>
-@property (nonatomic,assign) CGSize shadowOffset;
-@property (nonatomic,assign) CGFloat shadowBlur;
-@property (nonatomic,assign) UIColor *shadowColor;
+- (NUDInnerText * (^)(NSString *))innerText;
 
-- (void)mergeShadowTag:(NUDShadowTag *)shadowTag;
-- (NSShadow *)makeShadow;
 @end

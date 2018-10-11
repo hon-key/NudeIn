@@ -22,34 +22,6 @@
 #import "NudeIn-Prefix.h"
 
 
-#define NUDAB(...) className (^)(__VA_ARGS__)
-
-#define NUDABI(...) ^id (__VA_ARGS__)
-
-#define NUDAT(method,...) \
-self.parasiticalObj.method(__VA_ARGS__); \
-return self; \
-
-#define NUD_LAZY_LOAD_ARRAY(array)\
-- (NSMutableArray *)array { \
-if (!_##array) { _##array = [NSMutableArray new]; } \
-return _##array; \
-}
-
-#define NUD_VALUE_OF_RANGE(range) [NSValue valueWithBytes:&range objCType:@encode(NSRange)]
-
-
-#define NUDAT_ASSIGN OBJC_ASSOCIATION_ASSIGN
-#define NUDAT_RETAIN OBJC_ASSOCIATION_RETAIN
-#define NUDAT_RETAIN_NONATOMIC OBJC_ASSOCIATION_RETAIN_NONATOMIC
-#define NUDAT_COPY OBJC_ASSOCIATION_COPY
-#define NUDAT_COPY_NONATOMIC OBJC_ASSOCIATION_COPY_NONATOMIC
-
-#define NUDAT_SYNTHESIZE(methodType,type,prop,upperCaseProp,tag) \
-methodType (type)prop {return objc_getAssociatedObject(self, _cmd);} \
-methodType (void)set##upperCaseProp:(type)_prop \
-{ objc_setAssociatedObject(self, @selector(prop), _prop, tag);}
-
 typedef NS_ENUM(NSUInteger, NUDFontStyle) {
     NUDBold, NUDRegular, NUDMedium, NUDLight,
     NUDThin, NUDSemiBold, NUDUltraLight, NUDItalic,
@@ -88,7 +60,7 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDWord_HyphenationOn = NSUIntegerMax,
 };
 
-@class NUDText,NUDAttachment,NUDAttribute<T>,NUDAttributedAtachment<T>,NUDBase;
+@class NUDText,NUDTextExtension,NUDAttachment,NUDAttribute<T>,NUDAttributedAtachment<T>,NUDBase;
 
 @protocol NUDTemplate;
 
@@ -111,9 +83,6 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 @interface NUDAttribute <className> : NUDBase
 
 @property (nonatomic,readonly) NSArray *fontStyles;
-
-// TODO : 匹配字符串
-- (NUDAB(NSString *,NSString *))innerText;
 
 // font
 - (NUDAB(CGFloat))font;
@@ -159,10 +128,10 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 //- (NUDAB(id,SEL))longPress;
 - (NUDAB(NSString *))highlighted;
 
-- (void (^)(void))attach;
-- (void (^)(NSString *,...))attachWith;
+- (NUDTextExtension * (^)(void))attach;
+- (NUDTextExtension * (^)(NSString *,...))attachWith;
 
-- (void (^)(void))apply;
+- (NUDTextExtension * (^)(void))apply;
 
 #define nud_attachWith(...) attachWith(__VA_ARGS__,nil)
 - (void (^)(NSString *,...))nud_attachWith;

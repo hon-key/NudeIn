@@ -25,11 +25,6 @@
 #import "NUDAttachment.h"
 #import <objc/runtime.h>
 
-#define NUDOverrideASubclass() \
-                            @throw [NSException exceptionWithName:NSInternalInconsistencyException \
-                                                           reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
-                                                         userInfo:nil]
-
 #define NUDMethodNotImplemented(...) \
                                     if (self.implementedEmpty) {return ^id (__VA_ARGS__) {return self;};} \
                                     else { NUDOverrideASubclass(); }
@@ -153,9 +148,9 @@
 - (id (^)(NSString *))highlighted {NUDMethodNotImplemented(NSString *s);}
 - (id (^)(id, SEL))tap {NUDMethodNotImplemented(id t,SEL s);}
 
-- (void (^)(NSString *,...))attachWith {NUDMethodNotImplementedReturnVoid(NSString *s,...);}
-- (void (^)(void))attach {NUDMethodNotImplementedReturnVoid(void);}
-- (void (^)(void))apply {NUDMethodNotImplementedReturnVoid(void);}
+- (NUDTextExtension * (^)(NSString *,...))attachWith {NUDMethodNotImplemented(NSString *s,...);}
+- (NUDTextExtension * (^)(void))attach {NUDMethodNotImplemented(void);}
+- (NUDTextExtension * (^)(void))apply {NUDMethodNotImplemented(void);}
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @synthesize fontStyles = _fontStyles;
@@ -185,4 +180,3 @@
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
 @end
-

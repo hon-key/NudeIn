@@ -21,10 +21,13 @@
 
 #import "NUDTextView.h"
 #import "NUDText.h"
+#import "NUDText+.h"
 #import "NUDTextMaker.h"
+#import "NUDTextMaker+.h"
 #import "NUDAction.h"
 #import "NUDAttachment.h"
 #import "NUDTextUpdate.h"
+#import "NUDTextUpdate+.h"
 #import "NUDTouchTracking.h"
 #import "NUDAction.h"
 #import <objc/runtime.h>
@@ -107,9 +110,9 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 }
 
 - (void)update:(void (^)(NUDTextUpdate *))update {
-    NUDTextUpdate *up = [[NUDTextUpdate alloc] initWithComponents:[self.maker.textComponents mutableCopy]];
+    NUDTextUpdate *up = [[NUDTextUpdate alloc] initWithComponents:[self.maker.components mutableCopy]];
     update(up);
-    [self.maker applyComponentUpdate:up.textComponent];
+    [self.maker applyComponentUpdate:up.components];
     self.attributedText = [up generateString];
 }
 

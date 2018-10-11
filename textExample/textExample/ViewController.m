@@ -216,10 +216,20 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 - (NudeIn *)textView5 {
     if (!_textView5) {
         _textView5 = [NudeIn make:^(NUDTextMaker *make) {
-            make.text(@"superBig").superBig().ln(1).shadowDirection(NUDRight,0).attach();
+            make.textTemplate(@"inner").color([UIColor redColor]).attach();
+            make.text(@"abababa").superBig().ln(1).shadowDirection(NUDRight,0).attach()
+            .innerText(@"a").vertical(10).nud_attachWith(@"inner")
+            .innerText(@"b").vertical(-10).color([UIColor blueColor]).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.25).mark([UIColor blackColor]).attach();
         }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.textView5 update:^(NUDTextUpdate *update) {
+                update.comp(0).asText.apply()
+                .innerText(@"a").vertical(-10).attach()
+                .innerText(@"b").vertical(10).attach();
+            }];
+        });
     }
     return _textView5;
 }
