@@ -829,11 +829,13 @@ nude.backgroundColor = [UIColor purpleColor];
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.allText().font(19).color([UIColor whiteColor]).attach();
-    make.text(@"wow").attach();
-    make.image(@"githubIcon").size(100,100).attach();
-    make.text(@"yeah").attach();
-    make.image(@"githubIcon").size(100,100).vertical(10).attach();
-    make.text(@"right").attach();
+    make.allImage().size(100,100).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliLeft).attach();
+    make.text(@"Github").aligment(NUDAliCenter).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliCenter).attach();
+    make.text(@"Github").aligment(NUDAliCenter).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliRight).attach();
+    make.text(@"Github").aligment(NUDAliCenter).attach();
 }];
 nude.backgroundColor = [UIColor purpleColor];
 ```
