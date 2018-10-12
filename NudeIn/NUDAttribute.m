@@ -80,30 +80,39 @@
     return range;
 }
 
-- (NUDAttribute<NUDAttribute *> *)asText {
-    if ([self isKindOfClass:[NUDText class]]) {
-        return (NUDAttribute<NUDAttribute *> *)self;
-    }else {
-        NUDAttribute<NUDAttribute *> *emptyAttribute = [[NUDAttribute alloc] init];
-        emptyAttribute.implementedEmpty = YES;
-        return emptyAttribute;
-    }
-}
-
-- (NUDAttributedAtachment<NUDAttributedAtachment *> *)asImage {
-    
-    if ([self isKindOfClass:[NUDAttachment class]]) {
-        return (NUDAttributedAtachment<NUDAttributedAtachment *> *)self;
-    }else {
-        NUDAttributedAtachment<NUDAttributedAtachment *> *emptyAttrAttachment = [[NUDAttributedAtachment alloc] init];
-        emptyAttrAttachment.implementedEmpty = YES;
-        return emptyAttrAttachment;
-    }
-    
-}
-
-
 - (NSAttributedString *)attributedString {NUDOverrideASubclass();}
+
+// 为了解决 NUDBase 的子类自己的方法在 Update 时用错了 asText 和 asImage 之后引起的 unrecognized selector 问题，拦截了 UNrecognized selector 方法
+// to solve nrecognized selector problem which is arise from a call to Subclass method of NUDBase when you update a NUDBase and use asText in NUDAttachment or asImage in NUDText
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    Class unkownMethodHandler = NSClassFromString(@"NUDUnkownMethodHandler");
+    if (!unkownMethodHandler) {
+        unkownMethodHandler = objc_allocateClassPair([NSObject class], "NUDUnkownMethodHandler", 0);
+        objc_registerClassPair(unkownMethodHandler);
+    }
+    if (![self existMethod:aSelector forClass:unkownMethodHandler]) {
+        
+        IMP imp = imp_implementationWithBlock((id(^)(void)) ^(void){
+            NSLog(@"no method for NUDBase : %@", NSStringFromSelector(aSelector));
+            return ^id(void) { return self; };
+        });
+        class_addMethod(unkownMethodHandler, aSelector, imp, [NSStringFromSelector(aSelector) UTF8String]);
+    }
+    Class NUDUnkownMethodHandler = [unkownMethodHandler class];
+    return [[NUDUnkownMethodHandler alloc] init];
+}
+
+- (BOOL)existMethod:(SEL)targetSelector forClass:(Class)class {
+    unsigned int count;
+    Method *methods = class_copyMethodList(class, &count);
+    for (int i = 0; i < count; i++) {
+        SEL selector = method_getName(methods[i]);
+        if ([NSStringFromSelector(selector) isEqualToString:NSStringFromSelector(targetSelector)]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end
 
@@ -148,10 +157,10 @@
 - (id (^)(NSString *))highlighted {NUDMethodNotImplemented(NSString *s);}
 - (id (^)(id, SEL))tap {NUDMethodNotImplemented(id t,SEL s);}
 
-- (NUDTextExtension * (^)(NSString *,...))attachWith {NUDMethodNotImplemented(NSString *s,...);}
-- (NUDTextExtension * (^)(void))attach {NUDMethodNotImplemented(void);}
-- (NUDTextExtension * (^)(void))apply {NUDMethodNotImplemented(void);}
-- (void (^)(NSString *, ...))nud_attachWith{return nil;}
+- (id (^)(NSString *, ...))attachWith {NUDMethodNotImplemented(NSString *s,...);}
+- (id (^)(void))attach {NUDMethodNotImplemented(void);}
+- (id (^)(void))apply {NUDMethodNotImplemented(void);}
+- (id (^)(NSString *, ...))nud_attachWith {return nil;}
 
 @synthesize fontStyles = _fontStyles;
 - (NSArray *)fontStyles {
@@ -179,4 +188,8 @@
 
 - (void (^)(NSString *, ...))nud_attachWith{return nil;}
 
+@end
+
+
+@implementation NUDAttributeExtension
 @end

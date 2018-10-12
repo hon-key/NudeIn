@@ -314,3 +314,17 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 }
 
 @end
+
+@implementation NUDBase (NUDAttachment)
+
+- (NUDAttachment *)asImage {
+    if ([self isKindOfClass:[NUDAttachment class]]) {
+        return (NUDAttachment *)self;
+    }else {
+        NUDAttributedAtachment<NUDAttributedAtachment *> *emptyAttrAttachment = [[NUDAttributedAtachment alloc] init];
+        emptyAttrAttachment.implementedEmpty = YES;
+        return (NUDAttachment *)emptyAttrAttachment;
+    }
+}
+
+@end

@@ -60,7 +60,8 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
     NUDWord_HyphenationOn = NSUIntegerMax,
 };
 
-@class NUDText,NUDTextExtension,NUDAttachment,NUDAttribute<T>,NUDAttributedAtachment<T>,NUDBase;
+@class NUDText,NUDTextExtension,NUDAttachment,NUDAttribute<T1,T2>,
+NUDAttributeExtension,NUDAttributedAtachment<T>,NUDBase;
 
 @protocol NUDTemplate;
 
@@ -73,14 +74,11 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 - (id<NUDTemplate>)mergeTemplates:(NSArray<id<NUDTemplate>> *)templates;
 - (void)mergeComp:(NUDBase *)comp;
 
-- (NUDAttribute<NUDAttribute *> *)asText;
-- (NUDAttributedAtachment<NUDAttributedAtachment *> *)asImage;
-
 - (NSAttributedString *)attributedString;
 
 @end
 
-@interface NUDAttribute <className> : NUDBase
+@interface NUDAttribute <className,extension> : NUDBase
 
 @property (nonatomic,readonly) NSArray *fontStyles;
 
@@ -128,13 +126,13 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 //- (NUDAB(id,SEL))longPress;
 - (NUDAB(NSString *))highlighted;
 
-- (NUDTextExtension * (^)(void))attach;
-- (NUDTextExtension * (^)(NSString *,...))attachWith;
+- (extension (^)(void))attach;
+- (extension (^)(NSString *,...))attachWith;
 
-- (NUDTextExtension * (^)(void))apply;
+- (extension (^)(void))apply;
 
 #define nud_attachWith(...) attachWith(__VA_ARGS__,nil)
-- (void (^)(NSString *,...))nud_attachWith;
+- (extension (^)(NSString *,...))nud_attachWith;
 
 
 @end
@@ -163,5 +161,9 @@ typedef NS_ENUM(NSUInteger, NUDLineBreakMode) {
 @property (nonatomic,copy) NSString *identifier;
 - (instancetype)initWithFather:(NUDTextMaker *)maker identifier:(NSString *)identifier;
 - (void)mergeTemplate:(id<NUDTemplate>)tpl;
+
+@end
+
+@interface NUDAttributeExtension : NSObject
 
 @end

@@ -40,3 +40,7 @@
 @interface NUDAttachmentTemplate : NUDAttributedAtachment<NUDAttachmentTemplate *> <NUDTemplate>
 
 @end
+
+@interface NUDBase (NUDAttachment)
+- (NUDAttachment *)asImage;
+@end

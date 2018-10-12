@@ -22,20 +22,26 @@
 
 #import "NUDAttribute.h"
 
-@class NUDTextMaker,NUDText,NUDInnerText,NUDTextTemplate,NUDTextTemplate;
+@class NUDTextMaker,NUDText,NUDInnerText,NUDTextTemplate,NUDTextTemplate,NUDTextExtension;
 
-@interface NUDText : NUDAttribute<NUDText *> <NSCopying>
+@interface NUDText : NUDAttribute<NUDText *,NUDTextExtension *> <NSCopying>
 
 - (instancetype)initWithFather:(NUDTextMaker *)maker string:(NSString *)str;
 
 @end
 
-@interface NUDTextTemplate : NUDAttribute<NUDTextTemplate *> <NUDTemplate>
+@interface NUDTextTemplate : NUDAttribute<NUDTextTemplate *,NUDTextExtension *> <NUDTemplate>
 
 @end
 
 @interface NUDTextExtension : NSObject
 
 - (NUDInnerText * (^)(NSString *))innerText;
+- (NUDTextExtension * (^)(void))clearInnerText;
 
+@end
+
+
+@interface NUDBase (NUDText)
+- (NUDText *)asText;
 @end

@@ -11,7 +11,7 @@
 
 
 #define NUDAnounceTextAttributeSet(attrName) \
-@interface NUDAttribute <className> (attrName) \
+@interface NUDAttribute <className,extension> (attrName) \
 - (NUDAB(void))attrName; \
 @end
 
@@ -25,7 +25,7 @@ return self.asText.action; \
 @end
 
 #define NUDAnounceTextAttributeSetWithArg(attrName,type)\
-@interface NUDAttribute <className> (attrName) \
+@interface NUDAttribute <className,extension> (attrName) \
 - (NUDAB(type))attrName; \
 @end
 

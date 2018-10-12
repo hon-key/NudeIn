@@ -185,8 +185,8 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.textView3 update:^(NUDTextUpdate *update) {
-                update.comp(2).asImage.size(150,150).apply();
-//                update.comp(0).asText.font(16).apply();
+                update.comp(1).asImage.size(150,150).apply();
+                update.comp(2).asText.color([UIColor redColor]).apply();
             }];
         });
 
@@ -223,13 +223,19 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.25).mark([UIColor blackColor]).attach();
         }];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.textView5 update:^(NUDTextUpdate *update) {
-                update.comp(0).asText.apply()
-                .innerText(@"a").vertical(-10).attach()
-                .innerText(@"b").vertical(10).attach();
+#define random256 ((arc4random() % 256) / 256.0)
+#define randomColor [UIColor colorWithRed:random256 green:random256 blue:random256 alpha:1.0]
+        if (@available(iOS 10.0, *)) {
+            NSTimer *timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                [self.textView5 update:^(NUDTextUpdate *update) {
+                    update.comp(0).asText.apply()
+                    .clearInnerText()
+                    .innerText(@"a").color(randomColor).attach()
+                    .innerText(@"b").color(randomColor).attach();
+                }];
             }];
-        });
+            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        }
     }
     return _textView5;
 }

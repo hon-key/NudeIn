@@ -424,7 +424,7 @@
     };
 }
 
-- (NUDTextExtension * (^)(void))attach {
+- (id (^)(void))attach {
     return ^NUDTextExtension * (void) {
         if ([self.father containsComponent:self]) {
             return self.apply();
@@ -434,7 +434,7 @@
     };
 }
 
-- (NUDTextExtension * (^)(NSString *, ...))attachWith {
+- (id (^)(NSString *, ...))attachWith {
     return ^NUDTextExtension * (NSString *identifier,...) {
         NUD_STRING_VA_LIST_TO_ARRAY(identifier, identifiers);
         NUDTextTemplate *template = [self templateWithIdentifiers:identifiers];
@@ -466,7 +466,7 @@
     };
 }
 
-- (NUDTextExtension * (^)(void))apply {
+- (id (^)(void))apply {
     return ^NUDTextExtension * (void) {
         if (self.update) {
             [self.update applyComp:self];
@@ -641,7 +641,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
     };
 }
 
-- (NUDTextExtension * (^)(void))attach {
+- (id (^)(void))attach {
     return ^NUDTextExtension * (void) {
         [self.parasiticalObj.father addTemplate:self];
         NUDTextExtension *extention = [[NUDTextExtension alloc] init];
@@ -724,6 +724,27 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
         NUDInnerText *innerText = [[NUDInnerStrictMatchingText alloc] initWithKeyString:str searchingText:self.text];
         return innerText;
     };
+}
+
+- (NUDTextExtension *(^)(void))clearInnerText {
+    return NUDABI(void) {
+        [((NUDText *)self.text).innerTexts removeAllObjects];
+        return self;
+    };
+}
+
+@end
+
+@implementation NUDBase (NUDText)
+
+- (NUDText *)asText {
+    if ([self isKindOfClass:[NUDText class]]) {
+        return (NUDText *)self;
+    }else {
+        NUDAttribute<NUDAttribute *,NUDAttributeExtension *> *emptyAttribute = [[NUDAttribute alloc] init];
+        emptyAttribute.implementedEmpty = YES;
+        return (NUDText *)emptyAttribute;
+    }
 }
 
 @end
