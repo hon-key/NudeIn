@@ -45,7 +45,7 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
     [self.view addSubview:self.textView];
     self.textView.center = CGPointMake(10, 50);
     [self.textView sizeToFit];
-    
+
     [self.view addSubview:self.textView2];
     self.textView2.frame = CGRectMake(20, 100, 0, 0);
     [self.textView2 sizeToFit];
@@ -55,12 +55,10 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 
     [self.view addSubview:self.textView4];
     self.textView4.frame = CGRectMake(20, 500, 200, 150);
-    
+
     [self.view addSubview:self.textView5];
     self.textView5.frame = CGRectMake(20, 700, 0, 0);
     [self.textView5 sizeToFit];
-    
-    
     
 }
 
