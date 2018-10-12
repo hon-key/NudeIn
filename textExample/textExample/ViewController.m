@@ -227,12 +227,14 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 #define randomColor [UIColor colorWithRed:random256 green:random256 blue:random256 alpha:1.0]
         if (@available(iOS 10.0, *)) {
             NSTimer *timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                static int verticalValue= 10;
                 [self.textView5 update:^(NUDTextUpdate *update) {
                     update.comp(0).asText.apply()
                     .clearInnerText()
-                    .innerText(@"a").color(randomColor).attach()
-                    .innerText(@"b").color(randomColor).attach();
+                    .innerText(@"a").color(randomColor).vertical(verticalValue).attach()
+                    .innerText(@"b").color(randomColor).vertical(-verticalValue).attach();
                 }];
+                verticalValue = -verticalValue;
             }];
             [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         }
