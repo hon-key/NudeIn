@@ -168,11 +168,11 @@ pod 'NudeIn'
     
     - [**size**](#size) **`声明图像的大小`**
     
-    - [**ln**](#ln(image)) **`声明图像换行`**
+    - [**ln**](#ln-image) **`声明图像换行`**
     
-    - [**vertical**](#vertical(image)) **`声明图像换行`**
+    - [**vertical**](#vertical-image) **`声明图像换行`**
     
-    - [**aligment**](#aligment(image)) **`声明图像对齐属性，参数为 NUDAligment`**
+    - [**aligment**](#aligment-image) **`声明图像对齐属性，参数为 NUDAligment`**
 
 * ### [Template](#usage)
 
@@ -804,7 +804,7 @@ nude.backgroundColor = [UIColor purpleColor];
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/size.png" />
 
 
-### **vertical(image)**
+### **vertical-image**
 
 **vertical** 定义 image 的垂直位移，实际上只是 origin 修改 y 值的一个便利方法，由于 x 值设置无效，只使用此方法即可
 ```objc
@@ -823,7 +823,7 @@ nude.backgroundColor = [UIColor purpleColor];
 
 <p align="right"><a href="#indexes">back</a></p>
 
-### **aligment(image)**
+### **aligment-image**
 
 **aligment(image)** 定义 image 的水平对齐，传入 NUDAligment 即可，前提条件为 iamge 组件必须单独一行
 ```objc
@@ -844,7 +844,7 @@ nude.backgroundColor = [UIColor purpleColor];
 
 <p align="right"><a href="#indexes">back</a></p>
 
-### **ln(image)**
+### **ln-image**
 
 **ln(image)** 定义换行
 
