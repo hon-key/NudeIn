@@ -164,13 +164,15 @@ pod 'NudeIn'
 
 * ### [Image](#usage)
 
-    - [**origin**](#usage) **`声明图像的偏移，锚点为左下角`**
+    - [**origin**](#origin) **`声明图像的偏移，锚点为左下角`**
     
-    - [**size**](#usage) **`声明图像的大小`**
+    - [**size**](#size) **`声明图像的大小`**
     
-    - [**ln**](#usage) **`声明图像换行`**
+    - [**ln**](#ln(image)) **`声明图像换行`**
     
-    - [**aligment**](#usage) **`声明图像对齐属性，参数为 NUDAligment`**
+    - [**vertical**](#vertical(image)) **`声明图像换行`**
+    
+    - [**aligment**](#aligment(image)) **`声明图像对齐属性，参数为 NUDAligment`**
 
 * ### [Template](#usage)
 
@@ -764,6 +766,85 @@ NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.text(@"Github").font(64).color([UIColor blackColor]).highlighted(@"Highlight").tap(self,@selector(linkHandler:)).attach();
 }];
 ```
+
+<p align="right"><a href="#indexes">back</a></p>
+
+### **origin**
+
+**origin** 定义 image 的 起始点，注意，origin 的所在点为图片的左下角，baseline 所在的那条线上，即锚点为左下角，这和 UIView 的坐标系统是不一样的
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(17).color([UIColor whiteColor]).attach();
+    make.text(@"Hi,").attach();
+    make.image(@"githubIcon").origin(0,0).size(100,100).attach();
+    make.text(@"Github").attach();
+}];
+nude.backgroundColor = [UIColor purpleColor];
+```
+
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/origin.png" />
+
+<p align="right"><a href="#indexes">back</a></p>
+
+### **size**
+
+**size** 定义 image 的尺寸，需要注意的是，layoutManager 并不会自动 resize 图片的尺寸，如果你在你的 image 组件里不定义 size 值，layoutManager 自动使用 UIImage 的 size 属性
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(19).color([UIColor whiteColor]).attach();
+    make.text(@"wow").attach();
+    make.image(@"githubIcon").size(50,50).attach();
+    make.text(@"yeah").attach();
+    make.image(@"githubIcon").size(100,100).vertical(10).attach();
+    make.text(@"right").attach();
+}];
+nude.backgroundColor = [UIColor purpleColor];
+```
+
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/size.png" />
+
+
+### **vertical(image)**
+
+**vertical** 定义 image 的垂直位移，实际上只是 origin 修改 y 值的一个便利方法，由于 x 值设置无效，只使用此方法即可
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(19).color([UIColor whiteColor]).attach();
+    make.text(@"wow").attach();
+    make.image(@"githubIcon").size(100,100).attach();
+    make.text(@"yeah").attach();
+    make.image(@"githubIcon").size(100,100).vertical(10).attach();
+    make.text(@"right").attach();
+}];
+nude.backgroundColor = [UIColor purpleColor];
+```
+
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/vertical(image).png" />
+
+<p align="right"><a href="#indexes">back</a></p>
+
+### **aligment(image)**
+
+**aligment(image)** 定义 image 的水平对齐，传入 NUDAligment 即可，前提条件为 iamge 组件必须单独一行
+```objc
+NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.allText().font(19).color([UIColor whiteColor]).attach();
+    make.text(@"wow").attach();
+    make.image(@"githubIcon").size(100,100).attach();
+    make.text(@"yeah").attach();
+    make.image(@"githubIcon").size(100,100).vertical(10).attach();
+    make.text(@"right").attach();
+}];
+nude.backgroundColor = [UIColor purpleColor];
+```
+
+<img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/aligment(image).png" />
+
+<p align="right"><a href="#indexes">back</a></p>
+
+### **ln(image)**
+
+**ln(image)** 定义换行
 
 <p align="right"><a href="#indexes">back</a></p>
 
