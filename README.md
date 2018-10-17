@@ -71,6 +71,8 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 
 ## Installation
 
+### 1、Cocoapods
+
 ```
 pod 'NudeIn'
 ```
@@ -87,6 +89,12 @@ pod 'NudeIn'
 5、image 组件添加 aligment 功能，可以在一行里为 image 声明 aligment 类型
 
 最低 iOS 版本： `8.0`
+
+### 2、Copy files
+
+你可以拷贝 master 或者 1.2.4 里 NudeIn 文件夹的所有文件到你的工程里。
+
+master 分支可能包含一些新的功能或者为不稳定版本，如果你在使用过程中遇到问题，欢迎 commit an issue 或者提交 PR
 
 ## Indexes
 
