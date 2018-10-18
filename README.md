@@ -13,6 +13,13 @@ NudeIn 是一个基于 UITextView ，书写风格类似于 masonry 的 iOS 端�
 
 相比其他第三方富文本库，NudeIn 将是最符合人类思维方式的，使用它将不会花费你太多的学习成本。如果你有 masonry 经验，你将几乎没有学习成本，如果你没有，也无需担心，它看起来就像是为你的思维方式精心打造的一般，只需稍微看看例子，就可以完全学会使用方法。
 
+NudeIn is an iOS-style rich text control based on UITextView. It has a writing style similar to masonry. NudeIn uses an elegant declarative (chained) programming to define rich text controls. Unlike programming, it requires a very small amount of code, and it is intuitive and easy to use.
+
+In addition to reducing code redundancy to almost zero, NudeIn is very sensitive and intelligent. If you are writing a code where in the rich text there are more than two rich texts of consistent styles, or two rich texts of partially consistent styles, e.g. of different font sizes or different colors, and if you write it as what we usually do, you may end up having a large number of identical code segments. NudeIn provides a solution. It introduces templates. You can easily declare a template to be applied to any component that needs it. Or each component can even declare its own properties to override the properties on the template to achieve a partially consistent effect. In either way NudeIn is much more flexible than its alternatives.
+
+Compared to other third-party rich text libraries, NudeIn is developed to possess an “intuitive” mind so it is absolutely easy to learn. If you have masonry experience, there is almost no cost of learning. If you don't…No worries! NudeIn is purposely crafted to follow how you think. Just take a look at the guide and you will be all ready to start.
+
+
 ## Usage
 
 NudeIn 的用法非常简单明了，这里给出一个非常简单的例子，相信你会被这样的用法惊艳到，一旦用起来就会爱不释手:
