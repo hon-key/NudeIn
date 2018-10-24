@@ -239,14 +239,14 @@ NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
             if (nTouch.comp != nTouch.originComp) {
                 [((NUDText *)nTouch.comp) mergeComp:nTouch.originComp];
                 self.attributedText = [NUDTextUpdate nud_generateStringWith:nTouch.comp maker:self.maker];
-                if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
-                    [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
-                    NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
-                    if (selector) {
-                        NUDTapAction *action = [[NUDTapAction alloc] init];
-                        action.string = ((NUDText *)nTouch.comp).string;
-                        [selector performAction:action];
-                    }
+            }
+            if (CGRectContainsPoint(nTouch.glyphRect, nTouch.currentLocation) &&
+                [self.maker componentInCharacterLocation:nTouch.glyphIndex] == nTouch.comp) {
+                NUDSelector *selector = [((NUDText *)nTouch.comp) valueForKey:@"selector"];
+                if (selector) {
+                    NUDTapAction *action = [[NUDTapAction alloc] init];
+                    action.string = ((NUDText *)nTouch.comp).string;
+                    [selector performAction:action];
                 }
             }
         }else {}
