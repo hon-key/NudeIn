@@ -13,6 +13,13 @@ NudeIn 是一个基于 UITextView ，书写风格类似于 masonry 的 iOS 端�
 
 相比其他第三方富文本库，NudeIn 将是最符合人类思维方式的，使用它将不会花费你太多的学习成本。如果你有 masonry 经验，你将几乎没有学习成本，如果你没有，也无需担心，它看起来就像是为你的思维方式精心打造的一般，只需稍微看看例子，就可以完全学会使用方法。
 
+NudeIn is an iOS rich text control based on UITextView. It has a writing style similar to masonry. NudeIn uses an elegant declarative (chained) programming to define rich text controls. Unlike programming, it requires a very small amount of code, and it is intuitive and easy to use.
+
+In addition to reducing code redundancy to almost zero, NudeIn is very sensitive and intelligent. If you are writing a code where in the rich text there are more than two rich texts of consistent styles, or two rich texts of partially consistent styles, e.g. of different font sizes or different colors, and if you write it as what we usually do, you may end up having a large number of identical code segments. NudeIn provides a solution. It introduces templates. You can easily declare a template to be applied to any component that needs it. Or each component can even declare its own properties to override the properties on the template to achieve a partially consistent effect. In either way NudeIn is much more flexible than its alternatives.
+
+Compared to other third-party rich text libraries, NudeIn is developed to possess an “intuitive” mind so it is absolutely easy to learn. If you have masonry experience, there is almost no cost of learning. If you don't…No worries! NudeIn is purposely crafted to follow how you think. Just take a look at the guide and you will be all ready to start.
+
+
 ## Usage
 
 NudeIn 的用法非常简单明了，这里给出一个非常简单的例子，相信你会被这样的用法惊艳到，一旦用起来就会爱不释手:
@@ -71,6 +78,8 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 
 ## Installation
 
+### 1、Cocoapods
+
 ```
 pod 'NudeIn'
 ```
@@ -87,6 +96,12 @@ pod 'NudeIn'
 5、image 组件添加 aligment 功能，可以在一行里为 image 声明 aligment 类型
 
 最低 iOS 版本： `8.0`
+
+### 2、Copy files
+
+你可以拷贝 master 或者 1.2.4 里 NudeIn 文件夹的所有文件到你的工程里。
+
+master 分支可能包含一些新的功能或者为不稳定版本，如果你在使用过程中遇到问题，欢迎 commit an issue 或者提交 PR
 
 ## Indexes
 
@@ -168,11 +183,11 @@ pod 'NudeIn'
     
     - [**size**](#size) **`声明图像的大小`**
     
-    - [**ln**](#ln(image)) **`声明图像换行`**
+    - [**ln**](#ln-image) **`声明图像换行`**
     
-    - [**vertical**](#vertical(image)) **`声明图像换行`**
+    - [**vertical**](#vertical-image) **`声明图像换行`**
     
-    - [**aligment**](#aligment(image)) **`声明图像对齐属性，参数为 NUDAligment`**
+    - [**aligment**](#aligment-image) **`声明图像对齐属性，参数为 NUDAligment`**
 
 * ### [Template](#usage)
 
@@ -804,7 +819,7 @@ nude.backgroundColor = [UIColor purpleColor];
 <img src="https://github.com/hon-key/HKAttributedTextView/raw/master/Screenshots/size.png" />
 
 
-### **vertical(image)**
+### **vertical-image**
 
 **vertical** 定义 image 的垂直位移，实际上只是 origin 修改 y 值的一个便利方法，由于 x 值设置无效，只使用此方法即可
 ```objc
@@ -823,17 +838,19 @@ nude.backgroundColor = [UIColor purpleColor];
 
 <p align="right"><a href="#indexes">back</a></p>
 
-### **aligment(image)**
+### **aligment-image**
 
 **aligment(image)** 定义 image 的水平对齐，传入 NUDAligment 即可，前提条件为 iamge 组件必须单独一行
 ```objc
 NudeIn *nude = [NudeIn make:^(NUDTextMaker *make) {
     make.allText().font(19).color([UIColor whiteColor]).attach();
-    make.text(@"wow").attach();
-    make.image(@"githubIcon").size(100,100).attach();
-    make.text(@"yeah").attach();
-    make.image(@"githubIcon").size(100,100).vertical(10).attach();
-    make.text(@"right").attach();
+    make.allImage().size(100,100).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliLeft).attach();
+    make.text(@"Github").aligment(NUDAliCenter).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliCenter).attach();
+    make.text(@"Github").aligment(NUDAliCenter).ln(1).attach();
+    make.image(@"githubIcon").aligment(NUDAliRight).attach();
+    make.text(@"Github").aligment(NUDAliCenter).attach();
 }];
 nude.backgroundColor = [UIColor purpleColor];
 ```
@@ -842,7 +859,7 @@ nude.backgroundColor = [UIColor purpleColor];
 
 <p align="right"><a href="#indexes">back</a></p>
 
-### **ln(image)**
+### **ln-image**
 
 **ln(image)** 定义换行
 
