@@ -26,13 +26,13 @@
     return self;
 }
 
-- (NUDTextExtension *(^)(void))attach {
+- (id (^)(void))attach {
     return ^NUDTextExtension * (void) {
         return self.nud_attachWith(@"");
     };
 }
 
-- (NUDTextExtension *(^)(NSString *, ...))attachWith {
+- (id (^)(NSString *, ...))attachWith {
     return ^NUDTextExtension * (NSString *identifier,...) {
         if ([self.searchingText isKindOfClass:[NUDTextTemplate class]]) {
             
