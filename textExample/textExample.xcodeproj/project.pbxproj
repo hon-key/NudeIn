@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		922CB5372180151600E7DA57 /* NUDAttributeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDAttributeSet.h; path = ../../NudeIn/NUDAttributeSet.h; sourceTree = "<group>"; };
 		923F6300215C6CDF00259DE6 /* UIImage+NUDPainter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+NUDPainter.h"; path = "../../NudeIn/UIImage+NUDPainter.h"; sourceTree = "<group>"; };
 		923F6301215C6CDF00259DE6 /* UIImage+NUDPainter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+NUDPainter.m"; path = "../../NudeIn/UIImage+NUDPainter.m"; sourceTree = "<group>"; };
 		924B16B420D3AFF600D74A81 /* NUDTouchTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDTouchTracking.h; path = ../../NudeIn/NUDTouchTracking.h; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		9601DF4720BA8E42004811F0 /* NUDAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NUDAction.m; path = ../../NudeIn/NUDAction.m; sourceTree = "<group>"; };
 		9601DF4820BA8E42004811F0 /* NudeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NudeIn.h; path = ../../NudeIn/NudeIn.h; sourceTree = "<group>"; };
 		9601DF4920BA8E43004811F0 /* NudeIn-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NudeIn-Prefix.h"; path = "../../NudeIn/NudeIn-Prefix.h"; sourceTree = "<group>"; };
-		9614F034215E8D4E0052707D /* NUDAttributeSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NUDAttributeSet.h; sourceTree = "<group>"; };
 		962F3F6A20A96B16009AC22A /* textExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = textExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		962F3F6D20A96B16009AC22A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		962F3F6E20A96B16009AC22A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -73,9 +73,9 @@
 		9601DF2D20BA78C3004811F0 /* NudeIn */ = {
 			isa = PBXGroup;
 			children = (
+				922CB5372180151600E7DA57 /* NUDAttributeSet.h */,
 				9601DF3020BA78E2004811F0 /* NUDAttribute.h */,
 				9601DF3220BA78E2004811F0 /* NUDAttribute.m */,
-				9614F034215E8D4E0052707D /* NUDAttributeSet.h */,
 				9601DF4620BA8E42004811F0 /* NUDAction.h */,
 				9601DF4720BA8E42004811F0 /* NUDAction.m */,
 				9601DF3120BA78E2004811F0 /* NUDAttachment.h */,
