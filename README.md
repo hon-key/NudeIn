@@ -83,17 +83,41 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.4
+最新 pod 版本：1.2.6
 
-1、makeTemplate 功能，现在可以声明全局template了。
+1、优化了触摸时的逻辑，修复了 makeTemplate 方法在继承时无法独立使用的问题，修复了一个阴影在没有传入 template 时无效的问题
 
-2、shadow 属性优化
+2、makeTemplate 新增了 allText 和 allImage，现在可以对全局进行统一配置
 
-3、新增 tap 属性，现在 text 可以声明 tap，引入回调，此属性可代替 link 属性
+3、新增了一个很酷的功能：自定义方法:
 
-4、修复了一部分错误和 bug
+为了更加让自己的代码更加适应不同工程的开发，能够自定义方法是一件很有意义的事，它不但能够减少代码量，提高重用的可能性，还能让你的NudeIn看起来独一无二，完全属于其所在的工程里。这为 NudeIn 提供了非常好的可读性。不过这并不能算是实际意义上的新增，因为它基于 OC 的 Category，所以你完全可以自己通过 Category 去自定义属于自己的方法，这里 NudeIn 只是提供了更加方便，更加好管理的宏定义来实现这个操作。
 
-5、image 组件添加 aligment 功能，可以在一行里为 image 声明 aligment 类型
+我们举个例子：
+
+如果你的 app 里有一个属于自己的需求：一种属于该 app 的文字主题色（假如是橙色 Orange ）,那么你可能会把这种颜色编辑为宏定义以在工程里大范围重用。但是如果你大范围用到了 NudeIn，使用宏定义的方法可能会稍显麻烦，而如果使用自定义功能，假设你想为该需求定义一个完全属于该工程的方法：themeColor，你将可以得到看起来最为原生的使用体验。
+
+我们首先创建一对cocoa源文件（MyNudeInMethod.h, MyNudeInMethod.m）
+
+在 MyNudeInMethod.h 里添加：
+```Objc
+NUDAnounceTextAttributeSet(themeColor);
+```
+在 MyNudeInMethod.m 里添加：
+```Objc
+NUDMakeTextAttributeSet(themeColor, color([UIColor orangeColor]));
+```
+
+这样我们就完成了对 themeColor 的自定义，我们可以在任何引用了该源文件的源文件里使用它：
+```Objc
+nude = [NudeIn make:^(NUDTextMaker *make) {
+    make.text(@"text").themeColor().attach();
+}];
+```
+
+NudeIn 提供了两种自定义方法的宏，一种就是上面的无参数方法自定义，另一种为单参数方法自定义，该定义方式可在 textExample 里示范。
+
+至于更多参数的自定义方法，只能通过自己实现 Category 的方式去使用，不过为了让一个方法看起来更加易读，添加更多参数其实并不推荐，一个参数我认为基本上是够用的。
 
 最低 iOS 版本： `8.0`
 
@@ -101,7 +125,7 @@ pod 'NudeIn'
 
 你可以拷贝 master 或者 1.2.4 里 NudeIn 文件夹的所有文件到你的工程里。
 
-master 分支可能包含一些新的功能或者为不稳定版本，如果你在使用过程中遇到问题，欢迎 commit an issue 或者提交 PR
+master 分支可能包含一些新的功能或者为不稳定版本，如果你在使用过程中遇到问题，欢迎 commit an issue 或者提交 PR。
 
 ## Indexes
 
