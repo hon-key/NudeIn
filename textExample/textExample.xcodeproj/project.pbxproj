@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9208DDF5218AD11C00161DBF /* NUDParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208DDF4218AD11C00161DBF /* NUDParagraphStyle.m */; };
 		923F6302215C6CDF00259DE6 /* UIImage+NUDPainter.m in Sources */ = {isa = PBXBuildFile; fileRef = 923F6301215C6CDF00259DE6 /* UIImage+NUDPainter.m */; };
 		924B16B620D3AFF700D74A81 /* NUDTouchTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 924B16B520D3AFF700D74A81 /* NUDTouchTracking.m */; };
 		9601DF3820BA78E2004811F0 /* NUDText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9601DF2F20BA78E2004811F0 /* NUDText.m */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9208DDF3218AD11C00161DBF /* NUDParagraphStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NUDParagraphStyle.h; path = ../../NudeIn/NUDParagraphStyle.h; sourceTree = "<group>"; };
+		9208DDF4218AD11C00161DBF /* NUDParagraphStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NUDParagraphStyle.m; path = ../../NudeIn/NUDParagraphStyle.m; sourceTree = "<group>"; };
 		922CB5372180151600E7DA57 /* NUDAttributeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NUDAttributeSet.h; path = ../../NudeIn/NUDAttributeSet.h; sourceTree = "<group>"; };
 		923F6300215C6CDF00259DE6 /* UIImage+NUDPainter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+NUDPainter.h"; path = "../../NudeIn/UIImage+NUDPainter.h"; sourceTree = "<group>"; };
 		923F6301215C6CDF00259DE6 /* UIImage+NUDPainter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+NUDPainter.m"; path = "../../NudeIn/UIImage+NUDPainter.m"; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				9601DF4820BA8E42004811F0 /* NudeIn.h */,
 				923F6300215C6CDF00259DE6 /* UIImage+NUDPainter.h */,
 				923F6301215C6CDF00259DE6 /* UIImage+NUDPainter.m */,
+				9208DDF3218AD11C00161DBF /* NUDParagraphStyle.h */,
+				9208DDF4218AD11C00161DBF /* NUDParagraphStyle.m */,
 			);
 			name = NudeIn;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 			files = (
 				962F3F7220A96B16009AC22A /* ViewController.m in Sources */,
 				969B313D20CC248C006D1609 /* NUDTextUpdate.m in Sources */,
+				9208DDF5218AD11C00161DBF /* NUDParagraphStyle.m in Sources */,
 				9601DF3820BA78E2004811F0 /* NUDText.m in Sources */,
 				9601DF4A20BA8E43004811F0 /* NUDAction.m in Sources */,
 				9601DF3A20BA78E2004811F0 /* NUDTextMaker.m in Sources */,
