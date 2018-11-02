@@ -29,6 +29,8 @@
 #import "NUDTextUpdate+.h"
 #import "NUDInnerText.h"
 #import "NUDInnerText+.h"
+#import "UIImage+NUDPainter.h"
+#import "NUDParagraphStyle.h"
 #import <objc/runtime.h>
 
 
@@ -339,7 +341,7 @@
 - (NSMutableParagraphStyle *)currentParagraphStyle {
     NSMutableParagraphStyle *style = [self.attributes objectForKey:NSParagraphStyleAttributeName];
     if (!style) {
-        style = [NSMutableParagraphStyle new];
+        style = [NUDParagraphStyle new];
         [self.attributes setObject:style forKey:NSParagraphStyleAttributeName];
     }
     return style;
@@ -533,12 +535,7 @@
 - (void)applyTemplate:(NUDTextTemplate *)template {
     if (template) {
         NSMutableDictionary *tplAttrs = [template.parasiticalObj.attributes mutableCopy];
-        [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];
         
-        if ([tplAttrs objectForKey:NSLinkAttributeName]) {
-            self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
-            [tplAttrs removeObjectForKey:NSLinkAttributeName];
-        }
         if (self.countOfLinefeed == NSUIntegerMax) {
             self.countOfLinefeed = template.parasiticalObj.countOfLinefeed;
         }
@@ -547,6 +544,20 @@
         }
         if (!self.selector) {
             self.selector = template.parasiticalObj.selector;
+        }
+        
+        if ([tplAttrs objectForKey:NSParagraphStyleAttributeName] && [self.attributes objectForKey:NSParagraphStyleAttributeName]) {
+            NSMutableParagraphStyle *style = [tplAttrs objectForKey:NSParagraphStyleAttributeName];
+            [style nud_mergeParagraphStyle:[self.attributes objectForKey:NSParagraphStyleAttributeName]];
+            [self.attributes setObject:style forKey:NSParagraphStyleAttributeName];
+            [tplAttrs removeObjectForKey:NSParagraphStyleAttributeName];
+        }
+        
+        [tplAttrs removeObjectsForKeys:[self.attributes allKeys]];
+        
+        if ([tplAttrs objectForKey:NSLinkAttributeName]) {
+            self.link(template.tplLinkSelector.target,template.tplLinkSelector.action);
+            [tplAttrs removeObjectForKey:NSLinkAttributeName];
         }
         
         [self.attributes addEntriesFromDictionary:tplAttrs];
@@ -656,6 +667,12 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 - (void)mergeTemplate:(id<NUDTemplate>)tpl {
     if ([tpl isKindOfClass:[NUDTextTemplate class]]) {
         NUDTextTemplate *template = tpl;
+        if ([self.parasiticalObj.attributes objectForKey:NSParagraphStyleAttributeName] &&
+            [template.parasiticalObj.attributes objectForKey:NSParagraphStyleAttributeName]) {
+            NSMutableParagraphStyle *style = [self.parasiticalObj.attributes objectForKey:NSParagraphStyleAttributeName];
+            [style nud_mergeParagraphStyle:[template.parasiticalObj.attributes objectForKey:NSParagraphStyleAttributeName]];
+            [template.parasiticalObj.attributes removeObjectForKey:NSParagraphStyleAttributeName];
+        }
         [self.parasiticalObj.attributes addEntriesFromDictionary:template.parasiticalObj.attributes];
         NUDShadowTag *newTag = [template.parasiticalObj.shadowTag copy];
         [newTag mergeShadowTag:self.parasiticalObj.shadowTag];
