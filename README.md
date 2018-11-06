@@ -83,7 +83,7 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.6
+最新 pod 版本：1.2.7
 
 1、优化了触摸时的逻辑，修复了 makeTemplate 方法在继承时无法独立使用的问题，修复了一个阴影在没有传入 template 时无效的问题
 
@@ -123,7 +123,7 @@ NudeIn 提供了两种自定义方法的宏，一种就是上面的无参数方�
 
 ### 2、Copy files
 
-你可以拷贝 master 或者 1.2.6 里 NudeIn 文件夹的所有文件到你的工程里。
+你可以拷贝 master 或者 1.2.7 里 NudeIn 文件夹的所有文件到你的工程里。
 
 master 分支可能包含一些新的功能或者为不稳定版本，如果你在使用过程中遇到问题，欢迎 commit an issue 或者提交 PR。
 
