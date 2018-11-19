@@ -19,7 +19,7 @@
 @implementation NUDAttribute (attrName) \
 - (id (^)(void))attrName { \
 return NUDABI(void) { \
-return self.asText.action; \
+return self.action; \
 }; \
 } \
 @end
@@ -33,7 +33,7 @@ return self.asText.action; \
 @implementation NUDAttribute (attrName) \
 - (id (^)(type))attrName { \
     return NUDABI(type arg) { \
-        return self.asText.action; \
+        return self.action; \
     }; \
 } \
 @end

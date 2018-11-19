@@ -214,8 +214,9 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 - (NudeIn *)textView5 {
     if (!_textView5) {
         _textView5 = [NudeIn make:^(NUDTextMaker *make) {
-            make.textTemplate(@"inner").color([UIColor redColor]).attach();
-            make.text(@"abababa").superBig().ln(1).shadowDirection(NUDRight,0).attach()
+            make.textTemplate(@"inner").superBig().color([UIColor redColor]).attach();
+            make.text(@"aa").ln(1).attach();
+            make.text(@"abababa").font(20).ln(1).shadowDirection(NUDRight,0).attach()
             .innerText(@"a").vertical(10).nud_attachWith(@"inner")
             .innerText(@"b").vertical(-10).color([UIColor blueColor]).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
@@ -223,22 +224,23 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
         }];
 #define random256 ((arc4random() % 256) / 256.0)
 #define randomColor [UIColor colorWithRed:random256 green:random256 blue:random256 alpha:1.0]
-        if (@available(iOS 10.0, *)) {
-            NSTimer *timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                static int verticalValue= 10;
-                [self.textView5 update:^(NUDTextUpdate *update) {
-                    update.comp(0).asText.apply()
-                    .clearInnerText()
-                    .innerText(@"a").color(randomColor).vertical(verticalValue).attach()
-                    .innerText(@"b").color(randomColor).vertical(-verticalValue).attach();
-                }];
-                verticalValue = -verticalValue;
-            }];
-            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        }
+//        if (@available(iOS 10.0, *)) {
+//            NSTimer *timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+//                static int verticalValue= 10;
+//                [self.textView5 update:^(NUDTextUpdate *update) {
+//                    update.comp(0).asText.apply()
+//                    .clearInnerText()
+//                    .innerText(@"a").color(randomColor).vertical(verticalValue).attach()
+//                    .innerText(@"b").color(randomColor).vertical(-verticalValue).attach();
+//                }];
+//                verticalValue = -verticalValue;
+//            }];
+//            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//        }
     }
     return _textView5;
 }
+
 
 
 

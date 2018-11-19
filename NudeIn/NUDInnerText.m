@@ -26,6 +26,13 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    NUDInnerText *innerText = [super copyWithZone:zone];
+    innerText.searchingText = self.searchingText;
+    innerText.mutableRanges = [[NSMutableArray alloc] initWithArray:self.mutableRanges copyItems:YES];
+    return innerText;
+}
+
 - (id (^)(void))attach {
     return ^NUDTextExtension * (void) {
         return self.nud_attachWith(@"");
@@ -35,11 +42,14 @@
 - (id (^)(NSString *, ...))attachWith {
     return ^NUDTextExtension * (NSString *identifier,...) {
         if ([self.searchingText isKindOfClass:[NUDTextTemplate class]]) {
+            NUDTextTemplate *template = (NUDTextTemplate *)self.searchingText;
             
+            NSShadow *shadow = [self.shadowTag makeShadow];
+            if (shadow) {
+                [self.attributes setObject:shadow forKey:NSShadowAttributeName];
+            }
             
-            
-            
-            
+            [template.parasiticalObj.innerTexts addObject:self];
         }else if ([self.searchingText isKindOfClass:[NUDText class]]) {
             NUDText *searchingText = (NUDText *)self.searchingText;
             

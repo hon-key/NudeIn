@@ -57,6 +57,10 @@
     text.highlightedTpl = self.highlightedTpl;
     text.shadowTag = [self.shadowTag copy];
     text.selector = [self.selector copy];
+    text.innerTexts = [self.innerTexts copy];
+    for (NUDInnerText *innerText in text.innerTexts) {
+        innerText.searchingText = text;
+    }
     return text;
 }
 
@@ -72,6 +76,10 @@
         self.highlightedTpl = text.highlightedTpl;
         self.shadowTag = [text.shadowTag copy];
         self.selector = [text.selector copy];
+        [self.innerTexts addObjectsFromArray:[text.innerTexts copy]];
+        for (NUDInnerText *innerText in self.innerTexts) {
+            innerText.searchingText = self;
+        }
     }
 }
 
@@ -459,8 +467,11 @@
         Ivar ivar = class_getInstanceVariable(NSClassFromString(@"NUDBase"), "_range");
         object_setIvar(self, ivar, NUD_VALUE_OF_RANGE(strRange));
         
-        
         [self.father storeTextComponent:self];
+        
+        for (NUDInnerText *innerText in self.innerTexts) {
+            [innerText match];
+        }
         
         NUDTextExtension *extention = [[NUDTextExtension alloc] init];
         extention.text = self;
@@ -564,6 +575,10 @@
         
         if (template.parasiticalObj.shadowTag) {
             [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
+        }
+        [self.innerTexts addObject:[template.parasiticalObj.innerTexts copy]];
+        for (NUDInnerText *innerText in self.innerTexts) {
+            innerText.searchingText = self;
         }
     }
 }
@@ -738,6 +753,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
 - (NUDInnerText *(^)(NSString *))innerText {
     return NUDABI(NSString *str) {
         NUDInnerText *innerText = [[NUDInnerStrictMatchingText alloc] initWithKeyString:str searchingText:self.text];
+        
         return innerText;
     };
 }
