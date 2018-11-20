@@ -57,7 +57,7 @@
     text.highlightedTpl = self.highlightedTpl;
     text.shadowTag = [self.shadowTag copy];
     text.selector = [self.selector copy];
-    text.innerTexts = [self.innerTexts copy];
+    text.innerTexts = [self.innerTexts mutableCopy];
     for (NUDInnerText *innerText in text.innerTexts) {
         innerText.searchingText = text;
     }
@@ -471,6 +471,7 @@
         
         for (NUDInnerText *innerText in self.innerTexts) {
             [innerText match];
+            [innerText addAttributesTo:self.father.string];
         }
         
         NUDTextExtension *extention = [[NUDTextExtension alloc] init];
@@ -576,7 +577,7 @@
         if (template.parasiticalObj.shadowTag) {
             [self.shadowTag mergeShadowTag:template.parasiticalObj.shadowTag];
         }
-        [self.innerTexts addObject:[template.parasiticalObj.innerTexts copy]];
+        [self.innerTexts addObjectsFromArray:[template.parasiticalObj.innerTexts copy]];
         for (NUDInnerText *innerText in self.innerTexts) {
             innerText.searchingText = self;
         }
@@ -670,7 +671,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
     return ^NUDTextExtension * (void) {
         [self.parasiticalObj.father addTemplate:self];
         NUDTextExtension *extention = [[NUDTextExtension alloc] init];
-        extention.text = self.parasiticalObj;
+        extention.text = self;
         return extention;
     };
 }
@@ -700,6 +701,7 @@ NUDAT_SYNTHESIZE(-,NSString *,identifier,Identifier,NUDAT_COPY_NONATOMIC)
             self.parasiticalObj.countOfLinefeed += template.parasiticalObj.countOfLinefeed;
         }
         self.parasiticalObj.highlightedTpl = template.parasiticalObj.highlightedTpl;
+        [self.parasiticalObj.innerTexts addObjectsFromArray:[template.parasiticalObj.innerTexts copy]];
     }
 }
 

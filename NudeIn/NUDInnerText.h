@@ -8,7 +8,7 @@
 
 #import "NUDText.h"
 
-@interface NUDInnerText : NUDText <NSCopying>
+@interface NUDInnerText : NUDText <NSCopying,NSMutableCopying>
 @end
 
 @interface NUDInnerStrictMatchingText : NUDInnerText

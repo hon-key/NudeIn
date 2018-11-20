@@ -214,11 +214,9 @@ NUDMakeTextAttributeSetWithArg(greenAlpha, CGFloat, alpha, color([[UIColor green
 - (NudeIn *)textView5 {
     if (!_textView5) {
         _textView5 = [NudeIn make:^(NUDTextMaker *make) {
-            make.textTemplate(@"inner").superBig().color([UIColor redColor]).attach();
-            make.text(@"aa").ln(1).attach();
-            make.text(@"abababa").font(20).ln(1).shadowDirection(NUDRight,0).attach()
-            .innerText(@"a").vertical(10).nud_attachWith(@"inner")
-            .innerText(@"b").vertical(-10).color([UIColor blueColor]).attach();
+            make.textTemplate(@"a在上").attach().innerText(@"a").font(60).vertical(10).attach();
+            make.textTemplate(@"b在下").attach().innerText(@"b").vertical(-10).color([UIColor blueColor]).attach();
+            make.text(@"abababa").font(20).ln(1).shadowDirection(NUDRight,0).nud_attachWith(@"a在上",@"b在下");
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.8).mark([UIColor blackColor]).ln(1).attach();
             make.text(@"greenWithAlpha").font(20).greenAlpha(0.25).mark([UIColor blackColor]).attach();
         }];

@@ -33,6 +33,13 @@
     return innerText;
 }
 
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    NUDInnerText *innerText = [super copyWithZone:zone];
+    innerText.searchingText = self.searchingText;
+    innerText.mutableRanges = [[NSMutableArray alloc] initWithArray:self.mutableRanges copyItems:YES];
+    return innerText;
+}
+
 - (id (^)(void))attach {
     return ^NUDTextExtension * (void) {
         return self.nud_attachWith(@"");
@@ -122,6 +129,7 @@
     }else {
        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"unkown implementation" userInfo:nil];
     }
+    if (!searchingString) @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"searching string shouldn't be nil" userInfo:nil];
     [self strictMatchStringWithKeyString:self.string searchingString:searchingString];
     
 }
