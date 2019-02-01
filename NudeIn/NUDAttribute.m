@@ -111,6 +111,7 @@
             return YES;
         }
     }
+    free(methods);
     return NO;
 }
 
