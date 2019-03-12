@@ -3,7 +3,7 @@
 # NudeIn
 
 [![Build Status](https://travis-ci.org/hon-key/NudeIn.svg?branch=master)](https://travis-ci.org/hon-key/NudeIn)
-[![Cocoapods](https://img.shields.io/badge/pod-1.2.6-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
+[![Cocoapods](https://img.shields.io/badge/pod-1.2.8-orange.svg)](https://img.shields.io/badge/pod-1.2.4-orange.svg)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 [![Language](https://img.shields.io/badge/language-Objective--C-blue.svg)](https://img.shields.io/badge/language-Objective--C-blue.svg)
 
@@ -83,7 +83,11 @@ _attrLabel = [NudeIn make:^(NUDTextMaker *make) {
 ```
 pod 'NudeIn'
 ```
-最新 pod 版本：1.2.7
+最新 pod 版本：1.2.8
+
+1、新增 asyncMake 和 asyncRemake 方法，现在可以进行异步 make 了。因为 make 任务如果过于繁重，在性能敏感的页面具有一定的影响。如在 tableView 里使用 remake 时，最好使用 asyncRemake 来更新文本。
+
+1.2.7 更新如下:
 
 1、优化了触摸时的逻辑，修复了 makeTemplate 方法在继承时无法独立使用的问题，修复了一个阴影在没有传入 template 时无效的问题
 
