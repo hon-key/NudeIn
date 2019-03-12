@@ -32,6 +32,24 @@
 #import "NUDAction.h"
 #import <objc/runtime.h>
 
+static NSLock * nud_template_maker_lock() {
+    static NSLock *templateMakerBlock;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        templateMakerBlock = [[NSLock alloc] init];
+    });
+    return templateMakerBlock;
+}
+
+static dispatch_queue_t nud_async_make_queue() {
+    static dispatch_queue_t asyncMakeQueue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        asyncMakeQueue = dispatch_queue_create("com.NudeIn.async.make.queue", DISPATCH_QUEUE_CONCURRENT);
+    });
+    return asyncMakeQueue;
+}
+
 
 @interface NUDTextView ()
 <
@@ -47,11 +65,6 @@ NUDTouchTrackingDelegate
 
 @implementation NUDTextView
 
-NSLock *templateMakerBlock;
-+ (void)load {
-    templateMakerBlock = [[NSLock alloc] init];
-}
-
 + (NUDTextView *)make:(void (^)(NUDTextMaker *))make {
     
     NUDTextView *label = [[NUDTextView alloc] init];
@@ -66,7 +79,9 @@ NSLock *templateMakerBlock;
     }
     
     label.maker = [[NUDTextMaker alloc] init];
-    make(label.maker);
+    if (make) {
+        make(label.maker);
+    }
     
     label.attributedText = label.maker.string;
     label.linkTextAttributes = @{};
@@ -79,20 +94,62 @@ NSLock *templateMakerBlock;
     
 }
 
++ (NUDTextView *)asyncMake:(void (^)(NUDTextMaker *))make {
+    NUDTextView *label = [[NUDTextView alloc] init];
+    label.scrollEnabled = NO;
+    label.editable = NO;
+    label.textContainer.lineFragmentPadding = 0;
+    label.textContainerInset = UIEdgeInsetsMake(-2, 0, 0, 0);
+    label.delegate = label;
+    label.layoutManager.delegate = label;
+    if (@available(iOS 11.0, *)) {
+        label.textDragInteraction.enabled = NO;
+    }
+    label.linkTextAttributes = @{};
+    
+    label.touchTracking = [[NUDTouchTracking alloc] init];
+    label.touchTracking.delegate = label;
+    label.touchTracking.timeoutTime = 3;
+    
+    dispatch_async(nud_async_make_queue(), ^{
+        NUDTextMaker *maker = [[NUDTextMaker alloc] init];
+        if (make) {
+            make(maker);
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            label.maker = maker;
+            label.attributedText = label.maker.string;
+        });
+    });
+    
+    return label;
+}
+
 - (void)remake:(void (^)(NUDTextMaker *))make {
     self.maker = [[NUDTextMaker alloc] init];
     make(self.maker);
     self.attributedText = self.maker.string;
 }
 
+- (void)asyncRemake:(void (^)(NUDTextMaker *))make {
+    dispatch_async(nud_async_make_queue(), ^{
+        NUDTextMaker *maker = [[NUDTextMaker alloc] init];
+        make(maker);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.maker = maker;
+            self.attributedText = self.maker.string;
+        });
+    });
+}
+
 NUDAT_SYNTHESIZE(+,NUDTemplateMaker *,templateMaker,TemplateMaker,NUDAT_RETAIN)
 + (void)makeTemplate:(void (^)(NUDTemplateMaker *))make {
-    [templateMakerBlock lock];
+    [nud_template_maker_lock() lock];
     if (![self templateMaker]) {
         [self setTemplateMaker:[[NUDTemplateMaker alloc] init]];
     }
     make([self templateMaker]);
-    [templateMakerBlock unlock];
+    [nud_template_maker_lock() unlock];
 }
 
 + (NUDTemplateMaker *)sharedTemplateMaker {
